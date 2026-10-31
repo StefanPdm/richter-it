@@ -491,6 +491,38 @@
   /* Fokusring nach innen, sonst schneidet clip-path ihn weg */
   .schnitt:focus-visible { outline: 2px solid var(--color-text-inverse); outline-offset: -5px; }
 
+  /* ---- Bild-Hintergrund mit langsamem Kamerazoom (Leitstand, Kontakt) ---- */
+  .kamerafahrt { transform: scale(1.04); transform-origin: 60% 45%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .kamerafahrt { animation: kamerafahrt 38s ease-in-out infinite alternate; }
+  }
+  @keyframes kamerafahrt {
+    from { transform: scale(1.04) translate(0, 0); }
+    to { transform: scale(1.14) translate(-2%, -1.5%); }
+  }
+
+  /* ---- Scan-Strahl: misst die Fläche von oben nach unten (Leitstand) ---- */
+  .scan-strahl {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--color-neon) 14%, transparent) 46%, color-mix(in srgb, var(--color-neon) 55%, transparent) 50%, transparent 51%);
+    background-size: 100% 22%;
+    background-repeat: no-repeat;
+    transform: translateY(-25%);
+    opacity: 0.7;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .scan-strahl { animation: scan-strahl 9s var(--ease-in-out) infinite; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scan-strahl { display: none; }
+  }
+  @keyframes scan-strahl {
+    0% { transform: translateY(-25%); }
+    70%, 100% { transform: translateY(105%); }
+  }
+
   /* ---- Signallinie: Trennlinie, über die ein Lichtpunkt läuft ---- */
   .signal-linie { position: relative; height: 1px; overflow: hidden; background: var(--color-border); }
   .signal-linie::after {

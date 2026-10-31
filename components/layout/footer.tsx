@@ -21,7 +21,18 @@ export function Footer() {
             ))}
           </ul>
         </nav>
-        <span>Videos auf dieser Seite sind mit KI erstellt.</span>
+        <nav aria-label="Social Media">
+          <ul className="flex gap-6">
+            {site.social.map((s) => (
+              <li key={s.href}>
+                <a href={s.href} className="inline-flex min-h-11 items-center hover:text-text">
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <span>Bilder und Videos auf dieser Seite sind teilweise mit KI erstellt.</span>
       </div>
     </footer>
   );

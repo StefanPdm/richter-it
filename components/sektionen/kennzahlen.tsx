@@ -2,11 +2,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { Fallblatt } from "@/components/effekte/fallblatt";
 import { kennzahlen } from "@/lib/inhalte";
 
-const alsText = (k: (typeof kennzahlen)[number]) =>
-  `${k.wert.toLocaleString("de-DE", {
-    minimumFractionDigits: "nachkomma" in k ? k.nachkomma : 0,
-    maximumFractionDigits: "nachkomma" in k ? k.nachkomma : 0,
-  })}${k.nachsatz}`;
+const alsText = (k: (typeof kennzahlen)[number]) => `${k.wert.toLocaleString("de-DE")}${k.nachsatz}`;
 
 /**
  * BEISPIEL-Kennzahlen (Präsentation) als Fallblatt-Anzeige.

@@ -13,11 +13,16 @@ export const site = {
   email: "kontakt@daniel-richter.it",
   adresse: { strasse: "Tiroler Damm 16B", plz: "14478", ort: "Potsdam", land: "DE" },
   github: "https://github.com/danielrichterit/grafana-stack",
+  social: [
+    { label: "Instagram", href: "https://www.instagram.com/itisdanielrichter/" },
+    { label: "Facebook", href: "https://www.facebook.com/itdanny" },
+  ],
   navigation: [
     { label: "Leistungen", href: "/#leistungen" },
     { label: "Backup", href: "/#messung" },
     { label: "Referenzen", href: "/#referenzen" },
     { label: "Über mich", href: "/#ueber-mich" },
+    { label: "Partner", href: "/#partner" },
   ],
   aktion: { label: "Gespräch vereinbaren", kurz: "Kontakt", href: "/#kontakt" },
   rechtliches: [

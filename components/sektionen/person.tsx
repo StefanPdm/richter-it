@@ -9,7 +9,8 @@ const profil = [
   { label: "Standort", wert: "Potsdam" },
   { label: "Seit", wert: "2019" },
   { label: "Schwerpunkt", wert: "Open Source, On-Premises" },
-  { label: "Team", wert: "Daniel, Steffen, Benjamin" },
+  { label: "Aufgaben", wert: "Consulting, Strategie, Umsetzung" },
+  { label: "Team", wert: "Steffen (System Engineer), Benjamin (Backoffice)" },
 ] as const;
 
 /**

@@ -13,11 +13,11 @@ export function Leistungen() {
             Was ich für Ihre Infrastruktur tue
           </h2>
           <p className="max-w-measure text-lead text-text-muted">
-            Schwerpunkt ist Leistung mit Open Source: bestehende Systeme schneller und stabiler machen, ohne Sie an einen
-            Hersteller zu binden.
+            Proxmox-Experte für effiziente IT-Infrastrukturen: bestehende Systeme schneller und stabiler machen, mit Open
+            Source und ohne Bindung an einen Hersteller.
           </p>
         </Reveal>
-        <ul className="grid gap-5 md:grid-cols-2">
+        <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {leistungen.map((l, i) => (
             <Reveal as="li" key={l.titel} index={i}>
               <LichtkegelKarte className="grid h-full content-start gap-5 border border-border bg-surface p-[clamp(1.5rem,3vw,2.5rem)] transition-[border-color,background-color] duration-(--dur-base)">

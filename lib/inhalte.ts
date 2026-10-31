@@ -38,19 +38,27 @@ export const technik = [
   "Linux",
 ] as const;
 
-/** BEISPIEL: Kennzahlen für die Präsentation */
+/** Kennzahlen. Quelle: bestehende Website (20+ Projekte, über 10 Jahre, bis zu 40 % Kosten),
+    Backup-Faktor aus dem Kundenfall. Belege für 20+ und 40 % sind offen (siehe analyse.md). */
 export const kennzahlen = [
-  { wert: 40, vorsatz: "", nachsatz: "+", label: "Infrastrukturen optimiert" },
-  { wert: 99.98, vorsatz: "", nachsatz: " %", label: "Verfügbarkeit betreuter Systeme", nachkomma: 2 },
-  { wert: 32, vorsatz: "", nachsatz: "×", label: "schnellere Backups im besten Fall" },
-  { wert: 0, vorsatz: "", nachsatz: " €", label: "Lizenzkosten für die Kernsoftware" },
+  { wert: 20, vorsatz: "", nachsatz: "+", label: "Projekte abgeschlossen" },
+  { wert: 10, vorsatz: "", nachsatz: "+", label: "Jahre Erfahrung mit Open Source" },
+  { wert: 32, vorsatz: "", nachsatz: "×", label: "schnelleres Backup im Kundenprojekt" },
+  { wert: 40, vorsatz: "", nachsatz: " %", label: "weniger Betriebskosten, bis zu" },
 ] as const;
 
+/** Leistungen, Quelle: bestehende Website (Leistungen) und Antwort Daniel (Backup eigenes Angebot) */
 export const leistungen = [
   {
+    kennung: "PLAN",
+    titel: "Planung und Architektur",
+    text: "Manchmal liegt die Herausforderung im Detail. Ich betrachte das Gesamtbild und plane mit Ihnen die Lösung, bevor etwas umgebaut wird.",
+    technik: ["Analyse", "Konzept", "Audit"],
+  },
+  {
     kennung: "PERF",
-    titel: "Open Source und Performance",
-    text: "Virtualisierung, Speicher und Netzwerk so einstellen, dass vorhandene Hardware leistet, was sie kann.",
+    titel: "Proxmox VE und Performance",
+    text: "Die Stabilität eines Unternehmens ruht auf seiner Infrastruktur. Proxmox VE als Hypervisor, abgestimmt auf Ihre Hardware und Ihre Last.",
     technik: ["Proxmox VE", "Linux", "ZFS"],
   },
   {
@@ -60,16 +68,22 @@ export const leistungen = [
     technik: ["Proxmox Backup", "Deduplizierung"],
   },
   {
-    kennung: "SEC",
-    titel: "Netzwerk und Zugriff",
-    text: "Firewall, zentrale Anmeldung und Mehrfaktor-Schutz, damit nur die Richtigen an die Systeme kommen.",
-    technik: ["OPNsense", "Keycloak"],
+    kennung: "NET",
+    titel: "Firewall mit OPNsense",
+    text: "OPNsense ist mehr als eine Firewall. Mit dem Partnernetzwerk entstehen Lösungen, die Unternehmen auch intern absichern.",
+    technik: ["OPNsense", "VPN", "Segmentierung"],
+  },
+  {
+    kennung: "IAM",
+    titel: "Identität und Zugang",
+    text: "Keycloak als zentrale Anmeldung mit Single Sign-On und Mehrfaktor-Schutz. Manuell eingerichtet oder als angepasstes Docker-Compose-Template.",
+    technik: ["Keycloak", "SSO", "MFA"],
   },
   {
     kennung: "OPS",
-    titel: "Betrieb und Automatisierung",
-    text: "Wiederkehrende Arbeit als Playbook, der Zustand aller Systeme auf einen Blick.",
-    technik: ["Ansible", "Grafana", "Prometheus"],
+    titel: "Observability und Automatisierung",
+    text: "Wiederkehrende Arbeit blockiert IT-Teams. Playbooks und ein vollständiger Blick auf alle Systeme schaffen wieder Raum für Weiterentwicklung.",
+    technik: ["Ansible", "Grafana", "Semaphore UI"],
   },
 ] as const;
 
@@ -153,6 +167,44 @@ export const stimmen = [
     rolle: "Geschäftsführer, Maschinenbau",
   },
 ] as const;
+
+/** Observability-Stack, Quelle: bestehende Website, Seite Leistungen */
+export const observability = [
+  { name: "Grafana", rolle: "Oberfläche" },
+  { name: "Prometheus", rolle: "Metriken" },
+  { name: "InfluxDB2", rolle: "Metriken" },
+  { name: "Tempo", rolle: "Tracing" },
+  { name: "Loki", rolle: "Logs" },
+  { name: "Alloy", rolle: "Gateway" },
+] as const;
+
+/** Fertige Module, Quelle: bestehende Website, Seite Leistungen (Automatisierung, IAM, Ansible) */
+export const fertigeModule = [
+  { name: "Ansible-Playbooks", inhalt: "Linux Update/Upgrade, Linux KeyGen, Docker Handling, SSHKeyGen" },
+  { name: "Keycloak-Vorlage", inhalt: "Docker-Compose-Template für SSO und MFA, angepasst an Ihre Umgebung" },
+  { name: "Grafana-Stack", inhalt: "Observability in einem Paket, offen auf GitHub" },
+  { name: "CI/CD und Compose", inhalt: "Docker-Compose-Pakete und CI/CD-Konfigurationen aus echten Projekten" },
+] as const;
+
+/** Partner, Quelle: bestehende Website, Seite Partner (gekürzt) */
+export const partner = {
+  zitat: "Man muss nicht alles wissen, nur wissen, wo es zu finden ist.",
+  text: "Aus vielen Projektjahren ist ein unabhängiges Netzwerk entstanden. Für jedes Projekt findet sich das passende Fach-Team.",
+  liste: [
+    {
+      kategorie: "Proxmox-Schulungen",
+      name: "ProxForge",
+      person: "Jonas Sterr",
+      text: "Offizieller Proxmox-Trainings-Partner. Bringt Erfahrung aus Virtualisierungs- und Storage-Projekten in Workshops und offizielle Proxmox-VE-Trainings ein.",
+    },
+    {
+      kategorie: "Hardware",
+      name: "Thomas Krenn AG",
+      person: "Freyung, seit 2002",
+      text: "Einer der größten Hersteller individueller Server- und Storage-Systeme in Deutschland, gefertigt nach Bestellung. Zertifiziert nach DIN EN ISO 14001 und 27001.",
+    },
+  ],
+} as const;
 
 /** Text mit "[" am Anfang ist offen und wird markiert. */
 export const istOffen = (text: string) => text.startsWith("[");

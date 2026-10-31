@@ -26,10 +26,15 @@ export function Haltung() {
   return (
     <section aria-labelledby="haltung-titel" className="py-(--section-y)">
       <div className="mx-auto max-w-wide px-(--gutter)">
-        <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)]">
+        <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
           <h2 id="haltung-titel" className="titel-linie titel-glitch max-w-[16ch] text-h2">
             Gezielt eingreifen statt neu bauen
           </h2>
+          {/* Vision, sinngemäß von der bestehenden Website (Leistungen, Visionen) */}
+          <p className="max-w-measure text-lead text-text-muted">
+            Viele IT-Teams stecken im Alltagsgeschäft fest, und die Weiterentwicklung bleibt liegen. Mein Ziel: Playbooks,
+            Skripte und Werkzeuge so weit zu verfeinern, dass Ihr Team wieder Zeit für die eigene Infrastruktur hat.
+          </p>
         </Reveal>
         <div className="grid gap-[clamp(2rem,4vw,3.5rem)] md:grid-cols-3">
           {grundsaetze.map((g, i) => (
