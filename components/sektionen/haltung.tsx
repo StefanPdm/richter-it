@@ -1,19 +1,28 @@
 import { Reveal } from "@/components/motion/reveal";
 import { KiVideo } from "@/components/medien/ki-video";
 import { DekodierText } from "@/components/effekte/dekodier-text";
+import { DrohnenHud } from "@/components/effekte/drohnen-hud";
 import { grundsaetze } from "@/lib/inhalte";
 
-/** Medienband mit KI-Video 02: Drohnenflug durch eine unterirdische Serverhalle (Loop, stumm). */
+/**
+ * Medienband mit KI-Video 02: Drohnenflug durch eine unterirdische Serverhalle (Loop, stumm).
+ * Darüber das Drohnen-HUD: Visier, Flugdaten, Inspektion der Server im Vorbeiflug (BEISPIEL).
+ */
 export function Medienband() {
   return (
-    <section aria-label="Rechenzentrum" className="relative aspect-[21/9] min-h-70 max-w-full overflow-hidden border-y border-border">
+    <section aria-labelledby="drohne-titel" className="relative aspect-[21/9] min-h-80 max-w-full overflow-hidden border-y border-border md:min-h-[34rem]">
+      <h2 id="drohne-titel" className="sr-only">
+        Inspektionsflug durch das Rechenzentrum, animierte Beispielansicht
+      </h2>
       <KiVideo
         szene="rackreihen"
         video={{ mp4: "/medien/serverhalle.mp4", webm: "/medien/serverhalle.webm", poster: "/medien/serverhalle-poster.webp" }}
         className="absolute inset-0 size-full"
       />
-      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-bg)_0%,transparent_35%,transparent_70%,var(--color-bg)_100%)] opacity-80" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-bg)_0%,transparent_30%,transparent_75%,var(--color-bg)_100%)] opacity-80" />
+      <div className="scanlines" aria-hidden="true" />
       <div className="hud-rahmen absolute inset-4 md:inset-8" aria-hidden="true" />
+      <DrohnenHud />
       <span className="daten absolute bottom-6 left-[max(var(--gutter),1.5rem)] bg-bg/75 px-2.5 py-1.5 text-text md:bottom-10">
         <DekodierText text="Rechenzentrum · Ebene -2 · 2.400 Knoten" />
       </span>
