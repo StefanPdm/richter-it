@@ -3,7 +3,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { MonitorKachel } from "@/components/effekte/monitor-kachel";
 import { Terminal } from "@/components/effekte/terminal";
 import { DekodierText } from "@/components/effekte/dekodier-text";
-import { fertigeModule, monitor, observability, terminal } from "@/lib/inhalte";
+import { fertigeModule, monitor, observability, terminalLaeufe } from "@/lib/inhalte";
 import { site } from "@/lib/site";
 import kontrollraum from "@/public/images/kontrollraum-hologramm.jpg";
 
@@ -47,7 +47,7 @@ export function Leitstand() {
             ))}
           </div>
           <Reveal index={2}>
-            <Terminal zeilen={terminal} titel="pve-01 · ansible" />
+            <Terminal laeufe={terminalLaeufe} titel="pve-01 · ansible" />
           </Reveal>
         </div>
 

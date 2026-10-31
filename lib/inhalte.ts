@@ -111,6 +111,51 @@ export const terminal = [
   "pve-02   ok=12  changed=3  unreachable=0  failed=0",
 ] as const;
 
+/** BEISPIEL: weitere Läufe für die Terminal-Schleife. Playbook-Namen von der
+    bestehenden Website (Linux Update/Upgrade, Docker Handling, SSHKeyGen), Ausgabe erfunden. */
+export const terminalLaeufe = [
+  terminal,
+  [
+    "$ ansible-playbook linux-update-upgrade.yml -i alle-server",
+    "",
+    "PLAY [Linux – Update/Upgrade] ******************************",
+    "TASK [Paketquellen aktualisieren] ................... ok",
+    "TASK [Sicherheitsupdates einspielen] ................ changed",
+    "TASK [Kernel prüfen, Neustart planen] ............... ok",
+    "TASK [Dienste nach Update testen] ................... ok",
+    "",
+    "PLAY RECAP ************************************************",
+    "app-01   ok=9   changed=2  unreachable=0  failed=0",
+    "app-02   ok=9   changed=2  unreachable=0  failed=0",
+    "db-01    ok=9   changed=1  unreachable=0  failed=0",
+  ],
+  [
+    "$ ansible-playbook docker-handling.yml --tags aufraeumen",
+    "",
+    "PLAY [Docker Handling] *************************************",
+    "TASK [Laufende Container erfassen] .................. ok",
+    "TASK [Images auf neuen Stand bringen] ............... changed",
+    "TASK [Container neu starten, Healthcheck] ........... changed",
+    "TASK [Ungenutzte Images entfernen] .................. changed  12,4 GB frei",
+    "",
+    "PLAY RECAP ************************************************",
+    "docker-01   ok=8   changed=3  unreachable=0  failed=0",
+  ],
+  [
+    "$ ansible-playbook sshkeygen.yml -e rotation=quartal",
+    "",
+    "PLAY [SSHKeyGen] *******************************************",
+    "TASK [Neue Schlüssel erzeugen (ed25519)] ............ changed",
+    "TASK [Schlüssel verteilen] .......................... changed",
+    "TASK [Alte Schlüssel sperren] ....................... changed",
+    "TASK [Anmeldung testen] ............................. ok",
+    "",
+    "PLAY RECAP ************************************************",
+    "pve-01   ok=6   changed=3  unreachable=0  failed=0",
+    "pve-02   ok=6   changed=3  unreachable=0  failed=0",
+  ],
+] as const;
+
 export const grundsaetze = [
   {
     titel: "Open Source",

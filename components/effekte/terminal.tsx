@@ -3,35 +3,72 @@
 import { useEffect, useRef, useState } from "react";
 import { useRuhig, useSichtbar } from "@/lib/hooks";
 
-type Props = { zeilen: readonly string[]; titel: string };
+type Props = {
+  /** Mehrere Läufe, die nacheinander in Schleife abgespielt werden */
+  laeufe: readonly (readonly string[])[];
+  titel: string;
+};
+
+/** Pause nach jedem Lauf, bevor der nächste beginnt */
+const PAUSE_MS = 3000;
 
 /**
- * Terminal, das einen Lauf einmal abspielt, sobald es ins Bild kommt.
- * Ruhezustand und "weniger Bewegung": alle Zeilen sofort sichtbar.
+ * Terminal, das Ansible-Läufe in Schleife abspielt, solange es im Bild ist.
+ * Befehlszeile wird getippt, Ausgabezeilen erscheinen schneller.
+ * Ruhezustand und "weniger Bewegung": erster Lauf vollständig, keine Schleife.
  */
-export function Terminal({ zeilen, titel }: Props) {
+export function Terminal({ laeufe, titel }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const sichtbar = useSichtbar(ref, { einmal: true, schwelle: 0.4 });
+  const sichtbar = useSichtbar(ref, { schwelle: 0.3 });
   const ruhig = useRuhig();
-  const gesamt = zeilen.join("\n").length;
-  const [zeichen, setZeichen] = useState(gesamt);
+  const [lauf, setLauf] = useState(0);
+  const [zeichen, setZeichen] = useState(() => laeufe[0].join("\n").length);
   const [laeuft, setLaeuft] = useState(false);
+  /* Position in der Ref, damit die Schleife beim Pausieren dort weitermacht */
+  const stand = useRef({ lauf: 0, n: laeufe[0].join("\n").length, gestartet: false });
 
   useEffect(() => {
     if (!sichtbar || ruhig) return;
-    let n = 0;
     let uhr = 0;
-    const tick = () => {
-      /* erste Zeile wird getippt, Ausgabezeilen erscheinen schneller */
-      n += n < zeilen[0].length ? 1 : 4;
-      setZeichen(Math.min(n, gesamt));
-      setLaeuft(n < gesamt);
-      if (n < gesamt) uhr = window.setTimeout(tick, n < zeilen[0].length ? 38 : 14);
-    };
-    uhr = window.setTimeout(() => { setZeichen(0); tick(); }, 300);
-    return () => window.clearTimeout(uhr);
-  }, [sichtbar, ruhig, zeilen, gesamt]);
 
+    const tippe = () => {
+      const s = stand.current;
+      const zeilen = laeufe[s.lauf];
+      const gesamt = zeilen.join("\n").length;
+      if (s.n >= gesamt) {
+        /* Lauf fertig: Ergebnis stehen lassen, dann nächster Lauf */
+        setLaeuft(false);
+        uhr = window.setTimeout(() => {
+          s.lauf = (s.lauf + 1) % laeufe.length;
+          s.n = 0;
+          setLauf(s.lauf);
+          setZeichen(0);
+          setLaeuft(true);
+          uhr = window.setTimeout(tippe, 300);
+        }, PAUSE_MS);
+        return;
+      }
+      const befehl = zeilen[0].length;
+      s.n = Math.min(gesamt, s.n + (s.n < befehl ? 1 : 4));
+      setZeichen(s.n);
+      setLaeuft(true);
+      uhr = window.setTimeout(tippe, s.n < befehl ? 38 : 14);
+    };
+
+    /* Beim ersten Sichtbarwerden mit dem ersten Lauf von vorn beginnen */
+    if (!stand.current.gestartet) {
+      stand.current = { lauf: 0, n: 0, gestartet: true };
+      uhr = window.setTimeout(() => {
+        setZeichen(0);
+        tippe();
+      }, 300);
+    } else {
+      tippe();
+    }
+    return () => window.clearTimeout(uhr);
+  }, [sichtbar, ruhig, laeufe]);
+
+  const zeilen = laeufe[lauf];
   const text = zeilen.join("\n").slice(0, zeichen);
 
   return (
@@ -40,16 +77,18 @@ export function Terminal({ zeilen, titel }: Props) {
         <span className="daten">{titel}</span>
         <span className="flex items-center gap-2">
           <span className="status-punkt" aria-hidden="true" />
-          <span className="daten">{laeuft ? "läuft" : "fertig"}</span>
+          <span className="daten">
+            {laeuft ? "läuft" : "fertig"} · {lauf + 1}/{laeufe.length}
+          </span>
         </span>
       </div>
       <pre className="m-0 min-h-[22rem] overflow-x-auto p-5 font-mono text-[0.8125rem] leading-relaxed whitespace-pre text-text-muted">
-        <code aria-label={zeilen.join("\n")}>
+        <code aria-label={laeufe[0].join("\n")}>
           <span aria-hidden="true">
             {text.split("\n").map((zeile, i) => (
               <span
-                key={i}
-                className={`block ${zeile.startsWith("$") ? "text-text" : ""} ${/changed|00:1/.test(zeile) ? "text-brand-dark" : ""}`}
+                key={`${lauf}-${i}`}
+                className={`block ${zeile.startsWith("$") ? "text-text" : ""} ${/changed|00:1|GB frei/.test(zeile) ? "text-brand-dark" : ""}`}
               >
                 {zeile || " "}
               </span>

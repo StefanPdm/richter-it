@@ -2,6 +2,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { KiVideo } from "@/components/medien/ki-video";
 import { DekodierText } from "@/components/effekte/dekodier-text";
 import { DrohnenHud } from "@/components/effekte/drohnen-hud";
+import { Glitch } from "@/components/effekte/glitch";
 import { grundsaetze } from "@/lib/inhalte";
 
 /**
@@ -10,20 +11,31 @@ import { grundsaetze } from "@/lib/inhalte";
  */
 export function Medienband() {
   return (
-    <section aria-labelledby="drohne-titel" className="relative aspect-[21/9] min-h-80 max-w-full overflow-hidden border-y border-border md:min-h-[34rem]">
-      <h2 id="drohne-titel" className="sr-only">
-        Inspektionsflug durch das Rechenzentrum, animierte Beispielansicht
-      </h2>
+    <section aria-labelledby="drohne-titel" className="relative aspect-[21/9] min-h-[26rem] max-w-full overflow-hidden border-y border-border md:min-h-[34rem]">
       <KiVideo
         szene="rackreihen"
         video={{ mp4: "/medien/serverhalle.mp4", webm: "/medien/serverhalle.webm", poster: "/medien/serverhalle-poster.webp" }}
         className="absolute inset-0 size-full"
       />
       <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-bg)_0%,transparent_30%,transparent_75%,var(--color-bg)_100%)] opacity-80" />
-      <div className="scanlines" aria-hidden="true" />
+      <div className="scanlines scanlines--monitor" aria-hidden="true" />
       <div className="hud-rahmen absolute inset-4 md:inset-8" aria-hidden="true" />
       <DrohnenHud />
-      <span className="daten absolute bottom-6 left-[max(var(--gutter),1.5rem)] bg-bg/75 px-2.5 py-1.5 text-text md:bottom-10">
+      {/* Überschrift links oben im HUD-Stil: erklärt, was im Video passiert */}
+      <div className="absolute top-8 left-[max(var(--gutter),1.5rem)] grid max-w-[min(30rem,calc(100%-3rem))] gap-2 bg-bg/75 px-4 py-3 md:top-14">
+        <span className="daten flex items-center gap-2.5 text-text" aria-hidden="true">
+          <span className="funkpuls funkpuls--rot" />
+          Live · Prüfflug 02
+        </span>
+        <h2 id="drohne-titel" className="font-display text-[clamp(1.5rem,1rem+1.8vw,2.75rem)] leading-none font-semibold tracking-wide uppercase [font-stretch:72%]">
+          <Glitch text="Drohnen-Inspektion" takt="8s" />
+        </h2>
+        <p className="hidden text-sm text-text-muted lg:block">
+          Autonomer Prüfflug durch das Rechenzentrum. Jeder Server wird im Vorbeiflug geprüft, Befunde landen sofort im
+          Protokoll.
+        </p>
+      </div>
+      <span className="daten absolute bottom-6 left-[max(var(--gutter),1.5rem)] hidden bg-bg/75 px-2.5 py-1.5 text-text sm:block md:bottom-10">
         <DekodierText text="Rechenzentrum · Ebene -2 · 2.400 Knoten" />
       </span>
     </section>

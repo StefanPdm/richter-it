@@ -160,7 +160,7 @@ export function DrohnenHud() {
       </div>
 
       {/* Links: Flugdaten */}
-      <div className="hud-rahmen absolute top-1/2 left-[max(var(--gutter),1.5rem)] hidden w-56 -translate-y-1/2 bg-bg/75 p-4 md:block">
+      <div className="hud-rahmen absolute top-[60%] left-[max(var(--gutter),1.5rem)] hidden w-56 -translate-y-1/2 bg-bg/75 p-4 md:block">
         <p className="daten mb-2 text-brand-dark">Flugdaten · Drohne 02</p>
         <Wert label="Höhe" wert={hoehe} einheit="m" />
         <Wert label="Tempo" wert={String(tempo)} einheit="km/h" />

@@ -322,6 +322,7 @@
     background: var(--color-success);
   }
   .funkpuls::after { opacity: 0; }
+  .funkpuls--rot::before, .funkpuls--rot::after { background: var(--color-error); }
   @media (prefers-reduced-motion: no-preference) {
     .funkpuls::after { animation: funkpuls 2.2s var(--ease-out) infinite; }
   }
@@ -481,6 +482,15 @@
     pointer-events: none;
     background: repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.22) 0 1px, transparent 1px 4px);
     opacity: 0.55;
+  }
+
+  /* Kräftige Variante für Videos: Zeilen wie bei alten Röhrenmonitoren,
+     dazu leichte Randabdunklung. Statisch, damit nichts flimmert. */
+  .scanlines--monitor {
+    background:
+      repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.42) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / 0.45) 100%);
+    opacity: 1;
   }
 
   /* ---- Schnittkanten: abgeschnittene Ecken (Knöpfe) ---- */
