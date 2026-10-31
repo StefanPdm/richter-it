@@ -533,6 +533,27 @@
     70%, 100% { transform: translateY(105%); }
   }
 
+  /* ---- Handymenü (components/layout/mobil-menue.tsx) ---- */
+  .menue { margin: 0; padding: 0; border: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; background: var(--color-bg); color: var(--color-text); }
+  .menue::backdrop { background: transparent; }
+  @media (prefers-reduced-motion: no-preference) {
+    .menue[open] { animation: menue-auf 420ms var(--ease-out) both; }
+    .menue[open] .menue__punkt { animation: menue-punkt 520ms var(--ease-out) both; animation-delay: calc(120ms + var(--i, 0) * 60ms); }
+  }
+  @keyframes menue-auf {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+  @keyframes menue-punkt {
+    from { opacity: 0.001; transform: translateX(-18px); }
+    to { opacity: 1; transform: none; }
+  }
+  /* Burger: drei Striche werden zum X */
+  .burger span { display: block; width: 22px; height: 2px; background: currentColor; transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) ease; }
+  .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
   /* ---- Drohnen-Visier (Medienband) ---- */
   .visier { color: var(--color-neon); transition: color var(--dur-base) ease; }
   .visier[data-befund="ok"] { color: var(--color-success); }
@@ -577,5 +598,25 @@
   }
   @keyframes signal {
     to { transform: translateX(100vw); }
+  }
+}
+
+/* Nach-oben-Knopf: blendet nach dem Hero ein, Pfeil hebt sich beim Zeigen */
+@layer components {
+  .nach-oben {
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  }
+  .nach-oben[data-sichtbar="false"] { opacity: 0; transform: translateY(8px); pointer-events: none; }
+  .nach-oben svg { transition: transform var(--dur-fast) var(--ease-out); }
+  .nach-oben:active { transform: scale(0.96); }
+  .nach-oben.schnitt { --kante: 9px; }
+  .nach-oben.schnitt:focus-visible { outline-color: var(--color-brand); }
+  @media (hover: hover) and (pointer: fine) {
+    .nach-oben:hover { color: var(--color-brand); border-color: var(--color-brand); }
+    .nach-oben:hover svg { transform: translateY(-2px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nach-oben[data-sichtbar="false"] { transform: none; }
+    .nach-oben svg, .nach-oben:active { transform: none; }
   }
 }

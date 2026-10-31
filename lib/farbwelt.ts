@@ -1,7 +1,8 @@
 /*
   Farbwelten zur Auswahl durch Daniel. Werte in app/tokens.css.
   Nach der Entscheidung: NEXT_PUBLIC_FARBWELT auf die gewählte Welt setzen,
-  NEXT_PUBLIC_FARBWELT_WAEHLER=aus, später die übrigen Welten aus tokens.css löschen.
+  NEXT_PUBLIC_FARBWELT_WAEHLER=aus (auch auf dem Hosting setzen), später die übrigen
+  Welten aus tokens.css löschen.
 */
 export const FARBWELTEN = [
   // Farbmuster zeigen die jeweilige Welt, unabhängig von der aktiven, daher feste Werte
@@ -22,8 +23,10 @@ export const STANDARD_WELT: FarbweltId = istFarbwelt(process.env.NEXT_PUBLIC_FAR
   ? process.env.NEXT_PUBLIC_FARBWELT
   : "bernstein";
 
-/** Wähler sichtbar, solange Daniel nicht entschieden hat. */
-export const WAEHLER_AKTIV = process.env.NEXT_PUBLIC_FARBWELT_WAEHLER === "an";
+/** Wähler sichtbar, solange Daniel nicht entschieden hat.
+    Standard: an. Abschalten nur ausdrücklich mit NEXT_PUBLIC_FARBWELT_WAEHLER=aus
+    (.env steht nicht in Git, auf dem Hosting fehlte die Variable sonst). */
+export const WAEHLER_AKTIV = process.env.NEXT_PUBLIC_FARBWELT_WAEHLER !== "aus";
 
 export const SPEICHER_SCHLUESSEL = "richter-farbwelt";
 

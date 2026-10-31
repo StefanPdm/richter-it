@@ -3,6 +3,7 @@ import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { FarbweltWaehler } from "@/components/farbwelt/farbwelt-waehler";
+import { NachOben } from "@/components/layout/nach-oben";
 import { FRUEH_SKRIPT, STANDARD_WELT, WAEHLER_AKTIV } from "@/lib/farbwelt";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <NachOben ueberWaehler={WAEHLER_AKTIV} />
         {WAEHLER_AKTIV && <FarbweltWaehler />}
       </body>
     </html>

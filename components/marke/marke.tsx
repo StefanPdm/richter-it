@@ -18,7 +18,7 @@ export function Marke({ groesse = "klein", className = "" }: Props) {
       <span className={`logo-bild ${bild}`} aria-hidden="true" />
       <span className="flex flex-col leading-tight">
         <span className="font-display text-2xl font-semibold [font-stretch:72%]">{site.name}</span>
-        <span className="daten">{site.zusatz}</span>
+        <span className="daten whitespace-nowrap max-sm:text-[0.625rem]">{site.zusatz}</span>
       </span>
     </Link>
   );
