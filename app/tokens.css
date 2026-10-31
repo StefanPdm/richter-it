@@ -1,0 +1,164 @@
+/* =====================================================================
+   Design-Tokens Daniel Richter IT (Tailwind v4)
+   Einzige Quelle für Farbe, Schrift, Größen, Form und Bewegung.
+
+   Drei Farbwelten zur Auswahl durch Daniel (Stand 31.10.2026):
+   Bernstein (Standard, hier in @theme), Kobalt, Beton (unten als
+   [data-welt]-Blöcke). Gleiche Rollen, andere Werte. Nach der Wahl
+   bleibt eine Welt in @theme, die Blöcke unten entfallen.
+   Kontraste gerechnet mit kontrast.mjs, Werte in DESIGN.md.
+   ===================================================================== */
+
+@theme static {
+  /* --- Farbe: Bernstein ------------------------------------------- */
+  --color-*: initial;
+  --color-bg:           #0c0a08;  /* Grund */
+  --color-bg-alt:       #15120e;  /* Wechselfläche */
+  --color-surface:      #1c1813;  /* Karten, Kontaktband */
+  --color-border:       #2e2820;  /* Linien, nur Deko */
+  --color-border-strong:#5a4e3e;
+  --color-text:         #f2ebe0;  /* 16.7:1 auf bg */
+  --color-text-muted:   #b3a690;  /* 8.3:1 auf bg */
+  --color-text-inverse: #0c0a08;  /* Text auf Knopf */
+  --color-brand:        #f0a24a;  /* Akzent: Balken, Linien, große Schrift */
+  --color-brand-dark:   #f0a24a;  /* Akzent als Text und Knopffläche, 9.4:1 */
+  --color-brand-darker: #d98c34;  /* Knopf Hover */
+  --color-brand-soft:   #2a2014;  /* zarte Akzentfläche */
+
+  --color-logo-hell:    #ffcf8a;
+  --color-logo-dunkel:  #f0a24a;
+
+  /* Platzhalter-Szenen bis die KI-Videos da sind */
+  --color-media-licht:  #ffcf8a;
+  --color-media-dunst:  #6b4a26;
+  --color-media-turm:   #0a0806;
+  --color-media-signal: #f0a24a;
+
+  --color-success: #3fa34d;
+  --color-error:   #e5534b;
+  --color-white:   #ffffff;
+  --color-black:   #000000;
+
+  /* --- Schrift ------------------------------------------------------ */
+  --font-*: initial;
+  --font-display: var(--font-display-src), "Arial Narrow", sans-serif;
+  --font-body:    var(--font-body-src), "Segoe UI", system-ui, sans-serif;
+  --font-ui:      var(--font-body-src), "Segoe UI", system-ui, sans-serif;
+  --font-mono:    var(--font-mono-src), Consolas, monospace;  /* nur echte Daten */
+
+  --text-*: initial;
+  --text-xs:      0.75rem;
+  --text-sm:      0.875rem;
+  --text-base:    clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  --text-lead:    clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem);
+  --text-h3:      clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem);
+  --text-h2:      clamp(2.25rem, 1.4rem + 3.4vw, 4.5rem);
+  --text-display: clamp(3.25rem, 1.2rem + 8vw, 9rem);
+  --text-zahl:    clamp(1.75rem, 1rem + 2.5vw, 3rem);       /* Messuhr */
+  --text-faktor:  clamp(3.5rem, 2rem + 5vw, 7rem);
+
+  --text-h3--line-height: 1.1;
+  --text-h2--line-height: 0.95;
+  --text-display--line-height: 0.95;
+  --text-zahl--line-height: 1;
+  --text-faktor--line-height: 0.9;
+
+  /* --- Form: eckig, Schatten nur für Schwebendes -------------------- */
+  --radius-*: initial;
+  --shadow-*: initial;
+  --shadow-float: 0 24px 48px -12px rgb(0 0 0 / 0.45);
+
+  /* --- Layout ------------------------------------------------------- */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 56rem;
+  --breakpoint-lg: 90rem;
+
+  --container-page:    75rem;    /* 1200, Rechtsseiten */
+  --container-wide:    87.5rem;  /* 1400, alle Sektionen */
+  --container-measure: 62ch;
+
+  /* --- Bewegung ----------------------------------------------------- */
+  --ease-*: initial;
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* --- Farbwelt Kobalt (aus dem First Draft) -------------------------- */
+:root[data-welt="kobalt"] {
+  color-scheme: dark;
+  --color-bg:           #03060d;
+  --color-bg-alt:       #060c18;
+  --color-surface:      #0b1628;
+  --color-border:       #16243b;
+  --color-border-strong:#2f4466;
+  --color-text:         #e6efff;  /* 17.5:1 */
+  --color-text-muted:   #8fa6c8;  /* 8.2:1 */
+  --color-text-inverse: #03060d;
+  --color-brand:        #4d94ff;
+  --color-brand-dark:   #4d94ff;  /* 6.8:1 */
+  --color-brand-darker: #2f78e8;
+  --color-brand-soft:   #0d1e3a;
+  --color-logo-hell:    #41beea;  /* Originalfarbe Logo */
+  --color-logo-dunkel:  #3a7fd6;  /* Original #2e59a6 aufgehellt, sonst 2.99:1 */
+  --color-media-licht:  #9cc4ff;
+  --color-media-dunst:  #10306a;
+  --color-media-turm:   #02040a;
+  --color-media-signal: #4d94ff;
+}
+
+/* --- Farbwelt Beton (hell, sachlich) -------------------------------- */
+:root[data-welt="beton"] {
+  color-scheme: light;
+  --color-bg:           #ecebe7;
+  --color-bg-alt:       #e0ded8;
+  --color-surface:      #f6f5f2;
+  --color-border:       #cfccc4;
+  --color-border-strong:#9a968d;
+  --color-text:         #141414;  /* 15.4:1 */
+  --color-text-muted:   #55534e;  /* 6.4:1 */
+  --color-text-inverse: #ffffff;
+  --color-brand:        #d9480f;  /* nur Flächen, Balken, große Schrift (3.6:1) */
+  --color-brand-dark:   #a8380b;  /* Text 5.4:1, Knopf mit Weiß 6.5:1 */
+  --color-brand-darker: #8a2e09;
+  --color-brand-soft:   #f3ddd1;
+  --color-logo-hell:    #c8501a;
+  --color-logo-dunkel:  #a8380b;
+  --color-media-licht:  #fbfaf7;
+  --color-media-dunst:  #c9c5bc;
+  --color-media-turm:   #6f6c66;
+  --color-media-signal: #d9480f;
+}
+
+/* Tokens ohne eigene Utility */
+:root {
+  color-scheme: dark;
+  --leading-base: 1.6;
+  --section-y:  clamp(4.5rem, 3rem + 7vw, 10rem);
+  --gutter:     clamp(1rem, 4vw, 4rem);
+  --header-h:   4.5rem;
+
+  --dur-press:  160ms;
+  --dur-fast:   200ms;
+  --dur-base:   250ms;
+  --dur-linie:  500ms;
+  --dur-welt:   600ms;
+  --dur-reveal: 800ms;
+  --stagger:    70ms;
+  --rise:       24px;
+  --press-scale: 0.97;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press:  0ms;
+    --dur-fast:   0ms;
+    --dur-base:   0ms;
+    --dur-linie:  0ms;
+    --dur-welt:   0ms;
+    --dur-reveal: 200ms;
+    --stagger:    0ms;
+    --rise:       0px;
+    --press-scale: 1;
+  }
+}
