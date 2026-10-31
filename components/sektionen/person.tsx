@@ -1,13 +1,21 @@
+import Image from "next/image";
 import { Reveal } from "@/components/motion/reveal";
-import { BildPlatzhalter } from "@/components/ui/bild-platzhalter";
+import portraet from "@/public/images/daniel-richter-portraet.jpg";
 
 /** Daniel als Marke, das Team im Hintergrund. Porträt: echtes Foto, kein KI-Bild. */
 export function Person() {
   return (
     <section id="ueber-mich" aria-labelledby="person-titel" className="scroll-mt-(--header-h) py-(--section-y)">
       <div className="mx-auto grid max-w-wide gap-[clamp(2rem,5vw,5rem)] px-(--gutter) md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-end">
-        <Reveal>
-          <BildPlatzhalter motiv="Porträt Daniel, echtes Foto, Gegenlicht" format="4/5" className="border border-border" />
+        <Reveal className="relative aspect-[4/5] max-w-full overflow-hidden border border-border">
+          {/* Statischer Import: Breite, Höhe und Unschärfe-Vorschau kommen vom Build */}
+          <Image
+            src={portraet}
+            alt="Daniel Richter, Inhaber von Daniel Richter IT-Dienstleistungen, mit verschränkten Armen"
+            placeholder="blur"
+            sizes="(min-width: 56rem) 40vw, 100vw"
+            className="size-full object-cover object-top"
+          />
         </Reveal>
         <Reveal index={1} className="grid gap-5.5">
           <h2 id="person-titel" className="text-h2">
