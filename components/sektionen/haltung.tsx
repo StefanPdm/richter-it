@@ -27,7 +27,7 @@ export function Haltung() {
     <section aria-labelledby="haltung-titel" className="py-(--section-y)">
       <div className="mx-auto max-w-wide px-(--gutter)">
         <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)]">
-          <h2 id="haltung-titel" className="titel-linie max-w-[16ch] text-h2">
+          <h2 id="haltung-titel" className="titel-linie titel-glitch max-w-[16ch] text-h2">
             Gezielt eingreifen statt neu bauen
           </h2>
         </Reveal>

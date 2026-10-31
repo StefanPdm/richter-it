@@ -32,7 +32,7 @@ export function Messung() {
     <section id="messung" aria-labelledby="messung-titel" className="scroll-mt-(--header-h) py-(--section-y)">
       <div className="mx-auto grid max-w-wide gap-[clamp(2rem,5vw,5rem)] px-(--gutter) md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-start">
         <Reveal className="grid gap-5">
-          <h2 id="messung-titel" className="titel-linie text-h2">
+          <h2 id="messung-titel" className="titel-linie titel-glitch text-h2">
             Ein Backup, das nicht mehr die ganze Nacht braucht.
           </h2>
           <span className="daten">

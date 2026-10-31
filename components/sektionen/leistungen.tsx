@@ -9,7 +9,7 @@ export function Leistungen() {
     <section id="leistungen" aria-labelledby="leistungen-titel" className="scroll-mt-(--header-h) bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)">
       <div className="mx-auto max-w-wide px-(--gutter)">
         <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
-          <h2 id="leistungen-titel" className="titel-linie max-w-[16ch] text-h2">
+          <h2 id="leistungen-titel" className="titel-linie titel-glitch max-w-[16ch] text-h2">
             Was ich für Ihre Infrastruktur tue
           </h2>
           <p className="max-w-measure text-lead text-text-muted">

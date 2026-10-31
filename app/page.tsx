@@ -11,6 +11,7 @@ import { Person } from "@/components/sektionen/person";
 import { Kontakt } from "@/components/sektionen/kontakt";
 import { seitenMetadaten } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { Signallinie } from "@/components/effekte/signallinie";
 
 /* Startseite, Präsentationsversion "Leitstand im Abendlicht" (DESIGN.md).
    Rhythmus der Hintergründe, abwechselnd bewegt (B) und ruhig (R):
@@ -49,12 +50,16 @@ export default function Startseite() {
       <Laufband />
       <Messung />
       <Kennzahlen />
+      <Signallinie />
       <Leistungen />
       <Leitstand />
+      <Signallinie />
       <Haltung />
       <Medienband />
+      <Signallinie />
       <Referenzen />
       <Person />
+      <Signallinie />
       <Kontakt />
     </>
   );

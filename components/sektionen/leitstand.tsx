@@ -16,7 +16,7 @@ export function Leitstand() {
       <Datenstrom className="absolute inset-0 -z-10 size-full opacity-60" />
       <div className="mx-auto max-w-wide px-(--gutter)">
         <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
-          <h2 id="leitstand-titel" className="titel-linie max-w-[14ch] text-h2">
+          <h2 id="leitstand-titel" className="titel-linie titel-glitch max-w-[14ch] text-h2">
             Messen. Eingreifen. Wieder messen.
           </h2>
           <div className="grid gap-4">

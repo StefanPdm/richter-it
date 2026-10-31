@@ -17,7 +17,7 @@ export function Kontakt() {
             <span className="funkpuls" aria-hidden="true" />
             Kanal offen · neue Projekte ab Januar
           </span>
-          <h2 id="kontakt-titel" className="titel-linie max-w-[14ch] text-h2">
+          <h2 id="kontakt-titel" className="titel-linie titel-glitch max-w-[14ch] text-h2">
             Erzählen Sie mir, was zu langsam läuft.
           </h2>
           <p className="max-w-measure text-lead text-text-muted">

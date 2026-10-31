@@ -5,6 +5,7 @@ import { Netzwerk } from "@/components/effekte/netzwerk";
 import { DekodierText } from "@/components/effekte/dekodier-text";
 import { Uhr } from "@/components/effekte/uhr";
 import { Magnet } from "@/components/effekte/magnet";
+import { Glitch } from "@/components/effekte/glitch";
 import { site } from "@/lib/site";
 import abendlicht from "@/public/images/daniel-richter-abendlicht.jpg";
 
@@ -24,11 +25,20 @@ export function Hero() {
         sizes="100vw"
         className="absolute inset-0 -z-20 size-full object-cover object-[70%_30%]"
       />
+      {/* Glitch: zwei Kopien desselben Bildes (gleiche URL, aus dem Cache),
+          deren Streifen alle 9 s kurz verrutschen, dazu ein Neon-Farbstreifen */}
+      {["a", "b"].map((k) => (
+        <div key={k} aria-hidden="true" className={`glitch-bild__streifen glitch-bild__streifen--${k} absolute inset-0 -z-20`}>
+          <Image src={abendlicht} alt="" sizes="100vw" className="size-full object-cover object-[70%_30%]" />
+        </div>
+      ))}
+      <div aria-hidden="true" className="glitch-bild__farbe absolute inset-0 -z-20" />
       {/* Scrim: links dunkel für den Text, rechts bleibt Daniel im Licht */}
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,var(--color-bg)_0%,color-mix(in_srgb,var(--color-bg)_82%,transparent)_38%,transparent_70%),linear-gradient(to_top,var(--color-bg)_2%,transparent_40%)]"
       />
+      <div className="scanlines -z-10" aria-hidden="true" />
       <Netzwerk className="absolute inset-y-0 left-0 -z-10 h-full w-full md:w-[62%]" />
       <div className="raster-boden -z-10" aria-hidden="true" />
       <div className="scan" aria-hidden="true" />
@@ -49,7 +59,7 @@ export function Hero() {
           <h1 id="hero-titel" className="text-display">
             Mehr Leistung.
             <br />
-            <span className="leuchten text-brand-dark">Ohne Neubau.</span>
+            <Glitch text="Ohne Neubau." takt="6s" className="leuchten text-brand-dark" />
           </h1>
           <p className="max-w-measure text-lead">
             Ich optimiere IT-Infrastrukturen für mittelständische Unternehmen, Behörden und Landesanstalten. Mit

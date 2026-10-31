@@ -379,4 +379,132 @@
     .drehkarte[data-gedreht="true"] .drehkarte__rueck { opacity: 1; }
     .drehkarte[data-gedreht="true"] .drehkarte__vorn { opacity: 0; }
   }
+
+  /* =================================================================
+     Cyberpunk-Schicht: Glitch, Scanlines, Schnittkanten, Signallinien.
+     Glitches sind kurz (unter 0,4 s), selten (alle 6-9 s) und klein-
+     flächig: keine Blitze. Bei "weniger Bewegung" komplett aus.
+     ================================================================= */
+
+  /* ---- Glitch-Text: zwei Farbkanäle reißen kurz versetzt auf ---- */
+  .glitch { position: relative; display: inline-block; }
+  .glitch__kanal {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    white-space: nowrap;
+  }
+  .glitch__kanal--a { color: var(--color-neon); }
+  .glitch__kanal--b { color: var(--color-error); }
+  @media (prefers-reduced-motion: no-preference) {
+    .glitch__kanal--a { animation: glitch-a var(--glitch-takt, 7s) steps(1) infinite; }
+    .glitch__kanal--b { animation: glitch-b var(--glitch-takt, 7s) steps(1) infinite; }
+    .glitch__text { display: inline-block; animation: glitch-haupt var(--glitch-takt, 7s) steps(1) infinite; }
+  }
+  @keyframes glitch-a {
+    0%, 90%, 96%, 100% { opacity: 0; transform: none; clip-path: inset(0 0 100% 0); }
+    91% { opacity: 0.9; transform: translateX(-5px); clip-path: inset(8% 0 58% 0); }
+    92% { opacity: 0.9; transform: translateX(4px); clip-path: inset(62% 0 6% 0); }
+    93.5% { opacity: 0.8; transform: translateX(-3px); clip-path: inset(34% 0 40% 0); }
+    95% { opacity: 0.6; transform: translateX(2px); clip-path: inset(80% 0 2% 0); }
+  }
+  @keyframes glitch-b {
+    0%, 90.5%, 96%, 100% { opacity: 0; transform: none; clip-path: inset(0 0 100% 0); }
+    91.5% { opacity: 0.8; transform: translateX(5px); clip-path: inset(48% 0 22% 0); }
+    93% { opacity: 0.8; transform: translateX(-4px); clip-path: inset(14% 0 70% 0); }
+    94.5% { opacity: 0.6; transform: translateX(3px); clip-path: inset(70% 0 12% 0); }
+  }
+  @keyframes glitch-haupt {
+    0%, 90%, 96%, 100% { transform: none; }
+    91% { transform: translateX(2px) skewX(-8deg); }
+    92.5% { transform: translateX(-1px); }
+    94% { transform: translateX(1px) skewX(4deg); }
+  }
+
+  /* ---- Glitch beim Einblenden einer Überschrift (einmal) ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal="sichtbar"] .titel-glitch { animation: titel-glitch 520ms steps(1) 1; }
+  }
+  @keyframes titel-glitch {
+    0% { text-shadow: -4px 0 var(--color-neon), 4px 0 var(--color-error); transform: translateX(3px); }
+    20% { text-shadow: 3px 0 var(--color-neon), -3px 0 var(--color-error); transform: translateX(-2px) skewX(-6deg); }
+    40% { text-shadow: -2px 0 var(--color-neon), 2px 0 var(--color-error); transform: none; }
+    60% { text-shadow: 1px 0 var(--color-neon), -1px 0 var(--color-error); }
+    80%, 100% { text-shadow: none; transform: none; }
+  }
+
+  /* ---- Zucken beim Überfahren (Navigation, Knöpfe) ---- */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .zucken:hover { animation: zucken 260ms steps(1) 1; }
+  }
+  @keyframes zucken {
+    0% { text-shadow: -2px 0 var(--color-neon), 2px 0 var(--color-error); transform: translateX(1px); }
+    35% { text-shadow: 2px 0 var(--color-neon), -2px 0 var(--color-error); transform: translateX(-1px); }
+    70%, 100% { text-shadow: none; transform: none; }
+  }
+
+  /* ---- Glitch-Bild: Bildstreifen verrutschen kurz (Hero-Foto) ---- */
+  .glitch-bild__streifen { opacity: 0; pointer-events: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .glitch-bild__streifen--a { animation: bild-a 9s steps(1) infinite 2.5s; }
+    .glitch-bild__streifen--b { animation: bild-b 9s steps(1) infinite 2.5s; }
+    .glitch-bild__farbe { animation: bild-farbe 9s steps(1) infinite 2.5s; }
+  }
+  @keyframes bild-a {
+    0%, 94%, 97.5%, 100% { opacity: 0; transform: none; clip-path: inset(0 0 100% 0); }
+    94.5% { opacity: 1; transform: translateX(-18px); clip-path: inset(22% 0 66% 0); }
+    95.5% { opacity: 1; transform: translateX(26px); clip-path: inset(48% 0 44% 0); }
+    96.5% { opacity: 1; transform: translateX(-10px); clip-path: inset(70% 0 18% 0); }
+  }
+  @keyframes bild-b {
+    0%, 94.2%, 97.5%, 100% { opacity: 0; transform: none; clip-path: inset(0 0 100% 0); }
+    95% { opacity: 1; transform: translateX(14px); clip-path: inset(36% 0 58% 0); }
+    96% { opacity: 1; transform: translateX(-22px); clip-path: inset(8% 0 86% 0); }
+  }
+  .glitch-bild__farbe {
+    opacity: 0;
+    background: var(--color-neon);
+    mix-blend-mode: color;
+    pointer-events: none;
+  }
+  @keyframes bild-farbe {
+    0%, 94.5%, 96.5%, 100% { opacity: 0; clip-path: inset(0 0 100% 0); }
+    95% { opacity: 0.55; clip-path: inset(48% 0 44% 0); }
+    96% { opacity: 0.4; clip-path: inset(22% 0 70% 0); }
+  }
+
+  /* ---- CRT-Scanlines: statisch, sehr leise (keine Bewegung, kein Flimmern) ---- */
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.22) 0 1px, transparent 1px 4px);
+    opacity: 0.55;
+  }
+
+  /* ---- Schnittkanten: abgeschnittene Ecken (Knöpfe) ---- */
+  .schnitt {
+    --kante: 11px;
+    clip-path: polygon(0 0, calc(100% - var(--kante)) 0, 100% var(--kante), 100% 100%, var(--kante) 100%, 0 calc(100% - var(--kante)));
+  }
+  /* Fokusring nach innen, sonst schneidet clip-path ihn weg */
+  .schnitt:focus-visible { outline: 2px solid var(--color-text-inverse); outline-offset: -5px; }
+
+  /* ---- Signallinie: Trennlinie, über die ein Lichtpunkt läuft ---- */
+  .signal-linie { position: relative; height: 1px; overflow: hidden; background: var(--color-border); }
+  .signal-linie::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 180px;
+    background: linear-gradient(90deg, transparent, var(--color-neon), transparent);
+    transform: translateX(-180px);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .signal-linie::after { animation: signal 7s linear infinite; }
+  }
+  @keyframes signal {
+    to { transform: translateX(100vw); }
+  }
 }

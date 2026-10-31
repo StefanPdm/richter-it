@@ -28,6 +28,10 @@
   --color-logo-hell:    #ffcf8a;
   --color-logo-dunkel:  #f0a24a;
 
+  /* Neon: zweite Akzentfarbe nur für Effekte (Glitch, Signallinien), nie für Fließtext.
+     Bernstein: Cyan wie die LEDs im Serverhallen-Video, 13:1 auf bg */
+  --color-neon:         #2ee6ff;
+
   /* Platzhalter-Szenen bis die KI-Videos da sind */
   --color-media-licht:  #ffcf8a;
   --color-media-dunst:  #6b4a26;
@@ -101,6 +105,7 @@
   --color-brand-soft:   #0d1e3a;
   --color-logo-hell:    #41beea;  /* Originalfarbe Logo */
   --color-logo-dunkel:  #3a7fd6;  /* Original #2e59a6 aufgehellt, sonst 2.99:1 */
+  --color-neon:         #ff3bd4;  /* Magenta, 6.6:1 */
   --color-media-licht:  #9cc4ff;
   --color-media-dunst:  #10306a;
   --color-media-turm:   #02040a;
@@ -124,6 +129,7 @@
   --color-brand-soft:   #f3ddd1;
   --color-logo-hell:    #c8501a;
   --color-logo-dunkel:  #a8380b;
+  --color-neon:         #0a7f8c;  /* Petrol, 4.0:1: nur Grafik, nie Text */
   --color-media-licht:  #fbfaf7;
   --color-media-dunst:  #c9c5bc;
   --color-media-turm:   #6f6c66;

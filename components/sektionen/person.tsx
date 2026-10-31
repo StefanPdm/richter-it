@@ -42,7 +42,7 @@ export function Person() {
           </div>
         </Reveal>
         <Reveal index={1} className="grid gap-6">
-          <h2 id="person-titel" className="titel-linie text-h2">
+          <h2 id="person-titel" className="titel-linie titel-glitch text-h2">
             Daniel Richter
           </h2>
           <p className="max-w-measure text-lead">

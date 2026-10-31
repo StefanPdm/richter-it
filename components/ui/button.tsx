@@ -15,13 +15,13 @@ type AlsLink = Gemeinsam & { href: string } & Omit<ComponentProps<typeof Link>, 
 type AlsButton = Gemeinsam & { href?: undefined } & Omit<ComponentProps<"button">, "className" | "children">;
 
 const basis =
-  "group inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-6 py-3 font-ui text-sm font-medium " +
+  "zucken group inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-6 py-3 font-ui text-sm font-medium " +
   "transition-[transform,background-color,color,border-color] duration-(--dur-fast) ease-out " +
   "active:scale-(--press-scale) active:duration-(--dur-press) " +
   "disabled:pointer-events-none disabled:opacity-50";
 
 const varianten: Record<Variante, string> = {
-  primary: "bg-brand-dark text-text-inverse hover:bg-brand-darker",
+  primary: "schnitt bg-brand-dark text-text-inverse hover:bg-brand-darker",
   secondary: "border border-brand-dark text-brand-dark hover:bg-brand-soft",
   inverse: "bg-text-on-dark text-bg-dark hover:bg-white",
 };
