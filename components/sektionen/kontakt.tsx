@@ -12,7 +12,12 @@ export function Kontakt() {
     <section id="kontakt" aria-labelledby="kontakt-titel" className="scroll-mt-(--header-h) border-t border-border bg-surface py-(--section-y) transition-colors duration-(--dur-welt)">
       <div className="mx-auto max-w-wide px-(--gutter)">
         <Reveal className="grid gap-6">
-          <h2 id="kontakt-titel" className="max-w-[14ch] text-h2">
+          {/* BEISPIEL: Verfügbarkeit für die Präsentation */}
+          <span className="daten flex items-center gap-3 text-text">
+            <span className="funkpuls" aria-hidden="true" />
+            Kanal offen · neue Projekte ab Januar
+          </span>
+          <h2 id="kontakt-titel" className="titel-linie max-w-[14ch] text-h2">
             Erzählen Sie mir, was zu langsam läuft.
           </h2>
           <p className="max-w-measure text-lead text-text-muted">

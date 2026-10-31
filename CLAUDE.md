@@ -9,6 +9,13 @@ Projektunterlagen eine Ebene höher: `..\briefing.md`, `..\analyse.md`, `..\vide
 Deutsch, Anrede du, knapp und direkt, keine Emojis. Code-Kommentare auf Deutsch.
 Texte auf der Website: Anrede Sie, Daniel spricht in Ich-Form.
 
+## Präsentationsversion (Stand 31.10.2026)
+
+Die Seite ist zurzeit eine **Pitch-Version**, um Daniel zu überzeugen. Kennzahlen,
+Referenzen, Kundenstimmen, Monitorwerte und Terminal-Ausgabe sind **erfunden** und in
+`lib/inhalte.ts` mit `BEISPIEL` markiert (`PRAESENTATION = true`). Vor jedem Livegang:
+durch freigegebene Angaben ersetzen oder löschen. Nie ungeprüft veröffentlichen.
+
 ## Design
 
 - Kurzfassung und alle Werte in `DESIGN.md`.

@@ -52,6 +52,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </head>
       )}
       <body className="flex min-h-dvh flex-col">
+        <div className="scroll-fortschritt" aria-hidden="true" />
         <a
           href="#inhalt"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-bg focus:px-4 focus:py-3"

@@ -96,3 +96,287 @@
     transform: translateY(var(--rise));
   }
 }
+
+/* =====================================================================
+   Präsentationsversion: futuristische Effekte (Leitstand im Abendlicht)
+   Regeln: nur transform/opacity/clip-path animiert, Hover nur bei Maus,
+   bei "weniger Bewegung" steht alles im Endzustand.
+   ===================================================================== */
+@layer components {
+  /* HUD-Ecken: vier Winkel aus Verläufen, kein zusätzliches Markup */
+  .hud-rahmen {
+    --ecke: 18px;
+    --strich: 1px;
+    --farbe: var(--color-brand);
+    background:
+      linear-gradient(var(--farbe), var(--farbe)) top left / var(--ecke) var(--strich),
+      linear-gradient(var(--farbe), var(--farbe)) top left / var(--strich) var(--ecke),
+      linear-gradient(var(--farbe), var(--farbe)) top right / var(--ecke) var(--strich),
+      linear-gradient(var(--farbe), var(--farbe)) top right / var(--strich) var(--ecke),
+      linear-gradient(var(--farbe), var(--farbe)) bottom left / var(--ecke) var(--strich),
+      linear-gradient(var(--farbe), var(--farbe)) bottom left / var(--strich) var(--ecke),
+      linear-gradient(var(--farbe), var(--farbe)) bottom right / var(--ecke) var(--strich),
+      linear-gradient(var(--farbe), var(--farbe)) bottom right / var(--strich) var(--ecke);
+    background-repeat: no-repeat;
+  }
+
+  /* Raster-Boden aus dem First Draft, läuft langsam auf den Betrachter zu */
+  /* Gegen Flimmern:
+     1. Bewegung in der gekippten Ebene (translateY NACH rotateX), um genau eine
+        Zelle (--zelle). Vorher lief "translate" vor der Kippung im Bildschirmraum,
+        die Schleife sprang alle 4 s sichtbar zurück.
+     2. Linien mit weichen Kanten (2px, Verlauf statt harter Kante), größere Zellen.
+     3. Ferne Zone früh ausblenden, dort werden die Linien enger als ein Pixel (Moiré). */
+  .raster-boden {
+    --zelle: 96px;
+    --linie: color-mix(in srgb, var(--color-brand) 30%, transparent);
+    position: absolute;
+    inset: auto -20% -6% -20%;
+    height: 42%;
+    perspective: 480px;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: linear-gradient(to top, black 0%, black 20%, transparent 62%);
+  }
+  .raster-boden::before {
+    content: "";
+    position: absolute;
+    inset: -100% 0 0;
+    transform: rotateX(62deg);
+    transform-origin: bottom;
+    backface-visibility: hidden;
+    will-change: transform;
+    background:
+      repeating-linear-gradient(90deg, transparent 0, var(--linie) 1px, var(--linie) 2px, transparent 3px, transparent var(--zelle)),
+      repeating-linear-gradient(0deg, transparent 0, var(--linie) 1px, var(--linie) 2px, transparent 3px, transparent var(--zelle));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .raster-boden::before { animation: raster 7s linear infinite; }
+  }
+  @keyframes raster {
+    from { transform: rotateX(62deg) translateY(0); }
+    to { transform: rotateX(62deg) translateY(var(--zelle)); }
+  }
+
+  /* Statuspunkt: atmet langsam */
+  .status-punkt {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--color-success);
+    box-shadow: 0 0 10px var(--color-success);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .status-punkt { animation: atmen 2.4s ease-in-out infinite; }
+  }
+  @keyframes atmen {
+    50% { opacity: 0.35; }
+  }
+
+  /* HUD fährt beim Laden ein: Clip-Path öffnet von links (einmal) */
+  @media (prefers-reduced-motion: no-preference) {
+    .hud-ein { animation: hud-ein 1100ms var(--ease-out) both; animation-delay: calc(var(--i, 0) * 90ms + 200ms); }
+  }
+  @keyframes hud-ein {
+    from { clip-path: inset(0 100% 0 0); opacity: 0.001; }
+    to { clip-path: inset(0 0 0 0); opacity: 1; }
+  }
+
+  /* Laufband: konstante Bewegung, daher linear. Pausiert unter der Maus. */
+  .laufband { display: flex; width: max-content; }
+  @media (prefers-reduced-motion: no-preference) {
+    .laufband { animation: laufband 40s linear infinite; }
+    @media (hover: hover) and (pointer: fine) {
+      .laufband:hover { animation-play-state: paused; }
+    }
+  }
+  @keyframes laufband {
+    to { transform: translateX(-50%); }
+  }
+
+  /* Lichtkegel unter dem Mauszeiger (Leistungskarten) */
+  .lichtkegel { position: relative; isolation: isolate; }
+  .lichtkegel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--color-brand) 16%, transparent), transparent 60%);
+    transition: opacity var(--dur-base) ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lichtkegel:hover::before { opacity: 1; }
+    .lichtkegel:hover { border-color: color-mix(in srgb, var(--color-brand) 55%, var(--color-border)); }
+  }
+
+  /* Scroll-Fortschritt oben, an den Scrollbalken gekoppelt (linear) */
+  .scroll-fortschritt {
+    position: fixed;
+    inset: 0 0 auto;
+    height: 2px;
+    z-index: 60;
+    background: var(--color-brand);
+    transform-origin: left;
+    transform: scaleX(0);
+    pointer-events: none;
+  }
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .scroll-fortschritt { animation: fortschritt linear both; animation-timeline: scroll(root); }
+    }
+  }
+  @keyframes fortschritt {
+    to { transform: scaleX(1); }
+  }
+
+  /* Leuchten für Akzentzahlen, nur Text, kein Kasten-Glow */
+  .leuchten { text-shadow: 0 0 28px color-mix(in srgb, var(--color-brand) 45%, transparent); }
+
+  /* Terminal-Cursor */
+  .cursor-block {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.1em;
+    translate: 0 0.2em;
+    background: var(--color-brand);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .cursor-block { animation: blinken 1s steps(1) infinite; }
+  }
+  @keyframes blinken {
+    50% { opacity: 0; }
+  }
+
+  /* ---- Hintergrund "Lichtfeger": Punktmatrix, ein Lichtband zieht langsam darüber ---- */
+  .hg-lichtfeger { position: relative; isolation: isolate; overflow: hidden; }
+  .hg-lichtfeger::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-brand) 22%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px;
+  }
+  .hg-lichtfeger::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 40%;
+    z-index: -1;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-brand) 10%, transparent), transparent);
+    transform: translateX(-100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hg-lichtfeger::after { animation: feger 11s linear infinite; }
+  }
+  @keyframes feger {
+    to { transform: translateX(350%); }
+  }
+
+  /* ---- Linie unter Überschriften: zeichnet sich beim Einblenden ---- */
+  .titel-linie::after {
+    content: "";
+    display: block;
+    width: 72px;
+    height: 2px;
+    margin-top: 0.35em;
+    background: var(--color-brand);
+    transform-origin: left;
+    transition: transform 900ms var(--ease-out) 250ms;
+  }
+  [data-reveal="wartet"] .titel-linie::after { transform: scaleX(0); }
+
+  /* ---- Navigation: Unterstrich wächst von links ---- */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -6px 0;
+    height: 1px;
+    background: var(--color-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover::after { transform: scaleX(1); }
+  }
+
+  /* ---- Module: Technik-Tags leuchten nacheinander auf ---- */
+  .tag {
+    transition: border-color var(--dur-fast) ease, color var(--dur-fast) ease;
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .tag { border-color: var(--color-brand); color: var(--color-text); }
+  }
+
+  /* ---- Funkpuls: Ring breitet sich vom Statuspunkt aus ---- */
+  .funkpuls { position: relative; display: inline-flex; width: 10px; height: 10px; }
+  .funkpuls::before,
+  .funkpuls::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: var(--color-success);
+  }
+  .funkpuls::after { opacity: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    .funkpuls::after { animation: funkpuls 2.2s var(--ease-out) infinite; }
+  }
+  @keyframes funkpuls {
+    from { transform: scale(1); opacity: 0.6; }
+    to { transform: scale(3.6); opacity: 0; }
+  }
+
+  /* ---- Fallblatt: jedes Zeichen klappt von oben herunter ---- */
+  .fallblatt { display: inline-flex; gap: 4px; perspective: 400px; }
+  .fallblatt__zelle {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    min-width: 0.78em;
+    padding: 0.08em 0.06em;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+  .fallblatt__zelle::after {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 1px;
+    background: var(--color-bg);
+  }
+  .fallblatt__zelle--leer { min-width: 0.3em; background: transparent; border-color: transparent; }
+  .fallblatt__zelle--leer::after { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .fallblatt__zeichen { display: block; animation: klappen 180ms var(--ease-out) both; transform-origin: 50% 0; }
+  }
+  @keyframes klappen {
+    from { transform: rotateX(-80deg); opacity: 0.4; }
+    to { transform: rotateX(0); opacity: 1; }
+  }
+
+  /* ---- Drehkarte: Vorderseite Ergebnis, Rückseite Fall ---- */
+  .drehkarte { perspective: 1400px; }
+  .drehkarte__innen {
+    display: grid;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 700ms var(--ease-in-out);
+  }
+  .drehkarte__innen > * { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .drehkarte__rueck { transform: rotateY(180deg); }
+  .drehkarte[data-gedreht="true"] .drehkarte__innen { transform: rotateY(180deg); }
+  /* Weniger Bewegung: überblenden statt drehen */
+  @media (prefers-reduced-motion: reduce) {
+    .drehkarte .drehkarte__innen,
+    .drehkarte[data-gedreht="true"] .drehkarte__innen { transform: none; transition: none; }
+    .drehkarte__innen > * { backface-visibility: visible; transition: opacity 200ms ease; }
+    .drehkarte__rueck { transform: none; opacity: 0; }
+    .drehkarte[data-gedreht="true"] .drehkarte__rueck { opacity: 1; }
+    .drehkarte[data-gedreht="true"] .drehkarte__vorn { opacity: 0; }
+  }
+}

@@ -1,12 +1,22 @@
 import { Reveal } from "@/components/motion/reveal";
 import { KiVideo } from "@/components/medien/ki-video";
+import { DekodierText } from "@/components/effekte/dekodier-text";
 import { grundsaetze } from "@/lib/inhalte";
 
-/** Medienband mit KI-Video 02 "Kamerafahrt durch Rack-Reihen". */
+/** Medienband mit KI-Video 02: Drohnenflug durch eine unterirdische Serverhalle (Loop, stumm). */
 export function Medienband() {
   return (
     <section aria-label="Rechenzentrum" className="relative aspect-[21/9] min-h-70 max-w-full overflow-hidden border-y border-border">
-      <KiVideo szene="rackreihen" className="absolute inset-0 size-full" />
+      <KiVideo
+        szene="rackreihen"
+        video={{ mp4: "/medien/serverhalle.mp4", webm: "/medien/serverhalle.webm", poster: "/medien/serverhalle-poster.webp" }}
+        className="absolute inset-0 size-full"
+      />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-bg)_0%,transparent_35%,transparent_70%,var(--color-bg)_100%)] opacity-80" />
+      <div className="hud-rahmen absolute inset-4 md:inset-8" aria-hidden="true" />
+      <span className="daten absolute bottom-6 left-[max(var(--gutter),1.5rem)] bg-bg/75 px-2.5 py-1.5 text-text md:bottom-10">
+        <DekodierText text="Rechenzentrum · Ebene -2 · 2.400 Knoten" />
+      </span>
     </section>
   );
 }
@@ -17,7 +27,7 @@ export function Haltung() {
     <section aria-labelledby="haltung-titel" className="py-(--section-y)">
       <div className="mx-auto max-w-wide px-(--gutter)">
         <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)]">
-          <h2 id="haltung-titel" className="max-w-[16ch] text-h2">
+          <h2 id="haltung-titel" className="titel-linie max-w-[16ch] text-h2">
             Gezielt eingreifen statt neu bauen
           </h2>
         </Reveal>

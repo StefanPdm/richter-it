@@ -38,7 +38,7 @@ export function FarbweltWaehler() {
     >
       <div className="flex items-baseline justify-between gap-3">
         <span className="daten">Entwurf · Farbwelt wählen</span>
-        <span className="daten hidden sm:inline">Texte in [Klammern] sind offen</span>
+        <span className="daten hidden text-brand-dark sm:inline">Präsentation · Zahlen, Fälle, Zitate sind Beispiele</span>
       </div>
       <div className="grid grid-cols-3 gap-2" role="group" aria-label="Farbwelten">
         {FARBWELTEN.map((welt) => (

@@ -15,7 +15,7 @@ export function Header() {
               <li key={punkt.href}>
                 <Link
                   href={punkt.href}
-                  className="text-text-muted no-underline transition-colors duration-(--dur-fast) hover:text-text"
+                  className="nav-link text-text-muted no-underline transition-colors duration-(--dur-fast) hover:text-text"
                 >
                   {punkt.label}
                 </Link>

@@ -6,6 +6,8 @@ type Props = { vorherMinuten: number; nachherMinuten: number };
 
 /** 480 min entsprechen 6,4 s Animation, 15 min dann 0,2 s: das Verhältnis bleibt sichtbar. */
 const DAUER_VORHER_MS = 6400;
+/** Pause nach jedem Durchlauf, dann beginnt die Messung von vorn. */
+const PAUSE_MS = 2000;
 
 function uhr(minuten: number) {
   const s = Math.round(minuten * 60);
@@ -14,7 +16,7 @@ function uhr(minuten: number) {
 
 /**
  * Signature-Moment: Beide Balken starten gleichzeitig, "Nachher" ist fertig,
- * während "Vorher" noch läuft. Ruhezustand (ohne JS, Reduced Motion) = Endstand.
+ * während "Vorher" noch läuft. Wiederholt sich nach 2 s Pause, solange sichtbar. Ruhezustand (ohne JS, Reduced Motion) = Endstand.
  */
 export function BackupBalken({ vorherMinuten, nachherMinuten }: Props) {
   const ref = useRef<HTMLDivElement>(null);
@@ -28,8 +30,14 @@ export function BackupBalken({ vorherMinuten, nachherMinuten }: Props) {
     const el = ref.current;
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let bild = 0;
+    let pause = 0;
+    let sichtbar = false;
+    let laeuft = false;
 
+    /* Ein Durchlauf; danach 2 s Endstand stehen lassen, dann neu, solange im Bild.
+       Außerhalb des Bildes wartet die Schleife und startet beim Wiederkommen. */
     const lauf = () => {
+      laeuft = true;
       const fuellungen = el.querySelectorAll<HTMLElement>("[data-fuell]");
       const uhren = el.querySelectorAll<HTMLElement>("[data-uhr]");
       const start = performance.now();
@@ -41,16 +49,25 @@ export function BackupBalken({ vorherMinuten, nachherMinuten }: Props) {
           fuellungen[i].style.setProperty("--anteil", String(anteil * (z.minuten / vorherMinuten)));
           uhren[i].textContent = uhr(z.minuten * anteil);
         });
-        if (!fertig) bild = requestAnimationFrame(schritt);
+        if (!fertig) {
+          bild = requestAnimationFrame(schritt);
+          return;
+        }
+        laeuft = false;
+        pause = window.setTimeout(() => {
+          if (sichtbar) lauf();
+        }, PAUSE_MS);
       };
       bild = requestAnimationFrame(schritt);
     };
 
     const beobachter = new IntersectionObserver(
       ([e]) => {
-        if (!e.isIntersecting) return;
-        beobachter.disconnect();
-        lauf();
+        sichtbar = e.isIntersecting;
+        if (sichtbar && !laeuft) {
+          window.clearTimeout(pause);
+          lauf();
+        }
       },
       { threshold: 0.5 },
     );
@@ -58,6 +75,7 @@ export function BackupBalken({ vorherMinuten, nachherMinuten }: Props) {
     return () => {
       beobachter.disconnect();
       cancelAnimationFrame(bild);
+      window.clearTimeout(pause);
     };
     // zeilen ergibt sich aus den Props
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,7 +1,10 @@
 import { JsonLd } from "@/components/seo/json-ld";
 import { Hero } from "@/components/sektionen/hero";
-import { Messleiste, Messung } from "@/components/sektionen/messung";
+import { Laufband } from "@/components/sektionen/laufband";
+import { Messung } from "@/components/sektionen/messung";
+import { Kennzahlen } from "@/components/sektionen/kennzahlen";
 import { Leistungen } from "@/components/sektionen/leistungen";
+import { Leitstand } from "@/components/sektionen/leitstand";
 import { Haltung, Medienband } from "@/components/sektionen/haltung";
 import { Referenzen } from "@/components/sektionen/referenzen";
 import { Person } from "@/components/sektionen/person";
@@ -9,8 +12,10 @@ import { Kontakt } from "@/components/sektionen/kontakt";
 import { seitenMetadaten } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-/* Startseite als Erlebnisseite (DESIGN.md). Idee: Infrastruktur als Architektur,
-   die Messwerte sind die Beweise. */
+/* Startseite, Präsentationsversion "Leitstand im Abendlicht" (DESIGN.md).
+   Rhythmus der Hintergründe, abwechselnd bewegt (B) und ruhig (R):
+   Hero B, Messung R, Kennzahlen B (Lichtfeger), Leistungen R, Leitstand B (Datenstrom),
+   Haltung R, Medienband B (Video), Referenzen R, Person B (Netz), Kontakt R. */
 
 export const metadata = seitenMetadaten({
   titel: `${site.name} | IT-Infrastruktur mit Open Source`,
@@ -41,11 +46,13 @@ export default function Startseite() {
         }}
       />
       <Hero />
-      <Messleiste />
+      <Laufband />
       <Messung />
+      <Kennzahlen />
       <Leistungen />
-      <Medienband />
+      <Leitstand />
       <Haltung />
+      <Medienband />
       <Referenzen />
       <Person />
       <Kontakt />

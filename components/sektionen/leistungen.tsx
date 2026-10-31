@@ -1,13 +1,15 @@
+import type { CSSProperties } from "react";
 import { Reveal } from "@/components/motion/reveal";
-import { istOffen, leistungen } from "@/lib/inhalte";
+import { LichtkegelKarte } from "@/components/effekte/lichtkegel-karte";
+import { leistungen } from "@/lib/inhalte";
 
-/** Leistungen als Index: keine Icon-Karten, Reihenfolge nach Daniels Antwort. */
+/** Leistungen als Module eines Leitstands: Kennung, Titel, Satz, Technik. Lichtkegel folgt der Maus. */
 export function Leistungen() {
   return (
     <section id="leistungen" aria-labelledby="leistungen-titel" className="scroll-mt-(--header-h) bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)">
       <div className="mx-auto max-w-wide px-(--gutter)">
-        <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6">
-          <h2 id="leistungen-titel" className="max-w-[16ch] text-h2">
+        <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
+          <h2 id="leistungen-titel" className="titel-linie max-w-[16ch] text-h2">
             Was ich für Ihre Infrastruktur tue
           </h2>
           <p className="max-w-measure text-lead text-text-muted">
@@ -15,25 +17,24 @@ export function Leistungen() {
             Hersteller zu binden.
           </p>
         </Reveal>
-        <ul className="border-t border-border">
+        <ul className="grid gap-5 md:grid-cols-2">
           {leistungen.map((l, i) => (
-            <Reveal as="li" key={l.titel} index={i} className="group border-b border-border">
-              <div className="relative grid gap-x-10 gap-y-3 py-[clamp(1.75rem,3vw,2.75rem)] md:grid-cols-[minmax(0,5fr)_minmax(0,5fr)_minmax(0,3fr)] md:items-baseline">
+            <Reveal as="li" key={l.titel} index={i}>
+              <LichtkegelKarte className="grid h-full content-start gap-5 border border-border bg-surface p-[clamp(1.5rem,3vw,2.5rem)] transition-[border-color,background-color] duration-(--dur-base)">
+                <div className="flex items-baseline justify-between gap-4">
+                  <span className="daten text-brand-dark">MOD-{String(i + 1).padStart(2, "0")} · {l.kennung}</span>
+                  <span className="status-punkt" aria-hidden="true" />
+                </div>
                 <h3 className="text-h3">{l.titel}</h3>
                 <p className="max-w-measure text-text-muted">{l.text}</p>
-                <div className="flex flex-wrap gap-x-3.5 gap-y-2">
-                  {l.technik.map((t) => (
-                    <span key={t} className={`daten ${istOffen(t) ? "offen" : ""}`}>
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {l.technik.map((t, j) => (
+                    <span key={t} className="tag daten border border-border px-2.5 py-1.5" style={{ "--i": j } as CSSProperties}>
                       {t}
                     </span>
                   ))}
                 </div>
-                {/* Akzentlinie wächst beim Hover von links */}
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-0 -bottom-px h-px origin-left scale-x-0 bg-brand transition-transform duration-(--dur-linie) ease-out [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-x-100"
-                />
-              </div>
+              </LichtkegelKarte>
             </Reveal>
           ))}
         </ul>
