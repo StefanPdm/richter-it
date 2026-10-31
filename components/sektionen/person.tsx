@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Reveal } from "@/components/motion/reveal";
 import { DekodierText } from "@/components/effekte/dekodier-text";
 import { Netzwerk } from "@/components/effekte/netzwerk";
+import { ThemaKnopf } from "@/components/ui/thema-knopf";
+import { site } from "@/lib/site";
 import freigestellt from "@/public/images/daniel-richter-freigestellt.png";
 
 const profil = [
@@ -63,6 +65,12 @@ export function Person() {
               </div>
             ))}
           </dl>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <ThemaKnopf thema={{ anliegen: "Erstgespräch", betreff: "Kennenlernen" }}>Persönlich kennenlernen</ThemaKnopf>
+            <a href={`tel:${site.telefon.replace(/\s/g, "")}`} className="zucken inline-flex min-h-11 items-center font-mono text-sm hover:text-brand-dark">
+              {site.telefon}
+            </a>
+          </div>
         </Reveal>
       </div>
     </section>

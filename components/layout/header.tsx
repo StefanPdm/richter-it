@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
-import { Button } from "@/components/ui/button";
+import { ThemaKnopf } from "@/components/ui/thema-knopf";
 import { Marke } from "@/components/marke/marke";
 
 /** Header: Marke, 4 Links, eine Aktion. Klebt oben. */
@@ -23,10 +23,10 @@ export function Header() {
             ))}
           </ul>
         </nav>
-        <Button href={site.aktion.href}>
+        <ThemaKnopf thema={{ anliegen: "Erstgespräch" }} pfeil={false}>
           <span className="hidden sm:inline">{site.aktion.label}</span>
           <span className="sm:hidden">{site.aktion.kurz}</span>
-        </Button>
+        </ThemaKnopf>
       </div>
     </header>
   );

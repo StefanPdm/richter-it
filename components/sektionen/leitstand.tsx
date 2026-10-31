@@ -5,6 +5,7 @@ import { Terminal } from "@/components/effekte/terminal";
 import { DekodierText } from "@/components/effekte/dekodier-text";
 import { fertigeModule, monitor, observability, terminalLaeufe } from "@/lib/inhalte";
 import { site } from "@/lib/site";
+import { ThemaKnopf } from "@/components/ui/thema-knopf";
 import kontrollraum from "@/public/images/kontrollraum-hologramm.jpg";
 
 /**
@@ -85,6 +86,9 @@ export function Leitstand() {
               Auf Wunsch mit Semaphore UI oder Forgejo als Oberfläche für die Automatisierung. Neue Playbooks entstehen
               laufend, auch angepasst an Ihre Infrastruktur.
             </p>
+            <ThemaKnopf thema={{ anliegen: "Audit", betreff: "Monitoring- und Automatisierungs-Check" }} variante="secondary" className="justify-self-start">
+              Monitoring-Check anfragen
+            </ThemaKnopf>
           </Reveal>
         </div>
       </div>

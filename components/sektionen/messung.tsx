@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/motion/reveal";
 import { backupFall, istOffen } from "@/lib/inhalte";
 import { BackupBalken } from "./backup-balken";
+import { ThemaKnopf } from "@/components/ui/thema-knopf";
 
 /** Messleiste unter dem Hero: die Kernzahl in einer Zeile. */
 export function Messleiste() {
@@ -52,6 +53,9 @@ export function Messung() {
             Messwert aus einem einzelnen Kundenprojekt, veröffentlicht mit Freigabe. Wie viel in Ihrer Umgebung möglich
             ist, hängt von der Ausgangslage ab.
           </p>
+          <ThemaKnopf thema={{ anliegen: "Backup-Check", betreff: "Backup-Check: Sicherung dauert zu lange" }} className="justify-self-start">
+            Backup-Check anfragen
+          </ThemaKnopf>
         </Reveal>
       </div>
     </section>

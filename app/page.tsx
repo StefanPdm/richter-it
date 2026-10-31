@@ -13,6 +13,7 @@ import { Partner } from "@/components/sektionen/partner";
 import { seitenMetadaten } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { Signallinie } from "@/components/effekte/signallinie";
+import { CtaBand } from "@/components/ui/cta-band";
 
 /* Startseite, Präsentationsversion "Leitstand im Abendlicht" (DESIGN.md).
    Rhythmus der Hintergründe, abwechselnd bewegt (B) und ruhig (R):
@@ -54,12 +55,24 @@ export default function Startseite() {
       <Kennzahlen />
       <Signallinie />
       <Leistungen />
+      <CtaBand
+        satz="Nicht sicher, wo es hakt?"
+        zusatz="Ein kostenloses Audit von bis zu einer Stunde zeigt, wo sich ein Eingriff lohnt."
+        knopf="Kostenloses Audit anfragen"
+        thema={{ anliegen: "Audit", betreff: "Kostenloses Audit" }}
+      />
       <Leitstand />
       <Signallinie />
       <Haltung />
       <Medienband />
       <Signallinie />
       <Referenzen />
+      <CtaBand
+        satz="Ihr Projekt könnte Fall 04 sein."
+        zusatz="Beschreiben Sie kurz Ihre Ausgangslage, Sie bekommen ein konkretes Angebot."
+        knopf="Angebot anfordern"
+        thema={{ anliegen: "Angebot", betreff: "Angebot für mein Projekt" }}
+      />
       <Person />
       <Signallinie />
       <Partner />

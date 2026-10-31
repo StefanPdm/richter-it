@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { Button } from "@/components/ui/button";
+import { ThemaKnopf } from "@/components/ui/thema-knopf";
 import { Netzwerk } from "@/components/effekte/netzwerk";
 import { DekodierText } from "@/components/effekte/dekodier-text";
 import { Uhr } from "@/components/effekte/uhr";
@@ -67,9 +68,7 @@ export function Hero() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Magnet>
-              <Button href={site.aktion.href} pfeil>
-                {site.aktion.label}
-              </Button>
+              <ThemaKnopf thema={{ anliegen: "Erstgespräch" }}>{site.aktion.label}</ThemaKnopf>
             </Magnet>
             <Button href="#leitstand" variante="secondary">
               Live in den Leitstand

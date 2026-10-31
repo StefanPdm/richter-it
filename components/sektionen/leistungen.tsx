@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Reveal } from "@/components/motion/reveal";
 import { LichtkegelKarte } from "@/components/effekte/lichtkegel-karte";
+import { ThemaLink } from "@/components/ui/thema-knopf";
 import { leistungen } from "@/lib/inhalte";
 
 /** Leistungen als Module eines Leitstands: Kennung, Titel, Satz, Technik. Lichtkegel folgt der Maus. */
@@ -20,7 +21,7 @@ export function Leistungen() {
         <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {leistungen.map((l, i) => (
             <Reveal as="li" key={l.titel} index={i}>
-              <LichtkegelKarte className="grid h-full content-start gap-5 border border-border bg-surface p-[clamp(1.5rem,3vw,2.5rem)] transition-[border-color,background-color] duration-(--dur-base)">
+              <LichtkegelKarte className="flex h-full flex-col gap-5 border border-border bg-surface p-[clamp(1.5rem,3vw,2.5rem)] transition-[border-color,background-color] duration-(--dur-base)">
                 <div className="flex items-baseline justify-between gap-4">
                   <span className="daten text-brand-dark">MOD-{String(i + 1).padStart(2, "0")} · {l.kennung}</span>
                   <span className="status-punkt" aria-hidden="true" />
@@ -34,6 +35,9 @@ export function Leistungen() {
                     </span>
                   ))}
                 </div>
+                <ThemaLink thema={{ anliegen: "Angebot", betreff: `Anfrage: ${l.titel}` }} className="mt-auto">
+                  Dazu anfragen
+                </ThemaLink>
               </LichtkegelKarte>
             </Reveal>
           ))}
