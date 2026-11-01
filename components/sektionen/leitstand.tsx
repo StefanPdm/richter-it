@@ -53,10 +53,11 @@ export function Leitstand() {
         </div>
 
         {/* Stack und fertige Module, Inhalte von der bestehenden Website */}
-        <div className="mt-[clamp(2.5rem,5vw,4.5rem)] grid gap-10 border-t border-border pt-10 md:grid-cols-2">
-          <Reveal className="grid content-start gap-5">
+        {/* Leicht abgedunkelter Grund: Foto bleibt sichtbar, Text wird ruhiger lesbar */}
+        <div className="mt-(--gap-karten) grid gap-(--gap-karten) md:grid-cols-2">
+          <Reveal className="@container hud-rahmen grid content-start gap-5 bg-bg/65 p-[clamp(1.25rem,2.5vw,2rem)] transition-colors duration-(--dur-welt)">
             <h3 className="text-h3">Der Observability-Stack</h3>
-            <ul className="grid gap-x-6 sm:grid-cols-2">
+            <ul className="grid gap-x-6 @md:grid-cols-2">
               {observability.map((o) => (
                 <li key={o.name} className="flex items-baseline justify-between gap-3 border-b border-border py-2.5">
                   <span className="font-medium">{o.name}</span>
@@ -72,13 +73,13 @@ export function Leitstand() {
               </a>
             </p>
           </Reveal>
-          <Reveal index={1} className="grid content-start gap-5">
+          <Reveal index={1} className="@container hud-rahmen grid content-start gap-5 bg-bg/65 p-[clamp(1.25rem,2.5vw,2rem)] transition-colors duration-(--dur-welt)">
             <h3 className="text-h3">Fertige Module</h3>
-            <ul className="grid gap-2.5">
+            <ul className="grid gap-3">
               {fertigeModule.map((m) => (
-                <li key={m.name} className="grid gap-1 border-b border-border pb-2.5 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-4">
+                <li key={m.name} className="grid gap-1 border-b border-border pb-3 @md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] @md:gap-4">
                   <span className="font-medium">{m.name}</span>
-                  <span className="text-sm text-text-muted">{m.inhalt}</span>
+                  <span className="text-text-muted">{m.inhalt}</span>
                 </li>
               ))}
             </ul>
