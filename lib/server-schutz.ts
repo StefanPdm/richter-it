@@ -14,6 +14,11 @@ export function besucherIp(request: Request) {
 export function zuViele(bereich: string, ip: string, max: number) {
   const schluessel = `${bereich}:${ip}`;
   const jetzt = Date.now();
+  /* Abgelaufene Einträge aller Besucher verwerfen: keine IP bleibt länger als eine Minute
+     (so steht es in der Datenschutzerklärung) */
+  for (const [k, zeiten] of zugriffe) {
+    if (jetzt - zeiten[zeiten.length - 1] >= 60_000) zugriffe.delete(k);
+  }
   const liste = (zugriffe.get(schluessel) ?? []).filter((t) => jetzt - t < 60_000);
   liste.push(jetzt);
   zugriffe.set(schluessel, liste);
