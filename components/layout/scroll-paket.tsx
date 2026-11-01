@@ -50,7 +50,11 @@ export function ScrollPaket() {
           if (e.isIntersecting) sichtbar.add(e.target as HTMLElement);
           else sichtbar.delete(e.target as HTMLElement);
         }
-        const aktiv = reihenfolge.find((s) => sichtbar.has(s));
+        /* Liegt ein unbenannter Bereich in der Mitte (Ablauf, Kennzahlen, CTA ...), bleibt der zuletzt
+           passierte Abschnitt stehen. "Start" nur vor dem ersten benannten Abschnitt. */
+        const mitte = window.innerHeight / 2;
+        const aktiv =
+          reihenfolge.find((s) => sichtbar.has(s)) ?? reihenfolge.filter((s) => s.getBoundingClientRect().top < mitte).at(-1);
         setAbschnitt(aktiv ? (aktiv.dataset.paket ?? ABSCHNITTE[aktiv.id]) : null);
       },
       { rootMargin: "-50% 0px -49% 0px" },

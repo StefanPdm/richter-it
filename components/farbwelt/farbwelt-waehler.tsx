@@ -42,7 +42,7 @@ export function FarbweltWaehler() {
       {/* Handy: eingeklappt nur ein kleines Feld mit der aktiven Farbe, Tipp klappt die drei auf */}
       <aside
         aria-label="Farbwelt wählen (nur im Entwurf)"
-        className="fixed right-[max(10px,env(safe-area-inset-right,0px))] bottom-[max(10px,env(safe-area-inset-bottom,0px))] z-30 flex items-center border border-border bg-surface/90 shadow-float sm:hidden"
+        className="fixed right-[max(10px,env(safe-area-inset-right,0px))] bottom-[calc(var(--unten)+10px)] z-30 flex items-center border border-border bg-surface/90 shadow-float sm:hidden"
       >
         {offen && (
           <div id="welt-mobil-liste" className="flex items-center border-r border-border" role="group" aria-label="Farbwelten">
@@ -85,7 +85,7 @@ export function FarbweltWaehler() {
       {/* Ab Tablet: ausführlich mit Namen und Herkunft */}
       <aside
         aria-label="Farbwelt wählen (nur im Entwurf)"
-        className="fixed bottom-[max(16px,env(safe-area-inset-bottom,0px))] left-1/2 z-30 hidden w-[min(760px,calc(100%-32px))] -translate-x-1/2 gap-2.5 border border-border bg-surface p-3.5 shadow-float transition-colors duration-(--dur-welt) sm:grid"
+        className="fixed bottom-[calc(var(--unten)+16px)] left-1/2 z-30 hidden w-[min(760px,calc(100%-32px))] -translate-x-1/2 gap-2.5 border border-border bg-surface p-3.5 shadow-float transition-colors duration-(--dur-welt) sm:grid"
       >
       <div className="flex items-baseline justify-between gap-3">
         <span className="daten">Entwurf · Farbwelt wählen</span>

@@ -86,6 +86,7 @@
   --ease-*: initial;
   --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);  /* Terminal aus der Statusleiste */
 }
 
 /* --- Farbwelt Kobalt (aus dem First Draft) -------------------------- */
@@ -144,6 +145,8 @@
   --gutter:     clamp(1.25rem, 5vw, 5rem);
   --gap-karten: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);  /* Abstand zwischen Karten und Kacheln */
   --header-h:   4.5rem;
+  --leiste-h:   2.75rem;  /* Statusleiste unten, Handy: Tippziel 44px */
+  --unten:      calc(var(--leiste-h) + env(safe-area-inset-bottom, 0px));  /* Basis für alles, was unten schwebt */
 
   --dur-press:  160ms;
   --dur-fast:   200ms;
@@ -154,6 +157,10 @@
   --stagger:    70ms;
   --rise:       24px;
   --press-scale: 0.97;
+}
+
+@media (width >= 48rem) {
+  :root { --leiste-h: 2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

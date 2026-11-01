@@ -801,8 +801,19 @@
     box-shadow: 0 -24px 60px rgb(0 0 0 / 0.45);
   }
   .konsole::backdrop { background: rgb(0 0 0 / 0.35); }
+
+  /* Statusleiste unten (statusleiste.tsx): schmal, leicht durchscheinend, öffnet die Konsole */
+  .statusleiste {
+    height: var(--unten);
+    border-top: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+    transition: color var(--dur-fast) ease, background-color var(--dur-welt) ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .statusleiste:hover { border-top-color: var(--color-brand); }
+  }
   @media (prefers-reduced-motion: no-preference) {
-    .konsole[open] { animation: konsole-auf 260ms var(--ease-out) both; }
+    .konsole[open] { animation: konsole-auf 300ms var(--ease-drawer) both; }
   }
   @keyframes konsole-auf { from { transform: translateY(100%); } to { transform: none; } }
 }

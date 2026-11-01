@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { FarbweltWaehler } from "@/components/farbwelt/farbwelt-waehler";
 import { NachOben } from "@/components/layout/nach-oben";
 import { Konsole } from "@/components/layout/konsole";
+import { Statusleiste } from "@/components/layout/statusleiste";
 import { ScrollPaket } from "@/components/layout/scroll-paket";
 import { FRUEH_SKRIPT, STANDARD_WELT, WAEHLER_AKTIV } from "@/lib/farbwelt";
 import { site } from "@/lib/site";
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer />
         <NachOben ueberWaehler={WAEHLER_AKTIV} />
+        <Statusleiste />
         <Konsole />
         {WAEHLER_AKTIV && <FarbweltWaehler />}
       </body>

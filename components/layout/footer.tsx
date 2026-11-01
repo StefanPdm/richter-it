@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { ThemaKnopf } from "@/components/ui/thema-knopf";
-import { KonsoleKnopf } from "@/components/layout/konsole-knopf";
 
-/** Footer: Anschrift, Rechtliches, KI-Hinweis. Unten Platz für den Farbwelt-Wähler. */
+/** Footer: Anschrift, Rechtliches, KI-Hinweis. Unten Platz für Farbwelt-Wähler und Statusleiste. */
 export function Footer() {
   const { adresse } = site;
   return (
-    <footer className="border-t border-border pt-12 pb-36 text-sm text-text-muted">
+    <footer className="border-t border-border pt-12 pb-[calc(9rem+var(--unten))] text-sm text-text-muted">
       <div className="mx-auto mb-10 flex max-w-wide flex-wrap items-center justify-between gap-x-8 gap-y-4 border-b border-border px-(--gutter) pb-10">
         <p className="font-display text-h3 font-medium text-text [font-stretch:80%]">Mehr Leistung, ohne Neubau. Sprechen wir darüber.</p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -44,7 +43,6 @@ export function Footer() {
           </ul>
         </nav>
         <span>Bilder und Videos auf dieser Seite sind teilweise mit KI erstellt.</span>
-        <KonsoleKnopf />
       </div>
     </footer>
   );

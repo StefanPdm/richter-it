@@ -32,8 +32,8 @@ export function NachOben({ ueberWaehler = false }: Props) {
 
   /* Abstand unten: Handy über dem kleinen Wählerfeld, Tablet über der Wählerleiste, breit daneben */
   const unten = ueberWaehler
-    ? "bottom-[calc(max(10px,env(safe-area-inset-bottom,0px))+3.5rem)] sm:bottom-[calc(max(16px,env(safe-area-inset-bottom,0px))+10.5rem)] min-[60rem]:bottom-[max(16px,env(safe-area-inset-bottom,0px))]"
-    : "bottom-[max(16px,env(safe-area-inset-bottom,0px))]";
+    ? "bottom-[calc(var(--unten)+10px+3.5rem)] sm:bottom-[calc(var(--unten)+16px+10.5rem)] min-[60rem]:bottom-[calc(var(--unten)+16px)]"
+    : "bottom-[calc(var(--unten)+16px)]";
 
   return (
     <button
