@@ -2,6 +2,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Hero } from "@/components/sektionen/hero";
 import { Laufband } from "@/components/sektionen/laufband";
 import { Messung } from "@/components/sektionen/messung";
+import { BackupAblauf } from "@/components/sektionen/backup-ablauf";
 import { Kennzahlen } from "@/components/sektionen/kennzahlen";
 import { Leistungen } from "@/components/sektionen/leistungen";
 import { Leitstand } from "@/components/sektionen/leitstand";
@@ -52,6 +53,7 @@ export default function Startseite() {
       <Hero />
       <Laufband />
       <Messung />
+      <BackupAblauf />
       <Kennzahlen />
       <Signallinie />
       <Leistungen />

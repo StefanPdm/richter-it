@@ -620,3 +620,13 @@
     .nach-oben svg, .nach-oben:active { transform: none; }
   }
 }
+
+/* Backup-Ablauf: aktiver Schritt voll, die anderen zurückgenommen; Szene blendet über die Ersatzgrafik */
+@layer components {
+  .schritt { opacity: 0.5; transition: opacity var(--dur-base) var(--ease-out), border-color var(--dur-base) ease; }
+  .schritt[data-aktiv="true"] { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .szene-ein { animation: szene-ein 700ms var(--ease-out) both; }
+  }
+  @keyframes szene-ein { from { opacity: 0; } to { opacity: 1; } }
+}

@@ -253,3 +253,33 @@ export const partner = {
 
 /** Text mit "[" am Anfang ist offen und wird markiert. */
 export const istOffen = (text: string) => text.startsWith("[");
+
+/** Backup-Ablauf (3D-Szene): fünf Schritte mit Proxmox Backup.
+    Funktionen aus der Proxmox-Dokumentation, Einrichtung im Einzelfall von Daniel bestätigen lassen. */
+export const backupAblauf = [
+  {
+    kurz: "Erfassen",
+    titel: "Nur, was sich geändert hat.",
+    text: "Die Sicherung liest nur die Blöcke, die sich seit dem letzten Lauf geändert haben. Die laufenden Maschinen merken davon kaum etwas.",
+  },
+  {
+    kurz: "Deduplizieren",
+    titel: "Jeder Block nur einmal.",
+    text: "Gleiche Datenblöcke werden nur einmal gespeichert, über alle Maschinen und alle Stände hinweg. Das spart Speicher und Zeit.",
+  },
+  {
+    kurz: "Verschlüsseln",
+    titel: "Verschlüsselt, bevor es das Haus verlässt.",
+    text: "Die Daten werden schon auf dem Quellsystem verschlüsselt, mit AES-256-GCM. Der Schlüssel bleibt bei Ihnen.",
+  },
+  {
+    kurz: "Übertragen",
+    titel: "Eine zweite Kopie an einem zweiten Ort.",
+    text: "Ein Sync-Job spiegelt die Sicherung auf einen zweiten Backup-Server an einem anderen Standort. Fällt ein Gebäude aus, bleibt die Kopie.",
+  },
+  {
+    kurz: "Wiederherstellen",
+    titel: "Geprüft, nicht nur gesichert.",
+    text: "Regelmäßige Prüfläufe lesen die Sicherungen zurück. Im Ernstfall ist klar, dass die Wiederherstellung funktioniert und wie lange sie dauert.",
+  },
+] as const;
