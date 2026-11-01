@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 export default function NichtGefunden() {
   return (
     <Container breite="measure" className="py-(--section-y)">
-      <h1 className="text-h1">Diese Seite gibt es nicht</h1>
+      <h1 className="text-h2">Diese Seite gibt es nicht</h1>
       <p className="mt-4 text-lead text-text-muted">Vielleicht hilft einer dieser Wege weiter:</p>
       <ul className="mt-6 flex flex-col gap-2">
         <li>

@@ -47,14 +47,14 @@ export function Leitstand() {
               </Reveal>
             ))}
           </div>
-          <Reveal index={2}>
+          <Reveal index={2} className="grid">
             <Terminal laeufe={terminalLaeufe} titel="pve-01 · ansible" />
           </Reveal>
         </div>
 
         {/* Stack und fertige Module, Inhalte von der bestehenden Website */}
-        {/* Leicht abgedunkelter Grund: Foto bleibt sichtbar, Text wird ruhiger lesbar */}
-        <div className="mt-(--gap-karten) grid gap-(--gap-karten) md:grid-cols-2">
+        {/* Leicht abgedunkelter Grund wie die Reihe darüber, gleiche Spalten, damit die Kanten fluchten */}
+        <div className="mt-(--gap-karten) grid gap-(--gap-karten) md:grid-cols-2 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           <Reveal className="@container hud-rahmen grid content-start gap-5 bg-bg/65 p-[clamp(1.25rem,2.5vw,2rem)] transition-colors duration-(--dur-welt)">
             <h3 className="text-h3">Der Observability-Stack</h3>
             <ul className="grid gap-x-6 @md:grid-cols-2">

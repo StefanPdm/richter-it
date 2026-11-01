@@ -10,7 +10,7 @@ export const metadata = seitenMetadaten({
 /* Platzhalter. Text vom Kunden oder aus seinem Datenschutz-Generator übernehmen. */
 export default function Datenschutz() {
   return (
-    <Rechtsseite titel="Datenschutzerklärung">
+    <Rechtsseite titel={"Datenschutz­erklärung"}>
       <h2>Verantwortliche Stelle</h2>
       <p>Name und Anschrift des Verantwortlichen</p>
       <h2>Hosting und Server-Logs</h2>

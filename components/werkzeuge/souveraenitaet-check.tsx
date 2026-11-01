@@ -185,9 +185,11 @@ export function SouveraenitaetCheck() {
   const [antworten, setAntworten] = useState<(number | null)[]>(() => Array(ANZAHL).fill(null));
   const kopf = useRef<HTMLHeadingElement>(null);
   const flaeche = useRef<HTMLDivElement>(null);
+  /* Inhalt der aktuellen Frage: nur er wird eingeblendet, die Box bleibt stehen */
+  const inhalt = useRef<HTMLDivElement>(null);
   const erster = useRef(true);
 
-  /* Nach jedem Schrittwechsel: Fokus auf die Überschrift, sanft einblenden. Beim Laden nichts tun. */
+  /* Nach jedem Schrittwechsel: Fokus auf die Überschrift, Inhalt sanft einblenden. Beim Laden nichts tun. */
   useEffect(() => {
     if (erster.current) {
       erster.current = false;
@@ -196,7 +198,7 @@ export function SouveraenitaetCheck() {
     kopf.current?.focus({ preventScroll: true });
     const ruhig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!ruhig) {
-      flaeche.current?.animate(
+      (inhalt.current ?? flaeche.current)?.animate(
         [
           { opacity: 0.001, transform: "translateY(6px)" },
           { opacity: 1, transform: "none" },
@@ -234,15 +236,15 @@ export function SouveraenitaetCheck() {
               <span className="daten">
                 <span className="text-brand-dark">{String(schritt + 1).padStart(2, "0")}</span> / {ANZAHL} · {achse.name}
               </span>
-              {schritt > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setSchritt((s) => s - 1)}
-                  className="daten inline-flex min-h-11 cursor-pointer items-center gap-2 hover:text-text"
-                >
-                  <span aria-hidden="true">←</span> Zurück
-                </button>
-              )}
+              {/* Platz immer reserviert, damit die Kopfzeile ab Frage 2 nicht höher wird */}
+              <button
+                type="button"
+                onClick={() => setSchritt((s) => s - 1)}
+                disabled={schritt === 0}
+                className="daten inline-flex min-h-11 cursor-pointer items-center gap-2 hover:text-text disabled:invisible"
+              >
+                <span aria-hidden="true">←</span> Zurück
+              </button>
             </div>
             <div className="h-px bg-border" aria-hidden="true">
               <div
@@ -252,25 +254,42 @@ export function SouveraenitaetCheck() {
             </div>
           </div>
 
-          <h2 ref={kopf} tabIndex={-1} className="text-h3 font-medium outline-none">
-            {f.frage}
-          </h2>
-
-          <ul className="grid gap-3" aria-label="Antworten">
-            {f.antworten.map((text, i) => (
-              <li key={text}>
-                <button
-                  type="button"
-                  aria-pressed={antworten[schritt] === i}
-                  onClick={() => antworte(i)}
-                  className="zucken flex min-h-14 w-full cursor-pointer items-center gap-4 border border-border bg-bg px-4 py-3 text-left transition-colors duration-(--dur-fast) hover:border-text-muted aria-pressed:border-brand aria-pressed:bg-brand-soft"
+          {/* Alle Fragen liegen übereinander in einer Rasterzelle. Die Box ist so immer so hoch
+              wie die längste Frage, sichtbar und bedienbar ist nur die aktuelle. */}
+          <div className="grid">
+            {FRAGEN.map((fr, n) => {
+              const aktiv = n === schritt;
+              return (
+                <div
+                  key={fr.frage}
+                  ref={aktiv ? inhalt : null}
+                  inert={!aktiv}
+                  aria-hidden={!aktiv}
+                  className={`grid content-start gap-6 [grid-area:1/1] ${aktiv ? "" : "invisible"}`}
                 >
-                  <span className="daten w-5 shrink-0 text-brand-dark">{String.fromCharCode(65 + i)}</span>
-                  <span>{text}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <h2 ref={aktiv ? kopf : null} tabIndex={-1} className="text-h3 font-medium outline-none">
+                    {fr.frage}
+                  </h2>
+
+                  <ul className="grid gap-3" aria-label="Antworten">
+                    {fr.antworten.map((text, i) => (
+                      <li key={text}>
+                        <button
+                          type="button"
+                          aria-pressed={antworten[n] === i}
+                          onClick={() => antworte(i)}
+                          className="zucken flex min-h-14 w-full cursor-pointer items-center gap-4 border border-border bg-bg px-4 py-3 text-left transition-colors duration-(--dur-fast) hover:border-text-muted aria-pressed:border-brand aria-pressed:bg-brand-soft"
+                        >
+                          <span className="daten w-5 shrink-0 text-brand-dark">{String.fromCharCode(65 + i)}</span>
+                          <span>{text}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
         </Feld>
       </div>
     );

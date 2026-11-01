@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { FarbweltWaehler } from "@/components/farbwelt/farbwelt-waehler";
 import { NachOben } from "@/components/layout/nach-oben";
 import { Konsole } from "@/components/layout/konsole";
+import { ScrollPaket } from "@/components/layout/scroll-paket";
 import { FRUEH_SKRIPT, STANDARD_WELT, WAEHLER_AKTIV } from "@/lib/farbwelt";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       )}
       <body className="flex min-h-dvh flex-col">
         <div className="scroll-fortschritt" aria-hidden="true" />
+        <ScrollPaket />
         <a
           href="#inhalt"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-bg focus:px-4 focus:py-3"

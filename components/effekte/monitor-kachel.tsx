@@ -47,7 +47,7 @@ export function MonitorKachel({ kennung, label, einheit, basis, spanne }: Props)
   const stellen = basis < 10 ? 1 : 0;
 
   return (
-    <div ref={ref} className="hud-rahmen grid gap-3 border border-border bg-surface p-5 transition-colors duration-(--dur-welt)">
+    <div ref={ref} className="hud-rahmen grid gap-3 bg-bg/65 p-5 transition-colors duration-(--dur-welt)">
       <div className="flex items-baseline justify-between gap-3">
         <span className="daten">
           {kennung} · {label}

@@ -72,7 +72,7 @@ export function Terminal({ laeufe, titel }: Props) {
   const text = zeilen.join("\n").slice(0, zeichen);
 
   return (
-    <div ref={ref} className="hud-rahmen min-w-0 overflow-hidden border border-border bg-bg">
+    <div ref={ref} className="hud-rahmen flex h-full min-w-0 flex-col overflow-hidden bg-bg/65 transition-colors duration-(--dur-welt)">
       <div className="flex items-center justify-between gap-4 border-b border-border px-4 py-2.5">
         <span className="daten">{titel}</span>
         <span className="flex items-center gap-2">
@@ -82,7 +82,7 @@ export function Terminal({ laeufe, titel }: Props) {
           </span>
         </span>
       </div>
-      <pre className="m-0 min-h-[19rem] overflow-x-auto p-4 font-mono text-[0.6875rem] leading-relaxed break-all whitespace-pre-wrap text-text-muted sm:min-h-[22rem] sm:p-5 sm:text-[0.8125rem] sm:break-normal sm:whitespace-pre">
+      <pre className="m-0 min-h-[19rem] flex-1 overflow-x-auto p-4 font-mono text-[0.6875rem] leading-relaxed break-all whitespace-pre-wrap text-text-muted sm:min-h-[22rem] sm:p-5 sm:text-[0.8125rem] sm:break-normal sm:whitespace-pre">
         <code aria-label={laeufe[0].join("\n")}>
           <span aria-hidden="true">
             {text.split("\n").map((zeile, i) => (
