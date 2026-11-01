@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { ThemaKnopf } from "@/components/ui/thema-knopf";
+import { KonsoleKnopf } from "@/components/layout/konsole-knopf";
 
 /** Footer: Anschrift, Rechtliches, KI-Hinweis. Unten Platz für den Farbwelt-Wähler. */
 export function Footer() {
@@ -43,6 +44,7 @@ export function Footer() {
           </ul>
         </nav>
         <span>Bilder und Videos auf dieser Seite sind teilweise mit KI erstellt.</span>
+        <KonsoleKnopf />
       </div>
     </footer>
   );

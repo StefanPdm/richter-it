@@ -11,6 +11,7 @@ import { Referenzen } from "@/components/sektionen/referenzen";
 import { Person } from "@/components/sektionen/person";
 import { Kontakt } from "@/components/sektionen/kontakt";
 import { Partner } from "@/components/sektionen/partner";
+import { WerkzeugeTeaser } from "@/components/sektionen/werkzeuge-teaser";
 import { seitenMetadaten } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { Signallinie } from "@/components/effekte/signallinie";
@@ -64,6 +65,7 @@ export default function Startseite() {
         thema={{ anliegen: "Audit", betreff: "Kostenloses Audit" }}
       />
       <Leitstand />
+      <WerkzeugeTeaser />
       <Signallinie />
       <Haltung />
       <Medienband />

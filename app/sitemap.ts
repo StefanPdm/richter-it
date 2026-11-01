@@ -6,6 +6,11 @@ const seiten: { pfad: string; geaendert: string }[] = [
   { pfad: "/", geaendert: "2026-10-31" },
   { pfad: "/impressum", geaendert: "2026-10-31" },
   { pfad: "/datenschutz", geaendert: "2026-10-31" },
+  { pfad: "/werkzeuge", geaendert: "2026-11-01" },
+  { pfad: "/werkzeuge/souveraenitaet", geaendert: "2026-11-01" },
+  { pfad: "/werkzeuge/ausfall", geaendert: "2026-11-01" },
+  { pfad: "/werkzeuge/vmware-ausstieg", geaendert: "2026-11-01" },
+  { pfad: "/werkzeuge/cluster-planer", geaendert: "2026-11-01" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

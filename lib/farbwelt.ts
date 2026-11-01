@@ -35,3 +35,14 @@ export const FRUEH_SKRIPT = `(function(){try{var w=${JSON.stringify(IDS)};var h=
 
 /** Ereignis für Komponenten, die Farben selbst zeichnen (Canvas). */
 export const FARBWELT_EREIGNIS = "farbwelt-geaendert";
+
+/** Farbwelt setzen, merken und melden (für Wähler-ähnliche Bedienung, z. B. die Konsole). */
+export function setzeFarbwelt(id: FarbweltId) {
+  document.documentElement.setAttribute("data-welt", id);
+  try {
+    localStorage.setItem(SPEICHER_SCHLUESSEL, id);
+  } catch {
+    /* Speicher gesperrt: Wahl gilt nur für diese Ansicht */
+  }
+  window.dispatchEvent(new CustomEvent(FARBWELT_EREIGNIS, { detail: id }));
+}

@@ -24,6 +24,7 @@ export function KontaktFormular() {
   const [gesendet, setGesendet] = useState(false);
   const [anliegen, setAnliegen] = useState<Anliegen>("Erstgespräch");
   const [betreff, setBetreff] = useState("");
+  const [nachricht, setNachricht] = useState("");
   const formular = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export function KontaktFormular() {
       const thema = (e as CustomEvent<Thema>).detail;
       setAnliegen(thema.anliegen);
       if (thema.betreff) setBetreff(thema.betreff);
+      if (thema.nachricht) setNachricht(thema.nachricht);
       setGesendet(false);
       /* Kurz aufleuchten, sobald das Formular nach dem Sprung im Bild ist.
          Web Animations API: Eingaben bleiben erhalten, nichts wird neu aufgebaut. */
@@ -108,7 +110,14 @@ export function KontaktFormular() {
       </label>
       <label className="grid gap-1.5" htmlFor="kf-nachricht">
         <span className="daten">Nachricht</span>
-        <textarea id="kf-nachricht" name="nachricht" rows={4} className={`${feld} resize-y`} />
+        <textarea
+          id="kf-nachricht"
+          name="nachricht"
+          rows={4}
+          value={nachricht}
+          onChange={(e) => setNachricht(e.target.value)}
+          className={`${feld} resize-y`}
+        />
       </label>
       <p className="text-xs text-text-muted">
         Mit dem Absenden werden Ihre Angaben zur Bearbeitung der Anfrage verwendet. Details in der Datenschutzerklärung.

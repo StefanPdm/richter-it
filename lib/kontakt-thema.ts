@@ -7,7 +7,8 @@ export const THEMA_EREIGNIS = "kontakt-thema";
 export const ANLIEGEN = ["Erstgespräch", "Angebot", "Audit", "Backup-Check"] as const;
 export type Anliegen = (typeof ANLIEGEN)[number];
 
-export type Thema = { anliegen: Anliegen; betreff?: string };
+/** nachricht: Werkzeuge legen ihr Ergebnis hier ab, das Formular übernimmt es als Text */
+export type Thema = { anliegen: Anliegen; betreff?: string; nachricht?: string };
 
 export function meldeThema(thema: Thema) {
   window.dispatchEvent(new CustomEvent<Thema>(THEMA_EREIGNIS, { detail: thema }));

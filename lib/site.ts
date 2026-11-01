@@ -20,6 +20,7 @@ export const site = {
   navigation: [
     { label: "Leistungen", href: "/#leistungen" },
     { label: "Backup", href: "/#messung" },
+    { label: "Werkzeuge", href: "/werkzeuge" },
     { label: "Referenzen", href: "/#referenzen" },
     { label: "Über mich", href: "/#ueber-mich" },
     { label: "Partner", href: "/#partner" },

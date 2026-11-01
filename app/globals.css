@@ -665,3 +665,44 @@
   }
   .spur-aussen[data-aktiv="true"] .spur { overflow: visible; scroll-snap-type: none; will-change: transform; }
 }
+
+/* Schieberegler der Werkzeuge: dünne Spur, gefüllter Anteil in der Akzentfarbe, eckiger Griff */
+@layer components {
+  .regler {
+    appearance: none;
+    width: 100%;
+    height: 2.75rem; /* Trefferfläche 44px, Spur bleibt dünn */
+    background: transparent;
+    cursor: pointer;
+  }
+  .regler::-webkit-slider-runnable-track {
+    height: 2px;
+    background: linear-gradient(to right, var(--color-brand) var(--anteil, 0%), var(--color-border-strong) var(--anteil, 0%));
+  }
+  .regler::-moz-range-track { height: 2px; background: var(--color-border-strong); }
+  .regler::-moz-range-progress { height: 2px; background: var(--color-brand); }
+  .regler::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px; height: 18px; margin-top: -8px;
+    background: var(--color-bg); border: 2px solid var(--color-brand);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .regler::-moz-range-thumb { width: 14px; height: 14px; background: var(--color-bg); border: 2px solid var(--color-brand); border-radius: 0; }
+  .regler:active::-webkit-slider-thumb { transform: scale(1.15); }
+  .regler:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+}
+
+/* Konsole: Blatt am unteren Rand, fährt von unten herein */
+@layer components {
+  .konsole {
+    margin: auto 0 0; padding: 0; border: 0; border-top: 1px solid var(--color-brand);
+    width: 100%; max-width: none; height: min(60dvh, 34rem); max-height: none;
+    background: var(--color-bg); color: var(--color-text);
+    box-shadow: 0 -24px 60px rgb(0 0 0 / 0.45);
+  }
+  .konsole::backdrop { background: rgb(0 0 0 / 0.35); }
+  @media (prefers-reduced-motion: no-preference) {
+    .konsole[open] { animation: konsole-auf 260ms var(--ease-out) both; }
+  }
+  @keyframes konsole-auf { from { transform: translateY(100%); } to { transform: none; } }
+}
