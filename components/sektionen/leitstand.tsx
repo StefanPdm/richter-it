@@ -39,8 +39,8 @@ export function Leitstand() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-[minmax(0,1fr)] gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-(--gap-karten) lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+          <div className="grid grid-cols-1 gap-(--gap-karten) sm:grid-cols-2">
             {monitor.map((m, i) => (
               <Reveal key={m.kennung} index={i}>
                 <MonitorKachel {...m} />

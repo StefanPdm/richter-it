@@ -20,7 +20,7 @@ export function Partner() {
           </figure>
           <p className="max-w-measure text-text-muted">{partner.text}</p>
         </Reveal>
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-(--gap-karten) sm:grid-cols-2">
           {partner.liste.map((p, i) => (
             <Reveal key={p.name} index={i}>
               <LichtkegelKarte className="grid h-full content-start gap-4 border border-border bg-surface p-[clamp(1.5rem,2.5vw,2.25rem)] transition-[border-color,background-color] duration-(--dur-base)">

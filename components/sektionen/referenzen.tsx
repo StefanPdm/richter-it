@@ -22,7 +22,7 @@ export function Referenzen() {
           </p>
         </Reveal>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-(--gap-karten) md:grid-cols-3">
           {referenzen.map((r, i) => (
             <Reveal as="article" key={r.titel} index={i} className="md:min-h-[26rem]">
               <Drehkarte

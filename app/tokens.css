@@ -79,7 +79,7 @@
   --breakpoint-lg: 90rem;
 
   --container-page:    75rem;    /* 1200, Rechtsseiten */
-  --container-wide:    87.5rem;  /* 1400, alle Sektionen */
+  --container-wide:    80rem;    /* 1280, alle Sektionen */
   --container-measure: 62ch;
 
   /* --- Bewegung ----------------------------------------------------- */
@@ -140,8 +140,9 @@
 :root {
   color-scheme: dark;
   --leading-base: 1.6;
-  --section-y:  clamp(4.5rem, 3rem + 7vw, 10rem);
-  --gutter:     clamp(1rem, 4vw, 4rem);
+  --section-y:  clamp(5.5rem, 3.5rem + 8vw, 12rem);
+  --gutter:     clamp(1.25rem, 5vw, 5rem);
+  --gap-karten: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);  /* Abstand zwischen Karten und Kacheln */
   --header-h:   4.5rem;
 
   --dur-press:  160ms;
