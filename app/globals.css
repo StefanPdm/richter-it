@@ -1160,3 +1160,43 @@
     border-radius: 3px 3px 1px 1px;
   }
 }
+
+/* ---- Fachbegriff mit Erklärung (components/ui/begriff.tsx) ---- */
+@layer components {
+  .begriff {
+    font: inherit;
+    color: inherit;
+    cursor: help;
+    text-decoration: underline dotted color-mix(in srgb, var(--color-brand) 70%, transparent);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.22em;
+    transition: color var(--dur-fast) ease, text-decoration-color var(--dur-fast) ease;
+  }
+  /* Tippfläche: unsichtbar nach oben und unten erweitert, ohne den Zeilenabstand zu ändern.
+     Begriffe im Fließtext fallen unter die Inline-Ausnahme von WCAG 2.5.8. */
+  .begriff { position: relative; }
+  .begriff::after { content: ""; position: absolute; inset: -0.6rem -0.2rem; }
+  .begriff:hover,
+  .begriff[aria-expanded="true"] { color: var(--color-text); text-decoration-color: var(--color-brand); }
+  /* Karte in der obersten Ebene, Position setzt das Skript über --x / --y */
+  .begriff-karte {
+    position: fixed;
+    inset: auto;
+    left: var(--x, 0);
+    top: var(--y, 0);
+    margin: 0;
+    width: min(20rem, calc(100vw - 16px));
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--color-border-strong);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: var(--shadow-float);
+    --farbe: var(--color-brand);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .begriff-karte:popover-open { animation: begriff-ein var(--dur-fast) var(--ease-out); }
+  }
+  @keyframes begriff-ein {
+    from { opacity: 0; transform: translateY(-4px); }
+  }
+}

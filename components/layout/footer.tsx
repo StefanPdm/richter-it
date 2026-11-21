@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border pt-12 pb-[calc(9rem+var(--unten))] text-sm text-text-muted">
       <div className="mx-auto mb-10 flex max-w-wide flex-wrap items-center justify-between gap-x-8 gap-y-4 border-b border-border px-(--gutter) pb-10">
-        <p className="font-display text-h3 font-medium text-text [font-stretch:80%]">Mehr Leistung, ohne Neubau. Sprechen wir darüber.</p>
+        <p className="font-display text-h3 font-medium text-text [font-stretch:80%]">Mehr Leistung, volle Sicherheit. Sprechen wir darüber.</p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <ThemaKnopf thema={{ anliegen: "Erstgespräch" }}>Gespräch vereinbaren</ThemaKnopf>
           <a href={`tel:${site.telefon.replace(/\s/g, "")}`} className="inline-flex min-h-11 items-center font-mono text-text hover:text-brand-dark">

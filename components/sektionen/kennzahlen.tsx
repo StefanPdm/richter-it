@@ -5,7 +5,7 @@ import { kennzahlen } from "@/lib/inhalte";
 const alsText = (k: (typeof kennzahlen)[number]) => `${k.wert.toLocaleString("de-DE")}${k.nachsatz}`;
 
 /**
- * BEISPIEL-Kennzahlen (Präsentation) als Fallblatt-Anzeige.
+ * Kennzahlen aus dem Gespräch mit Daniel (19.11.2026) als Fallblatt-Anzeige.
  * Hintergrund animiert: "Lichtfeger" über einer Punktmatrix.
  */
 export function Kennzahlen() {

@@ -7,7 +7,9 @@ import { DekodierText } from "@/components/effekte/dekodier-text";
 import { Uhr } from "@/components/effekte/uhr";
 import { Magnet } from "@/components/effekte/magnet";
 import { Glitch } from "@/components/effekte/glitch";
+import { MitBegriffen } from "@/components/ui/begriff";
 import { site } from "@/lib/site";
+import { hero } from "@/lib/inhalte";
 import abendlicht from "@/public/images/daniel-richter-abendlicht.jpg";
 
 /**
@@ -57,14 +59,13 @@ export function Hero() {
         </div>
 
         <div className="grid min-h-[min(88svh,56rem)] content-end gap-8 pt-24 pb-[clamp(3rem,7vw,6rem)] md:max-w-[min(62%,52rem)]">
-          <h1 id="hero-titel" className="text-display">
-            Mehr Leistung.
+          <h1 id="hero-titel" className="text-display [font-stretch:64%]">
+            {hero.zeile1}
             <br />
-            <Glitch text="Ohne Neubau." takt="6s" className="leuchten text-brand-dark" />
+            <Glitch text={hero.zeile2} takt="6s" className="leuchten text-brand-dark" />
           </h1>
           <p className="max-w-measure text-lead">
-            Ich optimiere IT-Infrastrukturen für mittelständische Unternehmen, Behörden und Landesanstalten. Mit
-            Open-Source-Software, die bei Ihnen im Haus läuft, und mit gezielten Eingriffen statt großer Umbauten.
+            <MitBegriffen text={hero.text} />
           </p>
           <div className="flex flex-wrap gap-3">
             <Magnet>

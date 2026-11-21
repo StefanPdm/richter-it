@@ -5,6 +5,7 @@ import { LichtkegelKarte } from "@/components/effekte/lichtkegel-karte";
 import { ThemaLink } from "@/components/ui/thema-knopf";
 import { leistungen } from "@/lib/inhalte";
 import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
+import { MitBegriffen } from "@/components/ui/begriff";
 
 /**
  * Leistungen als Module eines Leitstands: Kennung, Titel, Satz, Technik. Lichtkegel folgt der Maus.
@@ -35,7 +36,9 @@ export function Leistungen() {
                 <span className="status-punkt" aria-hidden="true" />
               </div>
               <h3 className="text-h3">{l.titel}</h3>
-              <p className="max-w-measure text-text-muted">{l.text}</p>
+              <p className="max-w-measure text-text-muted">
+                <MitBegriffen text={l.text} />
+              </p>
               <div className="flex flex-wrap gap-2 pt-2">
                 {l.technik.map((t, j) => (
                   <span key={t} className="tag daten border border-border px-2.5 py-1.5" style={{ "--i": j } as CSSProperties}>

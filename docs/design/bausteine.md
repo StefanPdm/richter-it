@@ -114,3 +114,13 @@ Motiv, damit Sektionen nicht zu clean wirken. Sektion braucht `relative isolate`
 
 Regel: benachbarte Sektionen nie mit demselben Motiv. Sektionen mit eigenem Hintergrund
 (Hero, Leitstand, Person, Kontakt, Drohne, 502) bekommen keinen Sektionsgrund.
+
+## Begriff (Projekt Daniel Richter IT)
+
+`components/ui/begriff.tsx`: Fachbegriff mit Erklärung für Entscheider. Gepunktet
+unterstrichen, Hover oder Tipp öffnet eine HUD-Karte (Popover-API, Esc schließt).
+Erklärungen stehen im Glossar `begriffe` in `lib/inhalte.ts`.
+
+In Texten aus `lib/inhalte.ts`: `{Schlüssel}` oder `{Anzeige|Schlüssel}`, gerendert mit
+`<MitBegriffen text={...} />`. Nicht mit `[` beginnen lassen (das markiert offene Inhalte).
+Pro Absatz höchstens zwei Begriffe, sonst wird der Text unruhig.

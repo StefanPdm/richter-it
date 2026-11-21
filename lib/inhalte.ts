@@ -38,14 +38,53 @@ export const technik = [
   "Linux",
 ] as const;
 
-/** Kennzahlen. Quelle: bestehende Website (20+ Projekte, über 10 Jahre, bis zu 40 % Kosten),
-    Backup-Faktor aus dem Kundenfall. Belege für 20+ und 40 % sind offen (siehe analyse.md). */
+/** Hero: Kernbotschaft aus dem Gespräch am 19.11.2026, mehr Leistung bei voller Sicherheit.
+    Fachbegriffe in {geschweiften Klammern} bekommen eine Erklärung (siehe begriffe). */
+export const hero = {
+  zeile1: "Mehr Leistung.",
+  zeile2: "Volle Sicherheit.",
+  text: "Ich hole mehr aus Ihrer IT-Infrastruktur heraus, ohne die Sicherheit zu opfern. Mit {Proxmox} und Open Source, auf der Technik, die Sie schon haben.",
+} as const;
+
+/** Kennzahlen aus dem Gespräch am 19.11.2026: 20+ größere Projekte (von Daniel bestätigt),
+    bis zu 80 % Leistung mit aktiviertem VBS, Audit von etwa einer Stunde kostenlos.
+    "10+ Jahre" stammt von der bestehenden Website, von Daniel bestätigen lassen. */
 export const kennzahlen = [
-  { wert: 20, vorsatz: "", nachsatz: "+", label: "Projekte abgeschlossen" },
+  { wert: 20, vorsatz: "", nachsatz: "+", label: "größere Projekte abgeschlossen" },
+  { wert: 80, vorsatz: "", nachsatz: " %", label: "Leistung trotz VBS, bis zu" },
+  { wert: 1, vorsatz: "", nachsatz: " h", label: "Audit, kostenlos" },
   { wert: 10, vorsatz: "", nachsatz: "+", label: "Jahre Erfahrung mit Open Source" },
-  { wert: 32, vorsatz: "", nachsatz: "×", label: "schnelleres Backup im Kundenprojekt" },
-  { wert: 40, vorsatz: "", nachsatz: " %", label: "weniger Betriebskosten, bis zu" },
 ] as const;
+
+/** Glossar für Fachbegriffe im Text. Schreibweise im Text: {Schlüssel} oder {Anzeige|Schlüssel}.
+    Ein Satz Erklärung, verständlich für Entscheider. Von Daniel fachlich prüfen lassen. */
+export const begriffe = {
+  Proxmox: {
+    lang: "Proxmox VE",
+    text: "Open-Source-Plattform für virtuelle Maschinen und Container, aufgebaut auf Debian und KVM. Nutzbar ohne Lizenzkosten, Support ist optional.",
+  },
+  Hypervisor: {
+    lang: "Hypervisor",
+    text: "Die Software, auf der virtuelle Maschinen laufen. Sie teilt Prozessor, Speicher und Netz eines Servers auf viele Systeme auf. Beispiele: Proxmox VE, Hyper-V, VMware.",
+  },
+  VBS: {
+    lang: "Virtualization Based Security",
+    text: "Windows schottet Anmeldedaten und andere kritische Teile in einem eigenen, abgesicherten Bereich ab. Schützt vor dem Diebstahl von Zugangsdaten, kostet ohne Feinschliff viel Leistung.",
+  },
+  Cluster: {
+    lang: "Cluster",
+    text: "Mehrere Server, die als ein System arbeiten. Fällt einer aus, übernehmen die anderen seine virtuellen Maschinen.",
+  },
+  "Docker Compose": {
+    lang: "Docker Compose",
+    text: "Eine Vorlage, mit der sich mehrere zusammengehörige Dienste mit einem Befehl starten lassen. Jedes Mal gleich, auch auf einem neuen Server.",
+  },
+  Playbook: {
+    lang: "Ansible-Playbook",
+    text: "Eine Datei, die Schritt für Schritt beschreibt, wie Server eingerichtet werden. Läuft automatisch und auf allen Servern gleich.",
+  },
+} as const;
+export type BegriffSchluessel = keyof typeof begriffe;
 
 /** Leistungen, Quelle: bestehende Website (Leistungen) und Antwort Daniel (Backup eigenes Angebot) */
 export const leistungen = [
@@ -58,7 +97,7 @@ export const leistungen = [
   {
     kennung: "PERF",
     titel: "Proxmox VE und Performance",
-    text: "Die Stabilität eines Unternehmens ruht auf seiner Infrastruktur. Proxmox VE als Hypervisor, abgestimmt auf Ihre Hardware und Ihre Last.",
+    text: "Die Stabilität eines Unternehmens ruht auf seiner Infrastruktur. {Proxmox VE|Proxmox} als {Hypervisor}, abgestimmt auf Ihre Hardware und Ihre Last.",
     technik: ["Proxmox VE", "Linux", "ZFS"],
   },
   {
@@ -76,13 +115,13 @@ export const leistungen = [
   {
     kennung: "IAM",
     titel: "Identität und Zugang",
-    text: "Keycloak als zentrale Anmeldung mit Single Sign-On und Mehrfaktor-Schutz. Manuell eingerichtet oder als angepasstes Docker-Compose-Template.",
+    text: "Keycloak als zentrale Anmeldung mit Single Sign-On und Mehrfaktor-Schutz. Manuell eingerichtet oder als angepasste Vorlage für {Docker Compose}.",
     technik: ["Keycloak", "SSO", "MFA"],
   },
   {
     kennung: "OPS",
     titel: "Observability und Automatisierung",
-    text: "Wiederkehrende Arbeit blockiert IT-Teams. Playbooks und ein vollständiger Blick auf alle Systeme schaffen wieder Raum für Weiterentwicklung.",
+    text: "Wiederkehrende Arbeit blockiert IT-Teams. {Playbooks|Playbook} und ein vollständiger Blick auf alle Systeme schaffen wieder Raum für Weiterentwicklung.",
     technik: ["Ansible", "Grafana", "Semaphore UI"],
   },
 ] as const;

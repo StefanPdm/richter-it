@@ -8,7 +8,7 @@ export const site = {
   sprache: "de",
   locale: "de_DE",
   beschreibung:
-    "Daniel Richter optimiert IT-Infrastrukturen für Mittelstand, Behörden und Landesanstalten: Open Source, im eigenen Haus, mit gezielten Eingriffen.",
+    "Daniel Richter holt mehr Leistung aus bestehender IT-Infrastruktur, ohne die Sicherheit zu opfern: Proxmox, Open Source, im eigenen Haus.",
   telefon: "+49 173 963 74 27",
   email: "kontakt@daniel-richter.it",
   adresse: { strasse: "Tiroler Damm 16B", plz: "14478", ort: "Potsdam", land: "DE" },
