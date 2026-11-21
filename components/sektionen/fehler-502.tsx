@@ -66,15 +66,100 @@ function Zahnrad() {
 }
 
 /**
+ * Schema mit Schalter und Monitor: Besucher sehen zuerst die 502 und schalten den Dienst
+ * selbst wieder ein. Eigenständig, damit es auch im Wissens-Dossier stehen kann.
+ */
+export function Fehler502Demo({ kompakt = false }: { /** untereinander statt nebeneinander (schmale Spalte) */ kompakt?: boolean }) {
+  /* Startet getrennt: Besucher sehen zuerst die 502 und schalten den Dienst selbst wieder ein */
+  const [getrennt, setGetrennt] = useState(true);
+  const z = getrennt ? fehler502.getrennt : fehler502.verbunden;
+
+  return (
+    <div className={`grid grid-cols-1 items-center gap-[clamp(2rem,4vw,4rem)] ${kompakt ? "" : "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"}`}>
+      {/* Schema und Schalter */}
+      <Reveal className="grid gap-6">
+        <div className="flex items-center" role="img" aria-label={getrennt ? "Besucher erreicht den Proxy, der Dienst dahinter ist getrennt" : "Besucher erreicht über den Proxy den Dienst"}>
+          <Knoten name="Besucher" />
+          <Leitung />
+          <Knoten name="Proxy" />
+          <Leitung getrennt={getrennt} />
+          <Knoten name="Dienst" aus={getrennt} />
+        </div>
+        <p className="font-mono text-sm" aria-live="polite">
+          <span className="text-text-muted">$ curl -I dienst</span>
+          <br />
+          <span className={getrennt ? "text-brand-dark" : "text-success"}>{z.status}</span>
+        </p>
+        <Button variante="secondary" aria-pressed={getrennt} onClick={() => setGetrennt((g) => !g)} className="justify-self-start">
+          {z.knopf}
+        </Button>
+      </Reveal>
+
+      {/* Monitor: Gehäuse, Bild mit Röhrenwirkung, Bedienleiste, Standfuß */}
+      <Reveal index={1} className="monitor">
+        <div className="monitor__gehaeuse">
+        <div className="monitor__bild relative grid h-72 w-full place-items-center overflow-hidden bg-bg sm:aspect-[16/10] sm:h-auto">
+          {getrennt ? (
+            <div key="getrennt" className="hud-ein absolute inset-0 grid place-items-center">
+              <div className="raster-boden" aria-hidden="true" />
+              <div className="hud-rahmen absolute inset-4" aria-hidden="true" />
+              <span className="daten absolute top-7 left-8 hidden border-l-2 border-brand pl-3 leading-relaxed sm:block" aria-hidden="true">
+                System_Status
+                <br />/ 502
+              </span>
+              <span className="daten absolute right-8 bottom-7 hidden text-right sm:block" aria-hidden="true">
+                HTTP 502
+                <br />
+                Bad Gateway
+              </span>
+              <div className="relative grid justify-items-center gap-2 px-6 text-center">
+                <Zahnrad />
+                <span className="f502-zahl font-display text-[clamp(3rem,2rem+3vw,5rem)] leading-none font-semibold text-brand [font-stretch:80%]">
+                  <Glitch text="502" takt="5s" />
+                </span>
+                <span className="daten text-text">{fehler502.getrennt.zeile}</span>
+                <span className="max-w-[34ch] text-sm text-text-muted">{fehler502.getrennt.hinweis}</span>
+              </div>
+            </div>
+          ) : (
+            <div key="verbunden" className="grid w-full max-w-sm gap-4 px-6" aria-hidden="true">
+              <span className="daten flex items-center gap-2.5 text-text">
+                <span className="status-punkt" />
+                {fehler502.verbunden.bild}
+              </span>
+              <ul className="f502-protokoll grid gap-1.5 font-mono text-xs whitespace-pre text-text-muted">
+                {fehler502.verbunden.protokoll.map((zeile, i) => (
+                  <li key={zeile} style={{ "--i": i } as CSSProperties}>
+                    {zeile}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className="monitor__roehre" aria-hidden="true" />
+        </div>
+        <div className="monitor__leiste" aria-hidden="true">
+          <span className="monitor__marke" />
+          <span className="flex items-center gap-3">
+            <span className="monitor__taste" />
+            <span className="monitor__taste" />
+            <span className={`monitor__led ${getrennt ? "monitor__led--warten" : ""}`} />
+          </span>
+        </div>
+        </div>
+        <div className="monitor__hals" aria-hidden="true" />
+        <div className="monitor__fuss" aria-hidden="true" />
+      </Reveal>
+    </div>
+  );
+}
+
+/**
  * 502 mit Absicht: startet mit getrenntem Dienst, Besucher sehen zuerst die 502 und
  * schalten den Dienst selbst wieder ein. Optik nach Daniels Fehlerseite:
  * Zahnrad, leichter Glow, wenige Animationen. Darunter drei Gründe, warum man bewusst trennt.
  */
 export function Fehler502() {
-  /* Startet getrennt: Besucher sehen zuerst die 502 und schalten den Dienst selbst wieder ein */
-  const [getrennt, setGetrennt] = useState(true);
-  const z = getrennt ? fehler502.getrennt : fehler502.verbunden;
-
   return (
     <section id="fehler-502" aria-labelledby="f502-titel" className="scroll-mt-(--header-h) bg-bg-alt py-(--section-y)">
       <div className="mx-auto max-w-wide px-(--gutter)">
@@ -85,82 +170,7 @@ export function Fehler502() {
           <p className="max-w-measure text-lead text-text-muted">{fehler502.einleitung}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 items-center gap-[clamp(2rem,4vw,4rem)] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-          {/* Schema und Schalter */}
-          <Reveal className="grid gap-6">
-            <div className="flex items-center" role="img" aria-label={getrennt ? "Besucher erreicht den Proxy, der Dienst dahinter ist getrennt" : "Besucher erreicht über den Proxy den Dienst"}>
-              <Knoten name="Besucher" />
-              <Leitung />
-              <Knoten name="Proxy" />
-              <Leitung getrennt={getrennt} />
-              <Knoten name="Dienst" aus={getrennt} />
-            </div>
-            <p className="font-mono text-sm" aria-live="polite">
-              <span className="text-text-muted">$ curl -I dienst</span>
-              <br />
-              <span className={getrennt ? "text-brand-dark" : "text-success"}>{z.status}</span>
-            </p>
-            <Button variante="secondary" aria-pressed={getrennt} onClick={() => setGetrennt((g) => !g)} className="justify-self-start">
-              {z.knopf}
-            </Button>
-          </Reveal>
-
-          {/* Monitor: Gehäuse, Bild mit Röhrenwirkung, Bedienleiste, Standfuß */}
-          <Reveal index={1} className="monitor">
-            <div className="monitor__gehaeuse">
-            <div className="monitor__bild relative grid h-72 w-full place-items-center overflow-hidden bg-bg sm:aspect-[16/10] sm:h-auto">
-              {getrennt ? (
-                <div key="getrennt" className="hud-ein absolute inset-0 grid place-items-center">
-                  <div className="raster-boden" aria-hidden="true" />
-                  <div className="hud-rahmen absolute inset-4" aria-hidden="true" />
-                  <span className="daten absolute top-7 left-8 hidden border-l-2 border-brand pl-3 leading-relaxed sm:block" aria-hidden="true">
-                    System_Status
-                    <br />/ 502
-                  </span>
-                  <span className="daten absolute right-8 bottom-7 hidden text-right sm:block" aria-hidden="true">
-                    HTTP 502
-                    <br />
-                    Bad Gateway
-                  </span>
-                  <div className="relative grid justify-items-center gap-2 px-6 text-center">
-                    <Zahnrad />
-                    <span className="f502-zahl font-display text-[clamp(3rem,2rem+3vw,5rem)] leading-none font-semibold text-brand [font-stretch:80%]">
-                      <Glitch text="502" takt="5s" />
-                    </span>
-                    <span className="daten text-text">{fehler502.getrennt.zeile}</span>
-                    <span className="max-w-[34ch] text-sm text-text-muted">{fehler502.getrennt.hinweis}</span>
-                  </div>
-                </div>
-              ) : (
-                <div key="verbunden" className="grid w-full max-w-sm gap-4 px-6" aria-hidden="true">
-                  <span className="daten flex items-center gap-2.5 text-text">
-                    <span className="status-punkt" />
-                    {fehler502.verbunden.bild}
-                  </span>
-                  <ul className="f502-protokoll grid gap-1.5 font-mono text-xs whitespace-pre text-text-muted">
-                    {fehler502.verbunden.protokoll.map((zeile, i) => (
-                      <li key={zeile} style={{ "--i": i } as CSSProperties}>
-                        {zeile}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <div className="monitor__roehre" aria-hidden="true" />
-            </div>
-            <div className="monitor__leiste" aria-hidden="true">
-              <span className="monitor__marke" />
-              <span className="flex items-center gap-3">
-                <span className="monitor__taste" />
-                <span className="monitor__taste" />
-                <span className={`monitor__led ${getrennt ? "monitor__led--warten" : ""}`} />
-              </span>
-            </div>
-            </div>
-            <div className="monitor__hals" aria-hidden="true" />
-            <div className="monitor__fuss" aria-hidden="true" />
-          </Reveal>
-        </div>
+        <Fehler502Demo />
 
         <Reveal className="mt-[clamp(3rem,6vw,5rem)] mb-[clamp(1.5rem,3vw,2.5rem)] grid gap-2">
           <h3 className="font-display text-h3 font-medium [font-stretch:80%]">{fehler502.gruendeTitel}</h3>

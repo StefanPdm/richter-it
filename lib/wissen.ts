@@ -138,10 +138,43 @@ export const dossiers: readonly Dossier[] = [
     kennung: "WIS-02",
     bereich: "Betrieb",
     titel: "502 ist kein Absturz.",
-    kurz: "Warum ein bewusst getrennter Dienst die sicherere Antwort sein kann.",
+    kurz: "Warum ein bewusst getrennter Dienst die sicherere Antwort sein kann, und was Besucher dann sehen sollten.",
     tiefe: 1,
     minuten: 3,
-    status: "bald",
+    status: "bereit",
+    dreissig: [
+      "Ein 502 heißt: Der Proxy vorne antwortet, der Dienst dahinter nicht.",
+      "Oft ist das gewollt: bei Wartung, bei einer bekannten Lücke oder um einen auffälligen Dienst abzukoppeln.",
+      "Eine gestaltete Fehlerseite sagt Besuchern ehrlich, was los ist, statt halbe Seiten zu zeigen.",
+    ],
+    kapitel: [
+      {
+        titel: "Was ein 502 bedeutet",
+        text: "Viele Dienste stehen nicht direkt im Netz, sondern hinter einem Reverse Proxy. Er nimmt Anfragen an und reicht sie an den Dienst weiter. Antwortet der Dienst nicht, meldet der Proxy 502 Bad Gateway, sinngemäß: Ich bin da, aber hinter mir antwortet niemand.",
+        technik:
+          "Der Statuscode 502 gehört zu den Serverfehlern (5xx): Ein Gateway oder Proxy hat vom nachgelagerten Server keine oder eine ungültige Antwort bekommen. Verwandt sind 503 (Dienst vorübergehend nicht verfügbar) und 504 (Zeitüberschreitung am Gateway). Proxys wie nginx, Caddy oder HAProxy können dafür eine eigene Fehlerseite ausliefern.",
+      },
+      {
+        titel: "Warum man bewusst trennt",
+        text: "Ein 502 ist oft eine Entscheidung. Bei einem Update bleibt der Proxy online und sagt ehrlich, dass dahinter gerade niemand antwortet. Bei einer bekannten Lücke ohne Patch nehme ich den Dienst vom Netz, statt ihn offen laufen zu lassen. Und ein Dienst, der sich auffällig verhält, wird abgekoppelt und untersucht, während der Rest weiterläuft.",
+      },
+      {
+        titel: "Was Besucher sehen sollten",
+        text: "Eine leere Standardseite wirkt wie ein Absturz oder gar ein Angriff. Eine gestaltete Fehlerseite erklärt, dass der Dienst bewusst getrennt ist, dass er zurückkommt und wie man trotzdem jemanden erreicht. Besucher erschrecken weniger und schauen genauer hin.",
+        technik:
+          "Die Fehlerseite muss ohne den getrennten Dienst funktionieren: eine einzelne Datei ohne externe Abhängigkeiten, ausgeliefert vom Proxy selbst, in nginx etwa mit error_page 502 /502.html. Für geplante Wartung ist 503 mit Retry-After das sauberere Signal an Suchmaschinen.",
+      },
+    ],
+    ausprobieren: { art: "502", nach: 1, satz: "Schalten Sie den Dienst wieder ein und sehen Sie, was beim Besucher ankommt." },
+    fuerSie: {
+      text: "Wenn Ihre Dienste bei Wartung einfach verschwinden oder Besucher dann eine nackte Fehlermeldung sehen, lässt sich das mit wenig Aufwand sauber lösen.",
+      leistung: { pfad: "/automatisierung", label: "Automatisierung" },
+    },
+    fragen: [
+      { frage: "Ist ein 502 immer gewollt?", antwort: "Nein. Er entsteht auch, wenn ein Dienst abstürzt oder überlastet ist. Bei einer bewussten Trennung wissen Sie es vorher und können Besucher darauf vorbereiten." },
+      { frage: "Schadet ein 502 in Suchmaschinen?", antwort: "Kurze Unterbrechungen sind unkritisch. Für geplante Wartung ist 503 mit der Angabe, wann es weitergeht, das sauberere Signal." },
+      { frage: "Was gehört auf die Fehlerseite?", antwort: "Was los ist, dass es gewollt ist, dass der Dienst zurückkommt und wie man Sie trotzdem erreicht." },
+    ],
     geaendert: "2026-11-21",
   },
   {
@@ -149,10 +182,50 @@ export const dossiers: readonly Dossier[] = [
     kennung: "WIS-04",
     bereich: "Virtualisierung",
     titel: "Proxmox ist ein Baukasten.",
-    kurz: "KVM, QEMU, LXC und Debian: woraus Proxmox besteht und wo es klemmen kann.",
+    kurz: "KVM, QEMU, LXC und Debian: woraus Proxmox besteht, und warum die Ursache eines Fehlers oft eine Ebene tiefer liegt.",
     tiefe: 3,
     minuten: 5,
-    status: "bald",
+    status: "bereit",
+    dreissig: [
+      "Proxmox VE verbindet bewährte Open-Source-Bausteine zu einer Plattform.",
+      "KVM und QEMU für virtuelle Maschinen, LXC für Container, Debian als Grundlage.",
+      "Wer die Bausteine kennt, findet Fehler schneller: Oft liegt die Ursache eine Ebene tiefer.",
+    ],
+    kapitel: [
+      {
+        titel: "Die Bausteine",
+        text: "{Proxmox} erfindet wenig neu. Es setzt bewährte Teile zusammen: KVM, die Virtualisierung im Linux-Kernel, QEMU für die virtuelle Hardware, LXC für leichte Container, dazu Speicher wie ZFS oder Ceph und eine Weboberfläche, die alles bedienbar macht.",
+        technik:
+          "Die Grundlage ist Debian, den Kernel übernimmt Proxmox aus Ubuntu und pflegt ihn selbst. {Cluster} laufen über Corosync, Hochverfügbarkeit über einen eigenen HA-Manager, Sicherungen über Proxmox Backup Server. Alles ist Open Source unter der AGPL.",
+      },
+      {
+        titel: "Warum das zählt",
+        text: "Jeder Baustein bringt eigene Eigenheiten mit. Ein Fehler, der wie ein Proxmox-Problem aussieht, kommt oft aus Debian oder dem Kernel darunter. Wer die Schichten kennt, sucht an der richtigen Stelle.",
+      },
+      {
+        titel: "Ein Beispiel aus der Praxis",
+        text: "Nach einem Kernel-Update unterstützte das System ältere Netzwerkkarten nicht mehr, nach dem Neustart war das Netz weg. Kein Fehler in Proxmox, sondern eine Ebene darunter. Wer das weiß, prüft vor dem Update die Hardware und hat einen Rückweg.",
+        technik:
+          "Ein Rückweg heißt etwa: den bisherigen Kernel als Startoption behalten und festsetzen, Treiber und Firmware vorher gegen die Versionshinweise prüfen und Updates erst auf einem Testknoten fahren.",
+      },
+      {
+        titel: "Upgrades planen",
+        text: "Ein großes Upgrade wie von Proxmox 8 auf 9 hebt auch Debian auf eine neue Version. Vorher prüfen, was sich ändert, dann ein Testlauf, dann Knoten für Knoten im laufenden Betrieb.",
+        technik:
+          "Proxmox liefert dafür ein Prüfskript (pve8to9), das bekannte Stolpersteine vor dem Upgrade meldet. Im Cluster werden die Knoten nacheinander aktualisiert, die virtuellen Maschinen ziehen vorher per Live-Migration auf andere Knoten um.",
+      },
+    ],
+    ausprobieren: { art: "schichten", nach: 0, satz: "So sind die Bausteine geschichtet, und an diesen Stellen setzt der Feinschliff an." },
+    fuerSie: {
+      text: "Wenn bei Ihnen ein großes Proxmox-Upgrade ansteht oder nach Updates Merkwürdiges passiert, lohnt ein Blick auf die Ebene darunter.",
+      fall: "altsystem",
+      leistung: { pfad: "/proxmox", label: "Proxmox VE" },
+    },
+    fragen: [
+      { frage: "Ist Proxmox kostenlos?", antwort: "Die Software ist Open Source und ohne Lizenzkosten nutzbar. Für den Unternehmenseinsatz gibt es optionale Subscriptions mit stabilem Update-Kanal und Support." },
+      { frage: "Was ist der Unterschied zwischen VM und Container?", antwort: "Eine virtuelle Maschine bringt ein eigenes Betriebssystem mit. Ein Container teilt sich den Kernel mit dem Host, ist dadurch leichter, aber weniger stark getrennt." },
+      { frage: "Kann ich von VMware wechseln?", antwort: "Ja, Proxmox kann virtuelle Maschinen aus VMware übernehmen. Was der Wechsel bei Ihnen spart, zeigt der VMware-Ausstiegsrechner unter Werkzeuge." },
+    ],
     geaendert: "2026-11-21",
   },
   {
@@ -160,10 +233,48 @@ export const dossiers: readonly Dossier[] = [
     kennung: "WIS-05",
     bereich: "Netzwerk",
     titel: "Welcher Verkehr gehört durch die Firewall?",
-    kurz: "Interner Verkehr über die Firewall kann ein ganzes Netz ausbremsen.",
+    kurz: "Die Firewall schützt den Weg nach außen. Läuft großer interner Verkehr durch sie, wird sie zum Flaschenhals.",
     tiefe: 2,
     minuten: 4,
-    status: "bald",
+    status: "bereit",
+    dreissig: [
+      "Die Firewall schützt den Übergang nach außen. Für Verkehr zwischen internen Netzen ist sie oft das falsche Gerät.",
+      "Läuft großer interner Verkehr durch sie, wird sie zum Flaschenhals und blockiert unter Last ganze Netze.",
+      "Die Lösung liegt meist in der Wegführung, nicht in neuer Hardware.",
+    ],
+    kapitel: [
+      {
+        titel: "Was eine Firewall tut",
+        text: "Sie prüft Verkehr gegen Regeln, viele Modelle auch auf Viren und Angriffe. Das kostet Rechenleistung pro Paket. Für den Übergang ins Internet ist das genau richtig.",
+        technik:
+          "Moderne Firewalls arbeiten mit Deep Packet Inspection, Intrusion Prevention und Virenscan. Ihr Durchsatz mit allen Prüfungen liegt oft weit unter dem Wert, den das Datenblatt für reines Weiterleiten nennt.",
+      },
+      {
+        titel: "Wenn interner Verkehr durchläuft",
+        text: "Werden interne Netze über die Firewall verbunden, prüft sie auch jedes Paket zwischen Büro und Speicher. Bei großen Dateien wie 8K-Videos ist sie schnell am Limit, und dann blockiert sie unter Last ganze Netze.",
+      },
+      {
+        titel: "Die bessere Wegführung",
+        text: "Verkehr zwischen vertrauenswürdigen internen Netzen läuft über die Core-Switches, die für hohe Datenraten gebaut sind. Die Firewall prüft den Weg nach außen und gezielt die Übergänge, die wirklich Schutz brauchen.",
+        technik:
+          "Core-Switches mit Layer-3-Routing verbinden VLANs mit voller Geschwindigkeit. Wo zwischen internen Zonen trotzdem gefiltert werden soll, reichen oft Zugriffslisten auf dem Switch, oder die Firewall prüft nur die wenigen kritischen Übergänge.",
+      },
+      {
+        titel: "Warum es so weit kommt",
+        text: "Oft fehlt die Pflege: Eine Fachfirma richtet die Firewall ein, ein Wartungsvertrag entfällt, und neue Netze werden mit kopierten Einstellungen angelegt. So wandern unnötige Prüfungen von Netz zu Netz.",
+      },
+    ],
+    ausprobieren: { art: "firewall", nach: 2, satz: "Stellen Sie den Weg um und sehen Sie, wie sich der Stau auflöst." },
+    fuerSie: {
+      text: "Wenn Ihr Netz bei großen Datenmengen zeitweise hakt, ohne dass ein Gerät ausfällt, lohnt ein Blick in das Monitoring der Firewall.",
+      fall: "firewall-engpass",
+      leistung: { pfad: "/automatisierung", label: "Monitoring und Automatisierung" },
+    },
+    fragen: [
+      { frage: "Ist es nicht unsicherer, Verkehr an der Firewall vorbeizuleiten?", antwort: "Nicht bei vertrauenswürdigen internen Netzen. Wo eine Trennung nötig ist, prüft die Firewall gezielt diese Übergänge." },
+      { frage: "Brauche ich dafür neue Hardware?", antwort: "Meist nicht. Core-Switches können das in vielen Netzen schon, es fehlt nur die passende Konfiguration." },
+      { frage: "Woran erkenne ich den Engpass?", antwort: "Am Monitoring: Die Firewall steht bei großen Übertragungen unter Volllast, während die Switches kaum ausgelastet sind." },
+    ],
     geaendert: "2026-11-21",
   },
 ];

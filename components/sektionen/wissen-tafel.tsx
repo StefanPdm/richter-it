@@ -5,7 +5,7 @@ import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 import { dossiers } from "@/lib/wissen";
 
 /** Breite der Titelspalte in Zeichen: länger wird gekürzt, kürzer aufgefüllt */
-const BREITE = 40;
+const BREITE = 44;
 const zuschnitt = (t: string) => {
   const s = t.replace(/\.$/, "").toUpperCase();
   return s.length > BREITE ? `${s.slice(0, BREITE - 1)}…` : s.padEnd(BREITE, " ");
@@ -17,7 +17,7 @@ const zuschnitt = (t: string) => {
  * anklickbar. Auf dem Handy ohne Klappzellen im Titel (zu breit), dafür als Klartext.
  */
 export function WissenTafel() {
-  const zeilen = [...dossiers].sort((a, b) => (a.status === b.status ? a.kennung.localeCompare(b.kennung) : a.status === "bereit" ? -1 : 1)).slice(0, 4);
+  const zeilen = [...dossiers].sort((a, b) => (a.status === b.status ? a.kennung.localeCompare(b.kennung) : a.status === "bereit" ? -1 : 1));
 
   return (
     <section id="wissen" aria-labelledby="wissen-tafel-titel" className="relative isolate scroll-mt-(--header-h) border-y border-border bg-bg-alt py-[clamp(3.5rem,7vw,6rem)]">

@@ -6,6 +6,9 @@ import { DossierAnsicht } from "@/components/wissen/dossier-ansicht";
 import { Tiefe } from "@/components/wissen/wissen-liste";
 import { VbsInstrument } from "@/components/sektionen/vbs-moment";
 import { AusfallNetz } from "@/components/werkzeuge/ausfall-netz";
+import { Fehler502Demo } from "@/components/sektionen/fehler-502";
+import { Schichten } from "@/components/leistungen/schichten";
+import { FirewallSchema } from "@/components/faelle/firewall-schema";
 import { referenzen } from "@/lib/inhalte";
 import { dossier, fertigeDossiers, type Ausprobieren } from "@/lib/wissen";
 import { seitenMetadaten } from "@/lib/seo";
@@ -27,7 +30,9 @@ export async function generateMetadata({ params }: Seite) {
 function Element({ art }: { art: Ausprobieren }) {
   if (art === "vbs") return <VbsInstrument />;
   if (art === "ausfall") return <AusfallNetz />;
-  return null;
+  if (art === "502") return <Fehler502Demo kompakt />;
+  if (art === "schichten") return <Schichten />;
+  return <FirewallSchema />;
 }
 
 /** Dossier-Seite: Lesemodus, In 30 Sekunden, Kapitel mit Leiste, Ausprobieren, Fragen, Kontakt. */

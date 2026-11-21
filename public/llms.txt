@@ -13,6 +13,9 @@
 
 - [VBS: Was es schützt, was es kostet](https://daniel-richter.it/wissen/vbs): Virtualization Based Security auf virtuellen Servern
 - [NTP und DNS: die stillen Ausfallpunkte](https://daniel-richter.it/wissen/ntp-dns): Zeitserver und Namensauflösung in der Infrastrukturplanung
+- [502 ist kein Absturz](https://daniel-richter.it/wissen/502): bewusst getrennte Dienste hinter einem Reverse Proxy
+- [Proxmox ist ein Baukasten](https://daniel-richter.it/wissen/proxmox-baukasten): KVM, QEMU, LXC, Debian und Upgrades von 8 auf 9
+- [Welcher Verkehr gehört durch die Firewall?](https://daniel-richter.it/wissen/firewall-verkehr): interner Verkehr über Core-Switches statt Firewall
 - [Glossar](https://daniel-richter.it/wissen/begriffe): Fachbegriffe in je einem Satz
 
 ## Fälle (anonym)
