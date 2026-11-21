@@ -4,15 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import { useRuhig, useSichtbar } from "@/lib/hooks";
 
 const ZIFFERN = "0123456789";
+const ZEICHEN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-type Props = { text: string; className?: string };
+type Props = {
+  text: string;
+  className?: string;
+  /** Auch Buchstaben klappen durch (Abflugtafel), sonst nur Ziffern (Kennzahlen) */
+  buchstaben?: boolean;
+  /** Versatz zwischen den Stellen in Klappschritten, kleiner = schneller fertig */
+  versatz?: number;
+};
 
 /**
  * Fallblatt-Anzeige wie am Bahnhof: Jede Stelle klappt einige Male durch,
  * dann steht der Zielwert. Stellen laufen versetzt (links zuerst fertig).
  * Ruhezustand und "weniger Bewegung": Zielwert sofort.
  */
-export function Fallblatt({ text, className = "" }: Props) {
+export function Fallblatt({ text, className = "", buchstaben = false, versatz = 2 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const sichtbar = useSichtbar(ref, { einmal: true, schwelle: 0.6 });
   const ruhig = useRuhig();
@@ -28,18 +36,20 @@ export function Fallblatt({ text, className = "" }: Props) {
       schritt += 1;
       setStand(
         zeichen.map((z, i) => {
-          const fertigBei = SCHRITTE - 3 + i * 2; // jede Stelle etwas später fertig
-          if (schritt >= fertigBei || !/\d/.test(z)) return z;
-          return ZIFFERN[Math.floor(Math.random() * 10)];
+          const fertigBei = SCHRITTE - 3 + Math.round(i * versatz); // jede Stelle etwas später fertig
+          const klappt = buchstaben ? z !== " " : /\d/.test(z);
+          if (schritt >= fertigBei || !klappt) return z;
+          const vorrat = buchstaben ? ZEICHEN : ZIFFERN;
+          return vorrat[Math.floor(Math.random() * vorrat.length)];
         }),
       );
       setTakt(schritt);
-      if (schritt >= SCHRITTE + zeichen.length * 2) window.clearInterval(uhr);
+      if (schritt >= SCHRITTE + zeichen.length * versatz) window.clearInterval(uhr);
     }, 190); // Takt pro Klappschritt, ruhig genug zum Mitlesen
     return () => window.clearInterval(uhr);
     // zeichen ergibt sich aus text
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sichtbar, ruhig, text]);
+  }, [sichtbar, ruhig, text, buchstaben, versatz]);
 
   return (
     <span ref={ref} className={`fallblatt ${className}`}>

@@ -1,0 +1,26 @@
+# Daniel Richter IT-Dienstleistungen
+
+> Daniel Richter aus Potsdam holt mehr Leistung aus bestehender IT-Infrastruktur, ohne die Sicherheit zu opfern: Proxmox VE, Open Source, im eigenen Rechenzentrum der Kunden. Kostenloses Audit von etwa einer Stunde, Projekte mit Abnahmeprotokoll.
+
+## Leistungen
+
+- [Proxmox VE](https://daniel-richter.it/proxmox): Cluster planen, Upgrades von 8 auf 9 im laufenden Betrieb, Leistung trotz VBS
+- [Backup und Wiederherstellung](https://daniel-richter.it/backup): inkrementell, dedupliziert, zweiter Standort, regelmäßig geprüft
+- [Automatisierung](https://daniel-richter.it/automatisierung): Ansible-Playbooks, Patch-Management, Monitoring mit Grafana
+- [So arbeiten wir](https://daniel-richter.it/zusammenarbeit): Audit, Projektplan, Team, Tests, Abnahmeprotokoll
+
+## Wissen
+
+- [VBS: Was es schützt, was es kostet](https://daniel-richter.it/wissen/vbs): Virtualization Based Security auf virtuellen Servern
+- [NTP und DNS: die stillen Ausfallpunkte](https://daniel-richter.it/wissen/ntp-dns): Zeitserver und Namensauflösung in der Infrastrukturplanung
+- [Glossar](https://daniel-richter.it/wissen/begriffe): Fachbegriffe in je einem Satz
+
+## Fälle (anonym)
+
+- [Sicher und trotzdem schnell](https://daniel-richter.it/faelle/vbs-leistung): VBS-Leistungseinbruch behoben
+- [Die Firewall, die alles bremste](https://daniel-richter.it/faelle/firewall-engpass): interner Verkehr über Core-Switches statt Firewall
+- [Weiter betreiben statt neu kaufen](https://daniel-richter.it/faelle/altsystem): 18 Jahre altes System optimiert
+
+## Kontakt
+
+- [Kontakt und Impressum](https://daniel-richter.it/impressum)

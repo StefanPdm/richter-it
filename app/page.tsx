@@ -2,6 +2,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Hero } from "@/components/sektionen/hero";
 import { Laufband } from "@/components/sektionen/laufband";
 import { VbsMoment } from "@/components/sektionen/vbs-moment";
+import { WissenTafel } from "@/components/sektionen/wissen-tafel";
 import { ZitatBand } from "@/components/sektionen/zitat-band";
 import { ZusammenarbeitBand } from "@/components/sektionen/zusammenarbeit-band";
 import { Kennzahlen } from "@/components/sektionen/kennzahlen";
@@ -21,7 +22,7 @@ import { Fehler502 } from "@/components/sektionen/fehler-502";
 
 /* Startseite, Präsentationsversion "Leitstand im Abendlicht" (DESIGN.md).
    Rhythmus der Hintergründe, abwechselnd bewegt (B) und ruhig (R):
-   Hero B, VBS R, Kennzahlen B (Lichtfeger), Medienband B (Video), Leistungen R, Leitstand B (Datenstrom),
+   Hero B, VBS R, Wissen-Tafel R (Abflugtafel), Kennzahlen B (Lichtfeger), Medienband B (Video), Leistungen R, Leitstand B (Datenstrom),
    Haltung R, 502 B, Referenzen R, Zitat R, Zusammenarbeit (Band) R, Person B (Netz), Partner R,
    Kontakt B (Kontrollraum). Backup (Messung, Ablauf) steht auf /backup, die Leistungskarte
    verweist darauf. Neue Sektionen nur nach Rückfrage (CLAUDE.md). Leitstand: Kontrollraum mit Kamerafahrt und Scan-Strahl. */
@@ -57,6 +58,7 @@ export default function Startseite() {
       <Hero />
       <Laufband />
       <VbsMoment />
+      <WissenTafel />
       <Kennzahlen />
       {/* Drohnenvideo weit oben: Wunsch Daniel (21.11.2026) */}
       <Medienband />

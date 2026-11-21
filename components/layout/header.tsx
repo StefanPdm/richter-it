@@ -3,8 +3,9 @@ import { site } from "@/lib/site";
 import { ThemaKnopf } from "@/components/ui/thema-knopf";
 import { Marke } from "@/components/marke/marke";
 import { MobilMenue } from "@/components/layout/mobil-menue";
+import { NavAufklapp } from "@/components/layout/nav-aufklapp";
 
-/** Header: Marke, 4 Links, eine Aktion. Klebt oben. */
+/** Header: Marke, höchstens 6 Menüpunkte (einer davon mit Aufklappmenü), eine Aktion. Klebt oben. */
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-bg transition-colors duration-(--dur-welt)">
@@ -12,7 +13,10 @@ export function Header() {
         <Marke />
         <nav aria-label="Hauptmenü" className="hidden md:block">
           <ul className="flex items-center gap-7 text-sm">
-            {site.navigation.map((punkt) => (
+            {site.navigation.map((punkt) =>
+              "unter" in punkt ? (
+                <NavAufklapp key={punkt.href} label={punkt.label} href={punkt.href} unter={punkt.unter} />
+              ) : (
               <li key={punkt.href}>
                 <Link
                   href={punkt.href}
@@ -21,7 +25,8 @@ export function Header() {
                   {punkt.label}
                 </Link>
               </li>
-            ))}
+              ),
+            )}
           </ul>
         </nav>
         <div className="flex items-center gap-2">

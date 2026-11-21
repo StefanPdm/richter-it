@@ -36,6 +36,7 @@ const ZIELE: Record<string, { id: string; label: string; pfad?: string }> = {
   zusammenarbeit: { id: "", label: "So arbeiten wir", pfad: "/zusammenarbeit" },
   proxmox: { id: "", label: "Proxmox VE", pfad: "/proxmox" },
   automatisierung: { id: "", label: "Automatisierung", pfad: "/automatisierung" },
+  wissen: { id: "", label: "Wissen", pfad: "/wissen" },
   person: { id: "ueber-mich", label: "Über mich" },
   partner: { id: "partner", label: "Partner" },
   kontakt: { id: "kontakt", label: "Kontakt" },

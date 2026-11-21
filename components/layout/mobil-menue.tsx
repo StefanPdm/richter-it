@@ -81,6 +81,19 @@ export function MobilMenue() {
                         <span className="daten text-brand-dark">{String(i + 1).padStart(2, "0")}</span>
                         <span className="font-display text-h2 leading-none font-medium [font-stretch:72%]">{punkt.label}</span>
                       </a>
+                      {/* Unterseiten eingerückt unter dem Punkt */}
+                      {"unter" in punkt && (
+                        <ul className="-mt-1 grid gap-0.5 pb-3 pl-10">
+                          {punkt.unter.map((u) => (
+                            <li key={u.href}>
+                              <a href={u.href} onClick={geheZu} className="flex min-h-11 items-center gap-3 text-text-muted hover:text-text">
+                                <span aria-hidden="true" className="h-px w-3 bg-border-strong" />
+                                {u.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </li>
                   ))}
                 </ul>

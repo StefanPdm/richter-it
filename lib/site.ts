@@ -14,13 +14,23 @@ export const site = {
   adresse: { strasse: "Tiroler Damm 16B", plz: "14478", ort: "Potsdam", land: "DE" },
   github: "https://github.com/danielrichterit/grafana-stack",
   /* Keine Social-Media-Links: Daniels berufliche Auflagen (Gespräch 19.11.2026) */
+  /* Hauptmenü: höchstens 6 Punkte (Vorgabe Stefan). "unter" öffnet ein Aufklappmenü,
+     auf dem Handy eingerückt unter dem Punkt. */
   navigation: [
-    { label: "Leistungen", href: "/#leistungen" },
-    { label: "Backup", href: "/backup" },
+    {
+      label: "Leistungen",
+      href: "/#leistungen",
+      unter: [
+        { label: "Proxmox VE", href: "/proxmox", satz: "Cluster, Upgrades, Leistung" },
+        { label: "Backup", href: "/backup", satz: "Sichern im Zeitfenster" },
+        { label: "Automatisierung", href: "/automatisierung", satz: "Playbooks, Patches, Monitoring" },
+        { label: "So arbeiten wir", href: "/zusammenarbeit", satz: "Vom Audit bis zur Abnahme" },
+      ],
+    },
     { label: "Werkzeuge", href: "/werkzeuge" },
+    { label: "Wissen", href: "/wissen" },
     { label: "Referenzen", href: "/#referenzen" },
     { label: "Über mich", href: "/#ueber-mich" },
-    { label: "Partner", href: "/#partner" },
   ],
   aktion: { label: "Gespräch vereinbaren", kurz: "Kontakt", href: "/#kontakt" },
   rechtliches: [

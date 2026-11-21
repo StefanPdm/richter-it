@@ -33,7 +33,8 @@ durch freigegebene Angaben ersetzen oder löschen. Nie ungeprüft veröffentlich
 
 - `app/tokens.css` ist die einzige Quelle für Farben, Schrift, Größen, Form und
   Bewegung. Keine Hex-Werte, keine px-Werte in TSX. Fehlt ein Token: Stefan fragen.
-- Inhalte stehen in `lib/inhalte.ts` und `lib/site.ts`, nicht im Markup verstreut.
+- Inhalte stehen in `lib/inhalte.ts` und `lib/site.ts` (Wissens-Dossiers in `lib/wissen.ts`,
+  Werkzeuge in `lib/werkzeuge.ts`), nicht im Markup verstreut.
   Offene Inhalte beginnen mit `[` und werden automatisch markiert.
 - Komponenten aus `components/` wiederverwenden. Neue Bausteine: Props mit deutschem
   Namen und JSDoc, Client-Code nur wo nötig.

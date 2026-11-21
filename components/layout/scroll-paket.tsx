@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
    nachtragen, sonst bleibt beim Scrollen der Name der vorherigen Sektion stehen (CLAUDE.md). */
 const ABSCHNITTE: Record<string, string> = {
   vbs: "VBS",
+  wissen: "Wissen",
   drohne: "Inspektion",
   leistungen: "Leistungen",
   leitstand: "Leitstand",
@@ -40,6 +41,7 @@ function seitenName(pfad: string) {
   if (teil === "zusammenarbeit") return "Zusammenarbeit";
   if (teil === "proxmox") return "Proxmox";
   if (teil === "automatisierung") return "Automatisierung";
+  if (teil === "wissen") return pfad.includes("begriffe") ? "Glossar" : pfad === "/wissen" ? "Wissen" : "Dossier";
   if (teil === "impressum") return "Impressum";
   if (teil === "datenschutz") return "Datenschutz";
   return "Route";
