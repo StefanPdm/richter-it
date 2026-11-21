@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Richter;Daniel;;;
+FN:Daniel Richter
+ORG:Daniel Richter IT-Dienstleistungen
+TITLE:IT-Infrastruktur
+TEL;TYPE=WORK,VOICE:+491739637427
+EMAIL;TYPE=WORK:kontakt@daniel-richter.it
+ADR;TYPE=WORK:;;Tiroler Damm 16B;Potsdam;;14478;Deutschland
+URL:https://daniel-richter.it
+NOTE:Proxmox VE\, Backup\, Automatisierung. Kostenloses Audit von etwa einer Stunde.
+END:VCARD

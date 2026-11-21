@@ -607,3 +607,17 @@ export const leistungsseiten = {
   },
 } as const;
 export type Leistungsseite = (typeof leistungsseiten)[keyof typeof leistungsseiten];
+
+/* Vortrag: Seite für Workshop-Teilnehmer, erreichbar über den QR-Code auf Daniels letzter
+   Folie (public/vortrag-qr.svg, hell: vortrag-qr-hell.svg). Nicht in Navigation und Sitemap.
+   Daniel verweist lieber auf die Website als Visitenkarten zu verteilen (Gespräch 19.11.2026). */
+export const vortrag = {
+  titel: "Schön, dass Sie da waren.",
+  lead: "Hier finden Sie alles, um das Thema in Ruhe nachzulesen, selbst nachzurechnen oder direkt mit mir zu sprechen.",
+  statt: "Statt Visitenkarte: diese Seite. Speichern Sie meinen Kontakt, dann finden Sie mich wieder.",
+  wege: [
+    { kennung: "01 · Nachlesen", titel: "Dossiers", satz: "Fünf Themen aus der Praxis, in 30 Sekunden oder in der Tiefe.", pfad: "/wissen", aktion: "Zu den Dossiers" },
+    { kennung: "02 · Nachrechnen", titel: "Werkzeuge", satz: "Ausfall-Netz, Cluster-Planer, VMware-Ausstieg: rechnen nur in Ihrem Browser.", pfad: "/werkzeuge", aktion: "Zu den Werkzeugen" },
+    { kennung: "03 · Prüfen lassen", titel: "Kostenloses Audit", satz: "Etwa eine Stunde, in der wir auf Ihre Infrastruktur schauen und die Engpässe finden.", pfad: "/zusammenarbeit", aktion: "So läuft es ab" },
+  ],
+} as const;
