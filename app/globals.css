@@ -1087,3 +1087,76 @@
     12% { opacity: 0.35; }
   }
 }
+
+/* ---- Monitor (502-Sektion): Bildschirm wie ein echtes Gerät ----
+   Gehäuse mit Rahmen und Bedienleiste, Bild mit Röhrenwirkung (Zeilen, Randabdunklung,
+   leichte Wölbung durch Innenschatten), Hals und Fuß. */
+@layer components {
+  .monitor { display: grid; justify-items: center; }
+  .monitor__gehaeuse {
+    width: 100%;
+    padding: clamp(0.6rem, 0.4rem + 0.8vw, 1rem) clamp(0.6rem, 0.4rem + 0.8vw, 1rem) 0;
+    background: linear-gradient(to bottom, var(--color-surface), color-mix(in srgb, var(--color-surface) 70%, var(--color-bg)));
+    border: 1px solid var(--color-border-strong);
+    border-radius: 6px;
+    box-shadow: var(--shadow-float), inset 0 1px 0 color-mix(in srgb, var(--color-text) 8%, transparent);
+  }
+  .monitor__bild {
+    border: 1px solid var(--color-black);
+    border-radius: 3px;
+  }
+  /* Röhre: feine Zeilen, Randabdunklung, gewölbter Rand. Liegt über dem Bild. */
+  .monitor__roehre {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.18) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at center, transparent 60%, rgb(0 0 0 / 0.55) 100%);
+    box-shadow: inset 0 0 40px rgb(0 0 0 / 0.7), inset 0 0 2px rgb(0 0 0 / 0.9);
+  }
+  .monitor__leiste {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: clamp(1.75rem, 1.4rem + 0.8vw, 2.25rem);
+    padding-inline: 0.25rem;
+  }
+  .monitor__marke {
+    width: 2.25rem;
+    height: 2px;
+    background: color-mix(in srgb, var(--color-text-muted) 35%, transparent);
+  }
+  .monitor__taste {
+    width: 0.9rem;
+    height: 3px;
+    border-radius: 1px;
+    background: color-mix(in srgb, var(--color-border-strong) 80%, var(--color-bg));
+  }
+  .monitor__led {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--color-success);
+    box-shadow: 0 0 6px var(--color-success);
+  }
+  /* Getrennt: LED wechselt auf Bereitschaft (Bernstein) und blinkt langsam */
+  .monitor__led--warten { background: var(--color-cta); box-shadow: 0 0 6px var(--color-cta); }
+  @media (prefers-reduced-motion: no-preference) {
+    .monitor__led--warten { animation: atmen 2s ease-in-out infinite; }
+  }
+  .monitor__hals {
+    width: clamp(3rem, 2rem + 4vw, 5rem);
+    height: clamp(1rem, 0.6rem + 1.2vw, 1.75rem);
+    background: linear-gradient(to right, var(--color-bg-alt), var(--color-surface), var(--color-bg-alt));
+    border-inline: 1px solid var(--color-border);
+  }
+  .monitor__fuss {
+    width: clamp(8rem, 5rem + 10vw, 14rem);
+    height: 0.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 3px 3px 1px 1px;
+  }
+}

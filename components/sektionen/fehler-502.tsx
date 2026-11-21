@@ -105,13 +105,13 @@ export function Fehler502() {
             </Button>
           </Reveal>
 
-          {/* Bildschirm: was beim Besucher ankommt */}
-          <Reveal index={1}>
-            <div className="relative grid h-80 w-full place-items-center sm:aspect-[16/10] sm:h-auto sm:min-h-72 overflow-hidden border border-border bg-bg">
+          {/* Monitor: Gehäuse, Bild mit Röhrenwirkung, Bedienleiste, Standfuß */}
+          <Reveal index={1} className="monitor">
+            <div className="monitor__gehaeuse">
+            <div className="monitor__bild relative grid h-72 w-full place-items-center overflow-hidden bg-bg sm:aspect-[16/10] sm:h-auto">
               {getrennt ? (
                 <div key="getrennt" className="hud-ein absolute inset-0 grid place-items-center">
                   <div className="raster-boden" aria-hidden="true" />
-                  <div className="scanlines" aria-hidden="true" />
                   <div className="hud-rahmen absolute inset-4" aria-hidden="true" />
                   <span className="daten absolute top-7 left-8 hidden border-l-2 border-brand pl-3 leading-relaxed sm:block" aria-hidden="true">
                     System_Status
@@ -146,7 +146,19 @@ export function Fehler502() {
                   </ul>
                 </div>
               )}
+              <div className="monitor__roehre" aria-hidden="true" />
             </div>
+            <div className="monitor__leiste" aria-hidden="true">
+              <span className="monitor__marke" />
+              <span className="flex items-center gap-3">
+                <span className="monitor__taste" />
+                <span className="monitor__taste" />
+                <span className={`monitor__led ${getrennt ? "monitor__led--warten" : ""}`} />
+              </span>
+            </div>
+            </div>
+            <div className="monitor__hals" aria-hidden="true" />
+            <div className="monitor__fuss" aria-hidden="true" />
           </Reveal>
         </div>
 
