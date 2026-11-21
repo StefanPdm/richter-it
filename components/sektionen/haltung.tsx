@@ -4,6 +4,7 @@ import { DekodierText } from "@/components/effekte/dekodier-text";
 import { DrohnenHud } from "@/components/effekte/drohnen-hud";
 import { Glitch } from "@/components/effekte/glitch";
 import { grundsaetze } from "@/lib/inhalte";
+import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 
 /**
  * Medienband mit KI-Video 02: Drohnenflug durch eine unterirdische Serverhalle (Loop, stumm).
@@ -45,7 +46,8 @@ export function Medienband() {
 /** Haltung: drei Grundsätze, der dritte als Zitat von Daniel. */
 export function Haltung() {
   return (
-    <section aria-labelledby="haltung-titel" className="py-(--section-y)">
+    <section aria-labelledby="haltung-titel" className="relative isolate py-(--section-y)">
+      <Sektionsgrund licht="mitte-unten" motiv="scan" warm />
       <div className="mx-auto max-w-wide px-(--gutter)">
         <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
           <h2 id="haltung-titel" className="titel-linie titel-glitch max-w-[16ch] text-h2">

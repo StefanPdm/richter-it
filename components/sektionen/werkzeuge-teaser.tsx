@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { werkzeuge } from "@/lib/werkzeuge";
+import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 
 /** Startseite: kompakter Hinweis auf die Werkzeuge, eine Zeile je Werkzeug. Ruhiger Hintergrund. */
 export function WerkzeugeTeaser() {
   return (
-    <section id="werkzeuge" aria-labelledby="werkzeuge-teaser-titel" className="scroll-mt-(--header-h) py-(--section-y)">
+    <section id="werkzeuge" aria-labelledby="werkzeuge-teaser-titel" className="relative isolate scroll-mt-(--header-h) py-(--section-y)">
+      <Sektionsgrund licht="links-unten" motiv="marken" />
       <div className="mx-auto grid max-w-wide gap-[clamp(2rem,4vw,3.5rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start">
         <Reveal className="grid gap-5">
           <span className="daten">Werkzeuge · im Browser</span>

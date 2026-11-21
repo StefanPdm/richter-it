@@ -2,6 +2,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { ThemaKnopf } from "@/components/ui/thema-knopf";
 import { site } from "@/lib/site";
 import type { Thema } from "@/lib/kontakt-thema";
+import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 
 type Props = {
   /** Kurze Aussage, eine Zeile */
@@ -18,7 +19,8 @@ type Props = {
  */
 export function CtaBand({ satz, zusatz, knopf, thema }: Props) {
   return (
-    <aside aria-label="Kontakt aufnehmen" className="border-y border-border bg-surface transition-colors duration-(--dur-welt)">
+    <aside aria-label="Kontakt aufnehmen" className="relative isolate border-y border-border bg-surface transition-colors duration-(--dur-welt)">
+      <Sektionsgrund licht="rechts-oben" warm />
       <Reveal className="mx-auto max-w-wide px-(--gutter) py-[clamp(1.25rem,3vw,2rem)]">
         <div className="hud-rahmen grid items-center gap-6 p-[clamp(1.25rem,3vw,2rem)] md:grid-cols-[minmax(0,1fr)_auto]">
           <div className="grid gap-2">

@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/motion/reveal";
 import { LichtkegelKarte } from "@/components/effekte/lichtkegel-karte";
 import { partner } from "@/lib/inhalte";
+import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 
 /**
  * Partner-Netzwerk, Inhalte von der bestehenden Website (Seite Partner).
@@ -8,7 +9,8 @@ import { partner } from "@/lib/inhalte";
  */
 export function Partner() {
   return (
-    <section id="partner" aria-labelledby="partner-titel" className="scroll-mt-(--header-h) bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)">
+    <section id="partner" aria-labelledby="partner-titel" className="relative isolate scroll-mt-(--header-h) bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)">
+      <Sektionsgrund licht="rechts-oben" motiv="puls" />
       <div className="mx-auto grid max-w-wide gap-[clamp(2rem,5vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <Reveal className="grid content-start gap-6">
           <h2 id="partner-titel" className="titel-linie titel-glitch text-h2">

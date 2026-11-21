@@ -922,3 +922,168 @@
     to { rotate: 360deg; }
   }
 }
+
+/* ---- Sektionsgrund: leiser Farbverlauf plus kleines technisches Motiv ----
+   Damit die Sektionen nicht zu clean wirken. Alles sehr zurückhaltend:
+   Verlauf höchstens 12 % Deckkraft, Motive dünn und langsam.
+   Nur transform/opacity animiert, bei "weniger Bewegung" steht alles. */
+@layer components {
+  .sektionsgrund {
+    --lx: 15%;
+    --ly: 0%;
+    --ton: var(--color-brand);
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  /* Verlauf blendet oben und unten aus, damit an Sektionsgrenzen keine Kante entsteht */
+  .sektionsgrund::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 75% at var(--lx) var(--ly), color-mix(in srgb, var(--ton) 12%, transparent), transparent 70%);
+    mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+  }
+  .sektionsgrund--links-oben { --lx: 10%; --ly: 20%; }
+  .sektionsgrund--rechts-oben { --lx: 90%; --ly: 20%; }
+  .sektionsgrund--links-unten { --lx: 8%; --ly: 80%; }
+  .sektionsgrund--rechts-unten { --lx: 92%; --ly: 80%; }
+  .sektionsgrund--mitte-unten { --lx: 50%; --ly: 78%; }
+  .sektionsgrund--warm { --ton: var(--color-cta); }
+
+  /* Raster mit Messpunkten: feines Liniengitter, das zum Rand ausblendet,
+     drei Punkte leuchten nacheinander an Kreuzungen auf */
+  .sg-raster {
+    --zelle: 64px;
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, color-mix(in srgb, var(--color-brand) 7%, transparent) 1px, transparent 1px) 0 0 / var(--zelle) var(--zelle),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-brand) 7%, transparent) 1px, transparent 1px) 0 0 / var(--zelle) var(--zelle);
+    mask-image: radial-gradient(ellipse 60% 80% at var(--lx) var(--ly), black, transparent 75%);
+  }
+  .sg-messpunkt {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    margin: -1px 0 0 -1px;
+    background: var(--color-brand);
+    opacity: 0;
+  }
+  .sg-messpunkt:nth-child(1) { left: calc(var(--zelle) * 3); top: calc(var(--zelle) * 1); }
+  .sg-messpunkt:nth-child(2) { left: calc(var(--zelle) * 6); top: calc(var(--zelle) * 3); }
+  .sg-messpunkt:nth-child(3) { left: calc(var(--zelle) * 9); top: calc(var(--zelle) * 2); }
+  @media (prefers-reduced-motion: no-preference) {
+    .sg-messpunkt { animation: sg-messen 6s steps(1) infinite; }
+    .sg-messpunkt:nth-child(2) { animation-delay: 2s; }
+    .sg-messpunkt:nth-child(3) { animation-delay: 4s; }
+  }
+  @keyframes sg-messen {
+    0% { opacity: 0.9; }
+    6% { opacity: 0.3; }
+    10% { opacity: 0.9; }
+    18%, 100% { opacity: 0; }
+  }
+
+  /* Lineal: Skala am linken Rand, eine Marke wandert langsam daran entlang */
+  .sg-lineal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: max(8px, calc(var(--gutter) / 3));
+    width: 10px;
+    background:
+      repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-brand) 22%, transparent) 0 1px, transparent 1px 12px) left / 5px 100% no-repeat,
+      repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-brand) 35%, transparent) 0 1px, transparent 1px 60px) left / 10px 100% no-repeat;
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  }
+  .sg-lineal::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 1px;
+    background: var(--color-brand);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sg-lineal::after { animation: sg-lineal 14s var(--ease-in-out) infinite alternate; }
+  }
+  @keyframes sg-lineal {
+    from { transform: translateY(15vh); }
+    to { transform: translateY(70vh); }
+  }
+
+  /* Datenpuls: dünne Leitung oben, ein kurzes Signal läuft hindurch */
+  .sg-puls {
+    position: absolute;
+    top: clamp(1.5rem, 3vw, 2.5rem);
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, color-mix(in srgb, var(--color-brand) 14%, transparent) 20%, color-mix(in srgb, var(--color-brand) 14%, transparent) 80%, transparent);
+  }
+  .sg-puls::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-brand), transparent);
+    transform: translateX(-100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sg-puls::after { animation: sg-puls 9s var(--ease-in-out) infinite; }
+  }
+  @keyframes sg-puls {
+    0% { transform: translateX(-100%); }
+    45%, 100% { transform: translateX(900%); }
+  }
+
+  /* Scanband: ein sehr leiser waagerechter Streifen zieht von oben nach unten */
+  .sg-scan {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 18%;
+    background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--ton) 6%, transparent) 70%, color-mix(in srgb, var(--ton) 18%, transparent) 100%);
+    border-bottom: 1px solid color-mix(in srgb, var(--ton) 12%, transparent);
+    transform: translateY(-100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sg-scan { animation: sg-scan 16s linear infinite; }
+  }
+  @keyframes sg-scan {
+    0% { transform: translateY(-100%); }
+    60%, 100% { transform: translateY(560%); }
+  }
+
+  /* Passmarken: kleine Kreuze wie auf einem Messplan, blinken selten */
+  .sg-marke {
+    --g: 11px;
+    position: absolute;
+    width: var(--g);
+    height: var(--g);
+    background:
+      linear-gradient(var(--color-brand), var(--color-brand)) center / 100% 1px no-repeat,
+      linear-gradient(var(--color-brand), var(--color-brand)) center / 1px 100% no-repeat;
+    opacity: 0.35;
+  }
+  .sg-marke--1 { top: 12%; right: 8%; }
+  .sg-marke--2 { bottom: 14%; left: 6%; }
+  .sg-marke--3 { top: 48%; right: 3%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .sg-marke { animation: sg-marke 7s steps(1) infinite; }
+    .sg-marke--2 { animation-delay: 2.3s; }
+    .sg-marke--3 { animation-delay: 4.6s; }
+  }
+  @keyframes sg-marke {
+    0%, 100% { opacity: 0.35; }
+    4% { opacity: 0.9; }
+    7% { opacity: 0.35; }
+    9% { opacity: 0.9; }
+    12% { opacity: 0.35; }
+  }
+}

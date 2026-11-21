@@ -4,6 +4,7 @@ import { HorizontalSpur } from "@/components/motion/horizontal-spur";
 import { LichtkegelKarte } from "@/components/effekte/lichtkegel-karte";
 import { ThemaLink } from "@/components/ui/thema-knopf";
 import { leistungen } from "@/lib/inhalte";
+import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 
 /**
  * Leistungen als Module eines Leitstands: Kennung, Titel, Satz, Technik. Lichtkegel folgt der Maus.
@@ -11,7 +12,8 @@ import { leistungen } from "@/lib/inhalte";
  */
 export function Leistungen() {
   return (
-    <section id="leistungen" aria-labelledby="leistungen-titel" className="scroll-mt-(--header-h) bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)">
+    <section id="leistungen" aria-labelledby="leistungen-titel" className="relative isolate scroll-mt-(--header-h) bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)">
+      <Sektionsgrund licht="rechts-unten" motiv="lineal" />
       <div className="mx-auto max-w-wide px-(--gutter)">
         <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
           <h2 id="leistungen-titel" className="titel-linie titel-glitch max-w-[16ch] text-h2">

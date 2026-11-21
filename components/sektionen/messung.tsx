@@ -2,6 +2,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { backupFall, istOffen } from "@/lib/inhalte";
 import { BackupBalken } from "./backup-balken";
 import { ThemaKnopf } from "@/components/ui/thema-knopf";
+import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 
 /** Messleiste unter dem Hero: die Kernzahl in einer Zeile. */
 export function Messleiste() {
@@ -30,7 +31,8 @@ export function Messleiste() {
 /** Die Backup-Messung als Signature-Moment der Seite. */
 export function Messung() {
   return (
-    <section id="messung" aria-labelledby="messung-titel" className="scroll-mt-(--header-h) py-(--section-y)">
+    <section id="messung" aria-labelledby="messung-titel" className="relative isolate scroll-mt-(--header-h) py-(--section-y)">
+      <Sektionsgrund licht="rechts-oben" motiv="raster" />
       <div className="mx-auto grid max-w-wide gap-[clamp(2rem,5vw,5rem)] px-(--gutter) md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-start">
         <Reveal className="grid gap-5">
           <h2 id="messung-titel" className="titel-linie titel-glitch text-h2">

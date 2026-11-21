@@ -7,6 +7,7 @@ import { useSichtbar } from "@/lib/hooks";
 import { SCHRITTE, fortschrittVon } from "@/components/three/fortschritt";
 import { BackupFlussPoster } from "@/components/three/backup-fluss-poster";
 import { ThemaKnopf } from "@/components/ui/thema-knopf";
+import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 
 /* three.js nur laden, wenn die Szene gebraucht wird; bis dahin steht die Ersatzgrafik */
 const BackupFlussCanvas = dynamic(() => import("@/components/three/backup-fluss-canvas"), {
@@ -67,8 +68,9 @@ export function BackupAblauf() {
     <section
       id="backup-ablauf"
       aria-labelledby="backup-ablauf-titel"
-      className="scroll-mt-(--header-h) border-y border-border bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)"
+      className="relative isolate scroll-mt-(--header-h) border-y border-border bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)"
     >
+      <Sektionsgrund licht="links-oben" motiv="puls" />
       <div className="mx-auto grid max-w-wide gap-5 px-(--gutter)">
         <span className="daten">Backup-Fluss · Proxmox Backup</span>
         <h2 id="backup-ablauf-titel" className="titel-linie max-w-[22ch] text-h2">

@@ -100,3 +100,17 @@ Props mit deutschem Namen und JSDoc, nur Token-Klassen, Client-Code nur wo nöti
 | Weiches Scrollen | `motion/weiches-scrollen.tsx` | keine, einmal pro Seite |
 | 3D-Szene | `three/szene-laden.tsx` | `poster`, `beschreibung`, `format` |
 | JSON-LD | `seo/json-ld.tsx` | `daten` |
+
+## Sektionsgrund (Projekt Daniel Richter IT)
+
+`components/effekte/sektionsgrund.tsx`: leiser Farbverlauf plus ein kleines technisches
+Motiv, damit Sektionen nicht zu clean wirken. Sektion braucht `relative isolate`.
+
+| Prop | Werte |
+|---|---|
+| `licht` | `links-oben`, `rechts-oben`, `links-unten`, `rechts-unten`, `mitte-unten` |
+| `motiv` | `raster` (Gitter mit Messpunkten), `lineal` (Skala mit wandernder Marke), `puls` (Signal auf einer Leitung), `scan` (Scanband), `marken` (Passkreuze), `keins` |
+| `warm` | Bernstein statt Kobalt, für Sektionen nahe der Bildwelt |
+
+Regel: benachbarte Sektionen nie mit demselben Motiv. Sektionen mit eigenem Hintergrund
+(Hero, Leitstand, Person, Kontakt, Drohne, 502) bekommen keinen Sektionsgrund.
