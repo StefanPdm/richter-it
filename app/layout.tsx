@@ -49,7 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
          beim Seitenwechsel ab, damit die neue Seite sofort oben steht */
       data-scroll-behavior="smooth"
     >
-      <body className="flex min-h-dvh flex-col">
+      <body className="flex min-h-svh flex-col">
         <div className="scroll-fortschritt" aria-hidden="true" />
         <ScrollPaket />
         <a

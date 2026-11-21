@@ -60,15 +60,39 @@ export function HorizontalSpur({ children, label, kopf }: Props) {
       const fussReserve = fuss && fuss.offsetHeight === 0 ? FUSS_HOEHE : 0;
       return kinder.reduce((summe, k) => summe + k.offsetHeight, 0) + fussReserve + abstand * (kinder.length - 1);
     };
-    const messen = () => {
-      /* Platz zwischen Header und Statusleiste, abzüglich Innenabstand der Bühne */
+    /* Stabile Fensterhöhe: 100svh ändert sich nicht, wenn auf dem Handy die Adressleiste
+       ein- und ausfährt (window.innerHeight schon). */
+    const stabileHoehe = () => {
+      const probe = document.createElement("div");
+      probe.style.cssText = "position:fixed;top:0;left:0;width:0;height:100svh;visibility:hidden;pointer-events:none";
+      document.body.appendChild(probe);
+      const hoehe = probe.offsetHeight || window.innerHeight;
+      probe.remove();
+      return hoehe;
+    };
+
+    /* Modus (klebende Bühne oder Wischleiste) nur beim Start, nach dem Laden der Schriften,
+       bei neuer Breite (Drehen) oder geänderter Bewegungseinstellung festlegen. Sonst nicht:
+       Ein Moduswechsel ändert die Bühnengröße, das würde die nächste Prüfung auslösen und die
+       Spur samt Seitenhöhe hin und her springen lassen (Flackern auf dem Handy). */
+    let modus: boolean | null = null;
+    let breite = 0;
+    const entscheiden = () => {
       const kopfzeile = document.querySelector("header")?.offsetHeight ?? 0;
       const fusszeile = document.querySelector<HTMLElement>(".statusleiste")?.offsetHeight ?? 0;
       const innen = parseFloat(getComputedStyle(b).paddingTop) || 0;
-      const passt = inhaltHoehe() + innen <= window.innerHeight - kopfzeile - fusszeile;
-      const aktiv = !ruhig.matches && window.innerHeight >= MIN_HOEHE && passt;
-      a.dataset.aktiv = String(aktiv);
-      if (!aktiv) {
+      const hoehe = stabileHoehe();
+      const passt = inhaltHoehe() + innen <= hoehe - kopfzeile - fusszeile;
+      return !ruhig.matches && hoehe >= MIN_HOEHE && passt;
+    };
+
+    const messen = (neu = false) => {
+      if (neu || modus === null || window.innerWidth !== breite) {
+        breite = window.innerWidth;
+        modus = entscheiden();
+      }
+      a.dataset.aktiv = String(modus);
+      if (!modus) {
         a.style.height = "";
         s.style.transform = "";
         return;
@@ -81,16 +105,19 @@ export function HorizontalSpur({ children, label, kopf }: Props) {
       a.style.height = `${weg + b.offsetHeight}px`;
       stelle();
     };
+    const neuEntscheiden = () => messen(true);
 
-    const groesse = new ResizeObserver(messen);
+    const groesse = new ResizeObserver(() => messen());
     groesse.observe(b);
-    ruhig.addEventListener("change", messen);
+    ruhig.addEventListener("change", neuEntscheiden);
     window.addEventListener("scroll", beimScrollen, { passive: true });
-    messen();
+    messen(true);
+    /* Schriften verändern Höhen: einmal neu entscheiden, wenn sie geladen sind */
+    void document.fonts?.ready.then(neuEntscheiden);
     return () => {
       cancelAnimationFrame(wartet);
       groesse.disconnect();
-      ruhig.removeEventListener("change", messen);
+      ruhig.removeEventListener("change", neuEntscheiden);
       window.removeEventListener("scroll", beimScrollen);
     };
   }, []);

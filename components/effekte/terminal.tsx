@@ -83,8 +83,22 @@ export function Terminal({ laeufe, titel }: Props) {
         </span>
       </div>
       <pre className="m-0 min-h-[19rem] flex-1 overflow-x-auto p-4 font-mono text-[0.6875rem] leading-relaxed break-all whitespace-pre-wrap text-text-muted sm:min-h-[22rem] sm:p-5 sm:text-[0.8125rem] sm:break-normal sm:whitespace-pre">
-        <code aria-label={laeufe[0].join("\n")}>
-          <span aria-hidden="true">
+        <code aria-label={laeufe[0].join("\n")} className="grid">
+          {/* Platzhalter: alle Läufe vollständig und unsichtbar in derselben Zelle. So hat das
+              Terminal immer die Höhe des längsten Laufs und wächst beim Tippen nicht mit.
+              Sonst springt auf schmalen Bildschirmen (umbrechende Zeilen) alles darunter. */}
+          {laeufe.map((l, n) => (
+            <span key={`platz-${n}`} aria-hidden="true" className="invisible [grid-area:1/1]">
+              {l.map((zeile, i) => (
+                <span key={i} className="block">
+                  {zeile || " "}
+                </span>
+              ))}
+              {/* Zeile für den Cursor, der nach der letzten Zeile steht */}
+              <span className="block"> </span>
+            </span>
+          ))}
+          <span aria-hidden="true" className="[grid-area:1/1]">
             {text.split("\n").map((zeile, i) => (
               <span
                 key={`${lauf}-${i}`}
