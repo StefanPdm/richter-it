@@ -378,10 +378,11 @@ export const vbs = {
     "{VBS} schützt Zugangsdaten vor Diebstahl. Ohne Feinschliff bremst es einen Server aber massiv aus. Ich sorge dafür, dass Sie beides bekommen.",
   messgroesse: "Datenrate Windows-Server",
   einheit: "GB/s",
-  /** Drei Zustände, die Besucher nacheinander durchschalten */
+  /** Drei Zustände, die Besucher nacheinander durchschalten. "vorher": Bezeichnung der Zeile,
+      solange die Stufe noch nicht erreicht ist */
   stufen: [
-    { name: "VBS (aus)", wert: 25, schutz: false, knopf: "VBS aktivieren", zeile: "Schnell, aber Zugangsdaten ungeschützt." },
-    { name: "VBS (an)", wert: 3, schutz: true, knopf: "Feinschliff anwenden", zeile: "Geschützt, aber die Leistung bricht ein." },
+    { name: "Ohne VBS", wert: 25, schutz: false, knopf: "VBS aktivieren", zeile: "Schnell, aber Zugangsdaten ungeschützt." },
+    { name: "VBS (an)", vorher: "VBS (aus)", wert: 3, schutz: true, knopf: "Feinschliff anwenden", zeile: "Geschützt, aber die Leistung bricht ein." },
     { name: "Mit Feinschliff", wert: 20, schutz: true, knopf: "Noch einmal", zeile: "Geschützt und bis zu 80 % der Leistung." },
   ],
   schutzName: "Credential Guard",

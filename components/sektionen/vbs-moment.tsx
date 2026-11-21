@@ -65,9 +65,10 @@ export function VbsMoment() {
             <ul className="grid gap-4" aria-label={`${vbs.messgroesse} in ${vbs.einheit}`}>
               {vbs.stufen.map((s, i) => {
                 const erreicht = i <= stufe;
+                const bezeichnung = !erreicht && "vorher" in s ? s.vorher : s.name;
                 return (
                   <li key={s.name} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 sm:grid-cols-[minmax(0,9rem)_minmax(0,1fr)_4rem]">
-                    <span className={`daten ${i === stufe ? "text-text" : ""}`}>{s.name}</span>
+                    <span className={`daten ${i === stufe ? "text-text" : ""}`}>{bezeichnung}</span>
                     <span className={`vbs-balken order-3 col-span-2 sm:order-none sm:col-span-1 ${erreicht ? "" : "vbs-balken--offen"}`} aria-hidden="true">
                       <span
                         className={`vbs-fuellung ${FUELLUNG[i]} ${erreicht && i === 1 && stufe === 1 ? "vbs-einbruch" : ""}`}
