@@ -105,6 +105,8 @@ export const leistungen = [
     titel: "Backup und Wiederherstellung",
     text: "Sicherungen, die in ihr Zeitfenster passen. Und ein geübter Weg, wie die Daten im Ernstfall zurückkommen.",
     technik: ["Proxmox Backup", "Deduplizierung"],
+    /** Eigene Seite mit Messung und Ablauf, die Karte verweist darauf */
+    seite: { pfad: "/backup", label: "Backup im Detail" },
   },
   {
     kennung: "NET",
@@ -365,4 +367,44 @@ export const fehler502 = {
       text: "Ein Dienst verhält sich auffällig. Er wird abgekoppelt und untersucht, der Rest der Infrastruktur läuft weiter.",
     },
   ],
+} as const;
+
+/* VBS-Moment: Fall aus dem Gespräch am 19.11.2026. Werte von Daniel: Datenrate eines
+   virtuellen Windows-Servers 25 GB/s, mit VBS 3 GB/s, mit Feinschliff bis zu 80 %.
+   Texte und Zahlen vor dem Livegang von Daniel bestätigen lassen. */
+export const vbs = {
+  titel: "Sicherheit kostet Leistung. Muss sie nicht.",
+  einleitung:
+    "{VBS} schützt Zugangsdaten vor Diebstahl. Ohne Feinschliff bremst es einen Server aber massiv aus. Ich sorge dafür, dass Sie beides bekommen.",
+  messgroesse: "Datenrate Windows-Server",
+  einheit: "GB/s",
+  /** Drei Zustände, die Besucher nacheinander durchschalten */
+  stufen: [
+    { name: "Ohne VBS", wert: 25, schutz: false, knopf: "VBS aktivieren", zeile: "Schnell, aber Zugangsdaten ungeschützt." },
+    { name: "VBS an", wert: 3, schutz: true, knopf: "Feinschliff anwenden", zeile: "Geschützt, aber die Leistung bricht ein." },
+    { name: "Mit Feinschliff", wert: 20, schutz: true, knopf: "Noch einmal", zeile: "Geschützt und bis zu 80 % der Leistung." },
+  ],
+  schutzName: "Credential Guard",
+  punkte: [
+    {
+      titel: "Was VBS schützt",
+      text: "Virtualization Based Security legt Anmeldedaten in einen abgeschotteten Bereich. Credential Guard erkennt so Versuche, Zugangsdaten abzugreifen, und blockiert sie. Penetrationstests empfehlen genau das.",
+    },
+    {
+      titel: "Warum es bremst",
+      text: "Für VBS schaltet Windows eine zusätzliche Virtualisierungsebene ein. Läuft der Server selbst schon virtuell, etwa auf Proxmox, entsteht eine Verschachtelung. Im gemessenen Fall fiel die Datenrate von 25 auf 3 GB/s.",
+    },
+    {
+      titel: "Was ich tue",
+      text: "Ich baue die Konfiguration im eigenen Labor nach, stimme sie mit Proxmox-Entwicklern und Kollegen ab und messe mit Benchmarks. Der Schutz bleibt an, die Leistung kommt zurück.",
+    },
+  ],
+} as const;
+
+/* Zitat: sinngemäß aus dem Gespräch am 19.11.2026 (Installation ist Grundaufgabe,
+   sein Angebot ist der Feinschliff). Kein Wortlaut, von Daniel freigeben lassen. */
+export const zitat = {
+  text: "Proxmox installieren kann heute fast jeder. Mein Job ist der Feinschliff, der ein System sicher und schnell macht.",
+  von: "Daniel Richter",
+  rolle: "IT-Infrastruktur, Potsdam",
 } as const;

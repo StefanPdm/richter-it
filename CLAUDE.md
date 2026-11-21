@@ -59,6 +59,12 @@ npm run pruefen -- --url http://localhost:3000 --seiten impressum,datenschutz
 
 0 Fehler sind Pflicht. Dazu `docs/design/qualitaet.md` für das, was kein Skript prüft.
 
+## Startseite ausgewogen halten
+
+Die Startseite soll viel zeigen, aber nicht überladen sein. Neue Inhalte lieber auf der
+Startseite anteasern und auf eine eigene Unterseite weiterleiten. **Vor jeder neuen Sektion
+fragen: Sektion auf der Startseite oder Unterseite (mit Teaser)?** Nie selbst entscheiden.
+
 ## Nicht ohne Rückfrage
 
 - Dateien löschen, Abhängigkeiten hinzufügen oder entfernen

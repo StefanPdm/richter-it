@@ -1,8 +1,8 @@
 import { JsonLd } from "@/components/seo/json-ld";
 import { Hero } from "@/components/sektionen/hero";
 import { Laufband } from "@/components/sektionen/laufband";
-import { Messung } from "@/components/sektionen/messung";
-import { BackupAblauf } from "@/components/sektionen/backup-ablauf";
+import { VbsMoment } from "@/components/sektionen/vbs-moment";
+import { ZitatBand } from "@/components/sektionen/zitat-band";
 import { Kennzahlen } from "@/components/sektionen/kennzahlen";
 import { Leistungen } from "@/components/sektionen/leistungen";
 import { Leitstand } from "@/components/sektionen/leitstand";
@@ -20,9 +20,10 @@ import { Fehler502 } from "@/components/sektionen/fehler-502";
 
 /* Startseite, Präsentationsversion "Leitstand im Abendlicht" (DESIGN.md).
    Rhythmus der Hintergründe, abwechselnd bewegt (B) und ruhig (R):
-   Hero B, Messung R, Kennzahlen B (Lichtfeger), Leistungen R, Leitstand B (Datenstrom),
-   Haltung R, Medienband B (Video), Referenzen R, Person B (Netz), Partner R,
-   Kontakt B (Kontrollraum). Leitstand: Kontrollraum mit Kamerafahrt und Scan-Strahl. */
+   Hero B, VBS R, Kennzahlen B (Lichtfeger), Leistungen R, Leitstand B (Datenstrom),
+   Haltung R, 502 B, Medienband B (Video), Referenzen R, Zitat R, Person B (Netz), Partner R,
+   Kontakt B (Kontrollraum). Backup (Messung, Ablauf) steht auf /backup, die Leistungskarte
+   verweist darauf. Neue Sektionen nur nach Rückfrage (CLAUDE.md). Leitstand: Kontrollraum mit Kamerafahrt und Scan-Strahl. */
 
 export const metadata = seitenMetadaten({
   titel: `${site.name} | IT-Infrastruktur mit Open Source`,
@@ -54,8 +55,7 @@ export default function Startseite() {
       />
       <Hero />
       <Laufband />
-      <Messung />
-      <BackupAblauf />
+      <VbsMoment />
       <Kennzahlen />
       <Signallinie />
       <Leistungen />
@@ -79,6 +79,7 @@ export default function Startseite() {
         knopf="Angebot anfordern"
         thema={{ anliegen: "Angebot", betreff: "Angebot für mein Projekt" }}
       />
+      <ZitatBand />
       <Person />
       <Signallinie />
       <Partner />

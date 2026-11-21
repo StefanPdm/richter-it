@@ -9,11 +9,10 @@ import { usePathname } from "next/navigation";
  * (scroll-driven animations); hier wird nur der Name des sichtbaren Abschnitts ermittelt.
  */
 
-/* Reihenfolge wie auf der Startseite (app/page.tsx). Neue oder umbenannte Sektionen hier
+/* Reihenfolge wie auf der Startseite (app/page.tsx), danach Sektionen der Unterseiten. Neue oder umbenannte Sektionen hier
    nachtragen, sonst bleibt beim Scrollen der Name der vorherigen Sektion stehen (CLAUDE.md). */
 const ABSCHNITTE: Record<string, string> = {
-  messung: "Backup",
-  "backup-ablauf": "Backup-Fluss",
+  vbs: "VBS",
   leistungen: "Leistungen",
   leitstand: "Leitstand",
   werkzeuge: "Werkzeuge",
@@ -21,9 +20,13 @@ const ABSCHNITTE: Record<string, string> = {
   "fehler-502": "502",
   drohne: "Inspektion",
   referenzen: "Referenzen",
+  zitat: "Zitat",
   "ueber-mich": "Über mich",
   partner: "Partner",
   kontakt: "Kontakt",
+  /* Unterseite /backup */
+  messung: "Backup",
+  "backup-ablauf": "Backup-Fluss",
 };
 
 /** Name, wenn gerade kein bekannter Abschnitt in der Mitte steht */
@@ -31,6 +34,7 @@ function seitenName(pfad: string) {
   if (pfad === "/") return "Start";
   const teil = pfad.split("/")[1] ?? "";
   if (teil === "werkzeuge") return "Werkzeuge";
+  if (teil === "backup") return "Backup";
   if (teil === "impressum") return "Impressum";
   if (teil === "datenschutz") return "Datenschutz";
   return "Route";

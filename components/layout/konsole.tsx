@@ -21,11 +21,13 @@ import { KonsoleWetter } from "./konsole-wetter";
 const PROMPT = "gast@daniel-richter.it:~$";
 
 /* Ziele auf der Startseite */
-const ZIELE: Record<string, { id: string; label: string }> = {
+/* Ziele: Sektionen der Startseite, mit "pfad" auf einer Unterseite */
+const ZIELE: Record<string, { id: string; label: string; pfad?: string }> = {
   start: { id: "", label: "Seitenanfang" },
   leistungen: { id: "leistungen", label: "Leistungen" },
-  backup: { id: "messung", label: "Backup-Messung" },
-  ablauf: { id: "backup-ablauf", label: "Backup-Ablauf" },
+  vbs: { id: "vbs", label: "VBS: Sicherheit ohne Leistungsverlust" },
+  backup: { id: "messung", label: "Backup-Messung", pfad: "/backup" },
+  ablauf: { id: "backup-ablauf", label: "Backup-Ablauf", pfad: "/backup" },
   leitstand: { id: "leitstand", label: "Leitstand" },
   werkzeuge: { id: "werkzeuge", label: "Werkzeuge" },
   haltung: { id: "haltung", label: "Haltung" },
@@ -332,15 +334,15 @@ export function Konsole() {
     ende.current?.scrollIntoView({ block: "end" });
   }, [zeilen]);
 
-  function springe(id: string) {
+  function springe(id: string, pfad = "/") {
     schliessen();
     const el = id ? document.getElementById(id) : document.body;
-    if (el && (id === "" || window.location.pathname === "/")) {
+    if (el && (id === "" || window.location.pathname === pfad)) {
       const ruhig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (id) el.scrollIntoView({ behavior: ruhig ? "auto" : "smooth", block: "start" });
       else window.scrollTo({ top: 0 });
     } else {
-      router.push(`/${id ? `#${id}` : ""}`);
+      router.push(`${pfad}${id ? `#${id}` : ""}`);
     }
   }
 
@@ -383,7 +385,7 @@ export function Konsole() {
       case "goto": {
         const ziel = ZIELE[arg.replace(/^\/|\/$/g, "") || "start"];
         if (!ziel) return [{ art: "fehler", inhalt: `cd: ${arg}: Ziel unbekannt. ls zeigt alle Ziele.` }];
-        window.setTimeout(() => springe(ziel.id), 250);
+        window.setTimeout(() => springe(ziel.id, ziel.pfad), 250);
         return [{ art: "aus", inhalt: `→ ${ziel.label}` }];
       }
       case "leistungen":

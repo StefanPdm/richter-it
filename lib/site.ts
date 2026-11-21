@@ -16,7 +16,7 @@ export const site = {
   /* Keine Social-Media-Links: Daniels berufliche Auflagen (Gespräch 19.11.2026) */
   navigation: [
     { label: "Leistungen", href: "/#leistungen" },
-    { label: "Backup", href: "/#messung" },
+    { label: "Backup", href: "/backup" },
     { label: "Werkzeuge", href: "/werkzeuge" },
     { label: "Referenzen", href: "/#referenzen" },
     { label: "Über mich", href: "/#ueber-mich" },

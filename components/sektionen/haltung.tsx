@@ -43,7 +43,7 @@ export function Medienband() {
   );
 }
 
-/** Haltung: drei Grundsätze, der dritte als Zitat von Daniel. */
+/** Haltung: zwei Grundsätze. Das Zitat von Daniel steht im Zitatband. */
 export function Haltung() {
   return (
     <section id="haltung" aria-labelledby="haltung-titel" className="scroll-mt-(--header-h) relative isolate py-(--section-y)">
@@ -59,22 +59,13 @@ export function Haltung() {
             Skripte und Werkzeuge so weit zu verfeinern, dass Ihr Team wieder Zeit für die eigene Infrastruktur hat.
           </p>
         </Reveal>
-        <div className="grid gap-[clamp(2rem,4vw,3.5rem)] md:grid-cols-3">
+        <div className="grid gap-[clamp(2rem,4vw,3.5rem)] md:grid-cols-2">
           {grundsaetze.map((g, i) => (
             <Reveal key={g.titel} index={i} className="grid content-start gap-3.5 border-t border-border pt-5.5">
               <h3 className="text-h3">{g.titel}</h3>
               <p className="text-text-muted">{g.text}</p>
             </Reveal>
           ))}
-          <Reveal index={2} className="grid content-start gap-3.5 border-t border-border pt-5.5">
-            <h3 className="text-h3">Kleine Eingriffe</h3>
-            <figure className="grid gap-2">
-              <blockquote className="font-display text-h3 font-normal [font-stretch:85%]">
-                „Meistens ohne große Umbauarbeiten.“
-              </blockquote>
-              <figcaption className="daten">Daniel Richter</figcaption>
-            </figure>
-          </Reveal>
         </div>
       </div>
     </section>
