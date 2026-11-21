@@ -1423,3 +1423,69 @@
     .fehlersuche__ebene--daneben { animation: vbs-zucken 500ms steps(1) 1; }
   }
 }
+
+/* ---- Fehlerseiten 404/500: gleiche Familie wie die 502, leichter Glow erlaubt ---- */
+@layer components {
+  /* Statuspunkt in Kobalt statt Grün */
+  .f502-punkt { background: var(--color-brand); box-shadow: 0 0 8px var(--color-brand); }
+
+  /* Radar (404): Ringe, umlaufender Strahl, Echo blitzt auf und verschwindet */
+  .radar {
+    position: relative;
+    display: block;
+    width: clamp(7rem, 5rem + 6vw, 10rem);
+    aspect-ratio: 1;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-brand) 45%, transparent);
+    background:
+      radial-gradient(circle, transparent 0 32%, color-mix(in srgb, var(--color-brand) 22%, transparent) 32.5% 33%, transparent 33.5% 65%, color-mix(in srgb, var(--color-brand) 22%, transparent) 65.5% 66%, transparent 66.5%),
+      linear-gradient(color-mix(in srgb, var(--color-brand) 18%, transparent), color-mix(in srgb, var(--color-brand) 18%, transparent)) center / 1px 100% no-repeat,
+      linear-gradient(color-mix(in srgb, var(--color-brand) 18%, transparent), color-mix(in srgb, var(--color-brand) 18%, transparent)) center / 100% 1px no-repeat;
+    box-shadow: 0 0 32px -8px color-mix(in srgb, var(--color-brand) 45%, transparent);
+    overflow: hidden;
+  }
+  .radar__strahl {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: conic-gradient(from 0deg, color-mix(in srgb, var(--color-brand) 55%, transparent), transparent 22%);
+  }
+  .radar__echo {
+    position: absolute;
+    top: 30%;
+    left: 64%;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--color-brand);
+    box-shadow: 0 0 8px var(--color-brand);
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .radar__strahl { animation: f502-drehen 3.2s linear infinite; }
+    .radar__echo { animation: radar-echo 6.4s ease-out infinite 0.4s; }
+  }
+  /* Echo nur in jeder zweiten Runde, danach Funkstille: Signal verloren */
+  @keyframes radar-echo {
+    0%, 8% { opacity: 0; scale: 0.6; }
+    10% { opacity: 1; scale: 1; }
+    30% { opacity: 0; scale: 1.8; }
+    100% { opacity: 0; }
+  }
+
+  /* Zahnrad (500): ruckelt ein Stück vor, hängt, zuckt zurück */
+  @media (prefers-reduced-motion: no-preference) {
+    .f502-feld--stockt .f502-zahnrad { animation: zahnrad-stockt 2.6s steps(1) infinite; }
+    .f502-feld--stockt .f502-bogen { animation: f502-drehen 9s linear infinite; }
+  }
+  @keyframes zahnrad-stockt {
+    0% { rotate: 0deg; }
+    12% { rotate: 14deg; }
+    24% { rotate: 22deg; }
+    30% { rotate: 19deg; }
+    60% { rotate: 21deg; }
+    72% { rotate: 8deg; }
+    84% { rotate: 3deg; }
+    100% { rotate: 0deg; }
+  }
+}

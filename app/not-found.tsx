@@ -1,26 +1,39 @@
-import Link from "next/link";
-import { Container } from "@/components/ui/container";
-import { site } from "@/lib/site";
+"use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FehlerBuehne, Radar } from "@/components/fehler/fehler-buehne";
+
+/** 404: Radar sucht ins Leere. Kein Angriff, nur ein falscher Weg. Zeigt die angefragte Adresse. */
 export default function NichtGefunden() {
+  const pfad = usePathname();
   return (
-    <Container breite="measure" className="py-(--section-y)">
-      <h1 className="text-h2">Diese Seite gibt es nicht</h1>
-      <p className="mt-4 text-lead text-text-muted">Vielleicht hilft einer dieser Wege weiter:</p>
-      <ul className="mt-6 flex flex-col gap-2">
-        <li>
-          <Link href="/" className="text-brand-dark underline underline-offset-4">
-            Startseite
+    <FehlerBuehne
+      code="404"
+      zeile="Signal verloren"
+      titel="Diese Seite antwortet nicht."
+      text="Kein Angriff, kein Ausfall, nur ein Weg, der ins Leere führt. Vielleicht wurde die Seite verschoben oder die Adresse hat einen Tippfehler."
+      motiv={<Radar />}
+      konsole={
+        <p className="font-mono text-sm break-all">
+          <span className="text-text-muted">$ curl -I {pfad}</span>
+          <br />
+          <span className="text-brand-dark">HTTP/2 404 Not Found</span>
+        </p>
+      }
+      aktionen={
+        <>
+          <Link href="/" className="zucken inline-flex min-h-11 items-center gap-2 font-medium text-brand-dark">
+            ← Zur Startseite
           </Link>
-        </li>
-        {site.navigation.map((punkt) => (
-          <li key={punkt.href}>
-            <Link href={punkt.href} className="text-brand-dark underline underline-offset-4">
-              {punkt.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </Container>
+          <Link href="/wissen" className="zucken inline-flex min-h-11 items-center gap-2 font-medium text-brand-dark">
+            Zum Wissen
+          </Link>
+          <Link href="/#kontakt" className="zucken inline-flex min-h-11 items-center gap-2 font-medium text-brand-dark">
+            Kontakt
+          </Link>
+        </>
+      }
+    />
   );
 }

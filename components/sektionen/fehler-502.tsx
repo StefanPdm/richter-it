@@ -41,9 +41,9 @@ const ZAHNRAD =
  * selbst und die Nabe. Leichter Glow als bewusste Ausnahme für diese Stelle.
  * Bei "weniger Bewegung" steht alles.
  */
-function Zahnrad() {
+export function Zahnrad({ stockt = false }: { /** ruckelt statt gleichmäßig zu drehen (Fehlerseite 500) */ stockt?: boolean }) {
   return (
-    <span aria-hidden="true" className="f502-feld size-[clamp(6rem,4rem+5vw,9rem)]">
+    <span aria-hidden="true" className={`f502-feld size-[clamp(6rem,4rem+5vw,9rem)] ${stockt ? "f502-feld--stockt" : ""}`}>
       <span className="f502-kreis f502-kreis--1" />
       <span className="f502-kreis f502-kreis--2" />
       <span className="f502-kreis f502-kreis--3" />
