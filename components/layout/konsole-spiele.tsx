@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** Farben aus den Tokens lesen (keine festen Werte im Code) */
 function farben() {
@@ -36,13 +36,64 @@ type Props = { /** Rückkehr zur Konsole */ beenden: () => void };
 
 /**
  * Easter Egg "matrix": Zeichenregen in Kobalt über der Ausgabe. Läuft, bis er über den
- * Knopf "Ausschalten" oder mit Esc beendet wird.
+ * Knopf "Ausschalten" oder mit Esc beendet wird. "Vollbild" nutzt die Vollbild-Funktion
+ * des Browsers; ohne sie füllt der Regen ersatzweise das Fenster. Esc verlässt erst das
+ * Vollbild, ein zweites Esc kehrt zur Konsole zurück.
  */
 export function KonsoleMatrix({ beenden }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
+  const huelle = useRef<HTMLDivElement>(null);
   const knopf = useRef<HTMLButtonElement>(null);
+  const [voll, setVoll] = useState(false);
+  /* Ersatz ohne Vollbild-Funktion: Fläche fest über das ganze Fenster */
+  const [ersatz, setErsatz] = useState(false);
   /* Fokus auf den Ausschalter, damit Enter oder Leertaste ihn sofort bedienen */
   useEffect(() => knopf.current?.focus(), []);
+
+  /* Vollbild-Zustand mit dem Browser abgleichen (Esc beendet es dort von selbst) */
+  useEffect(() => {
+    const wechsel = () => setVoll(document.fullscreenElement === huelle.current);
+    document.addEventListener("fullscreenchange", wechsel);
+    return () => {
+      document.removeEventListener("fullscreenchange", wechsel);
+      if (document.fullscreenElement === huelle.current) void document.exitFullscreen().catch(() => {});
+    };
+  }, []);
+
+  /* Ersatz-Vollbild: erstes Esc verkleinert nur, statt die Konsole zu verlassen */
+  useEffect(() => {
+    if (!ersatz) return;
+    const taste = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      e.preventDefault();
+      e.stopPropagation();
+      setErsatz(false);
+      setVoll(false);
+    };
+    window.addEventListener("keydown", taste, true);
+    return () => window.removeEventListener("keydown", taste, true);
+  }, [ersatz]);
+
+  const umschalten = async () => {
+    const el = huelle.current;
+    if (!el) return;
+    if (voll) {
+      if (document.fullscreenElement) await document.exitFullscreen().catch(() => {});
+      setErsatz(false);
+      setVoll(false);
+      return;
+    }
+    if (el.requestFullscreen && document.fullscreenEnabled) {
+      try {
+        await el.requestFullscreen();
+        return;
+      } catch {
+        /* abgelehnt: Ersatz nutzen */
+      }
+    }
+    setErsatz(true);
+    setVoll(true);
+  };
 
   useEffect(() => {
     const c = ref.current;
@@ -87,18 +138,25 @@ export function KonsoleMatrix({ beenden }: Props) {
     };
   }, []);
 
+  const knopfKlasse =
+    "daten inline-flex min-h-11 cursor-pointer items-center gap-2 border border-border-strong bg-bg/90 px-3.5 text-text transition-colors duration-(--dur-fast) hover:border-brand";
+
   return (
-    <div className="absolute inset-0 z-10 bg-bg">
+    <div ref={huelle} className={`${ersatz ? "fixed inset-0 z-[100]" : "absolute inset-0 z-10"} bg-bg`}>
       <canvas ref={ref} aria-hidden="true" className="block" />
-      <button
-        ref={knopf}
-        type="button"
-        onClick={beenden}
-        className="daten absolute right-4 bottom-3 inline-flex min-h-11 cursor-pointer items-center gap-2 border border-border-strong bg-bg/90 px-3.5 text-text transition-colors duration-(--dur-fast) hover:border-brand"
-      >
-        <span aria-hidden="true" className="size-2 bg-brand" />
-        Ausschalten
-      </button>
+      <div className="absolute right-4 bottom-3 flex gap-2">
+        <button type="button" onClick={umschalten} aria-pressed={voll} className={knopfKlasse}>
+          {/* Symbol: vier Ecken nach außen (Vollbild) oder nach innen (Normal) */}
+          <svg aria-hidden="true" viewBox="0 0 12 12" className="size-3" fill="none" stroke="currentColor" strokeWidth="1.4">
+            {voll ? <path d="M4 1v3H1M8 1v3h3M4 11V8H1M8 11V8h3" /> : <path d="M1 4V1h3M11 4V1H8M1 8v3h3M11 8v3H8" />}
+          </svg>
+          {voll ? "Normal" : "Vollbild"}
+        </button>
+        <button ref={knopf} type="button" onClick={beenden} className={knopfKlasse}>
+          <span aria-hidden="true" className="size-2 bg-brand" />
+          Ausschalten
+        </button>
+      </div>
     </div>
   );
 }
