@@ -56,15 +56,15 @@ const ANORDNUNGEN = {
 type Anordnung = (typeof ANORDNUNGEN)[keyof typeof ANORDNUNGEN];
 
 /** Ein Gerät im Schema: Rahmen, Name, Zustand */
-function Geraet({ pos, name, zustand, schrift, warn = false, aus = false }: { pos: readonly number[]; name: string; zustand: string; schrift: readonly number[]; warn?: boolean; aus?: boolean }) {
+function Geraet({ pos, name, zustand, schrift, warn = false, ok = false, aus = false }: { pos: readonly number[]; name: string; zustand: string; schrift: readonly number[]; warn?: boolean; ok?: boolean; aus?: boolean }) {
   const [x, y] = pos;
   return (
     <g className={aus ? "opacity-45" : ""}>
-      <rect x={x} y={y} width="120" height="50" className={`fill-bg ${warn ? "stroke-error" : "stroke-border-strong"}`} strokeWidth="1.5" />
+      <rect x={x} y={y} width="120" height="50" className={`fill-bg transition-[stroke] duration-(--dur-base) ${warn ? "stroke-error" : ok ? "stroke-success" : "stroke-border-strong"}`} strokeWidth="1.5" />
       <text x={x + 10} y={y + 21} fontSize={schrift[0]} className="fill-text font-mono tracking-[0.1em] uppercase">
         {name}
       </text>
-      <text x={x + 10} y={y + 38} fontSize={schrift[1]} className={`font-mono tracking-[0.1em] uppercase ${warn ? "fill-error" : "fill-text-muted"}`}>
+      <text x={x + 10} y={y + 38} fontSize={schrift[1]} className={`font-mono tracking-[0.1em] uppercase ${warn ? "fill-error" : ok ? "fill-success" : "fill-text-muted"}`}>
         {zustand}
       </text>
     </g>
@@ -121,15 +121,15 @@ function Schema({ a, umgestellt, bewegt, className }: { a: Anordnung; umgestellt
 
       <Geraet pos={a.netz} schrift={a.schrift} name="Netz A" zustand="Video 8K/16K" />
       <Geraet pos={a.speicher} schrift={a.schrift} name="Speicher" zustand="2 PB" />
-      <Geraet pos={a.firewall} schrift={a.schrift} name="Firewall" zustand={umgestellt ? "Nur Internet" : "Überlastet"} warn={!umgestellt} />
+      <Geraet pos={a.firewall} schrift={a.schrift} name="Firewall" zustand={umgestellt ? "Nur Internet" : "Überlastet"} warn={!umgestellt} ok={umgestellt} />
       <Geraet pos={a.core} schrift={a.schrift} name="Core-Switch" zustand={umgestellt ? "Intern" : "Ungenutzt"} aus={!umgestellt} />
     </svg>
   );
 }
 
 /**
- * Netzschema zum Firewall-Fall: Vorher stauen sich die Pakete an der Firewall,
- * nachher laufen sie über den Core-Switch. Besucher stellen den Weg selbst um.
+ * Netzschema zum Firewall-Fall: Vorher stauen sich die Pakete an der Firewall (rot),
+ * nachher laufen sie über den Core-Switch und die Firewall ist entlastet (grün). Besucher stellen den Weg selbst um.
  * Breit nebeneinander, auf dem Handy untereinander. Bei "weniger Bewegung" stehen die Pakete still.
  */
 export function FirewallSchema() {
