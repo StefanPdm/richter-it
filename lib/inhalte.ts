@@ -51,7 +51,7 @@ export const hero = {
     "10+ Jahre" stammt von der bestehenden Website, von Daniel bestätigen lassen. */
 export const kennzahlen = [
   { wert: 20, vorsatz: "", nachsatz: "+", label: "größere Projekte abgeschlossen" },
-  { wert: 80, vorsatz: "", nachsatz: " %", label: "Leistung trotz VBS, bis zu" },
+  { wert: 80, vorsatz: "", nachsatz: " %", label: "Leistung trotz VBS" },
   { wert: 1, vorsatz: "", nachsatz: " h", label: "Audit, kostenlos" },
   { wert: 10, vorsatz: "", nachsatz: "+", label: "Jahre Erfahrung mit Open Source" },
 ] as const;

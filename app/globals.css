@@ -748,19 +748,33 @@
   }
   .spur > li { flex: 0 0 min(84vw, 26rem); scroll-snap-align: start; }
   .spur-fuss {
-    display: flex; align-items: center; gap: 1.25rem;
-    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+    display: flex; align-items: center; gap: 1.25rem;  /* Abstand nach oben über gap der Bühne */
     padding-inline: max(var(--gutter), calc((100% - var(--container-wide)) / 2 + var(--gutter)));
   }
   .spur-leiste { position: relative; flex: 1; max-width: 16rem; height: 1px; background: var(--color-border); }
   .spur-balken { position: absolute; inset: 0; background: var(--color-brand); transform: scaleX(0); transform-origin: left; }
   .spur-aussen[data-aktiv="false"] .spur-fuss { display: none; }
 
+  /* Klebender Kopf im Backup-Ablauf: läuft unten weich aus, damit weggescrollter Text verschwindet */
+  @media (width >= 56rem) {
+    .ablauf-kopf::after {
+      content: "";
+      position: absolute;
+      inset: 100% 0 auto;
+      height: 2.5rem;
+      background: linear-gradient(to bottom, var(--color-bg-alt), transparent);
+      pointer-events: none;
+    }
+  }
+  .spur-buehne { display: flex; flex-direction: column; gap: clamp(1.5rem, 3vw, 2.25rem); }
+  /* Niedrige Bildschirme (Laptops): kompakter, damit Kopf und Karten zusammen ins Bild passen */
+  @media (max-height: 50rem) { .spur-buehne { gap: 1rem; } }
   .spur-aussen[data-aktiv="true"] .spur-buehne {
     position: sticky;
     top: var(--header-h);
-    height: calc(100svh - var(--header-h));
-    display: flex; flex-direction: column; justify-content: center;
+    height: calc(100svh - var(--header-h) - var(--unten));  /* zwischen Header und Statusleiste */
+    padding-top: 2.25rem;  /* Platz für die Scroll-Anzeige (PKT) unter dem Header */
+    justify-content: center;
     overflow: hidden;
   }
   .spur-aussen[data-aktiv="true"] .spur { overflow: visible; scroll-snap-type: none; will-change: transform; }
