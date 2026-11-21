@@ -121,7 +121,7 @@ export const dossiers: readonly Dossier[] = [
         text: "Bei jeder Clusterplanung frage ich nach Zeit- und DNS-Servern und beziehe sie ein: Wie viele gibt es, woher beziehen sie ihre Daten, und was passiert, wenn einer ausfällt?",
       },
     ],
-    ausprobieren: { art: "ausfall", nach: 2, satz: "Klicken Sie ein System an und sehen Sie, was alles mit ausfällt." },
+    ausprobieren: { art: "ausfall", nach: 1, satz: "Klicken Sie die Internetleitung an, einmal ohne und einmal mit eigenem Zeitserver (Haken bei „Zeitserver (NTP)“ setzen)." },
     fuerSie: {
       text: "Wenn Sie nicht sicher sagen können, woher Ihre Server die Zeit beziehen und wie viele DNS-Server Sie haben, lohnt ein kurzer Check.",
       leistung: { pfad: "/proxmox", label: "Proxmox VE" },

@@ -9,6 +9,9 @@ import { ErgebnisKnopf, Feld, Kennwert } from "./bausteine";
  * Jede Kante heißt "braucht". Fällt ein System aus, fallen alle Systeme mit aus,
  * die es (direkt oder über andere) brauchen. Doppelt ausgelegte Systeme fallen beim
  * Anklicken nicht aus, weil das zweite System übernimmt.
+ * "ersatz": Fehlt ein gebrauchtes System, springt ein anderes ein. Beispiel Zeit: Ohne
+ * eigenen Zeitserver holt sich die Anmeldung die Zeit aus dem Internet (Daniel: kleinen
+ * NTP-Server im Haus haben, falls das Internet ausfällt).
  */
 
 type Knoten = {
@@ -20,6 +23,8 @@ type Knoten = {
   braucht: string[];
   /** immer vorhanden, Schalter "vorhanden" gesperrt */
   pflicht?: boolean;
+  /** Ersatzquelle je gebrauchtem System, greift nur, wenn es nicht vorhanden ist */
+  ersatz?: Record<string, string>;
 };
 
 const EBENEN = ["Versorgung", "Anbindung", "Infrastruktur", "Grunddienste", "Anwendungen"] as const;
@@ -32,8 +37,10 @@ const KNOTEN: Knoten[] = [
   { id: "firewall", name: "Firewall", ebene: 2, x: 20, braucht: ["strom", "netz"] },
   { id: "host", name: "Virtualisierungs-Host", ebene: 2, x: 52, braucht: ["strom", "netz"], pflicht: true },
   { id: "speicher", name: "Speicher (SAN/NAS)", ebene: 2, x: 82, braucht: ["strom", "netz"] },
-  { id: "dns", name: "DNS / DHCP", ebene: 3, x: 36, braucht: ["host", "speicher"] },
-  { id: "anmeldung", name: "Verzeichnis / Anmeldung", ebene: 3, x: 68, braucht: ["host", "speicher", "dns"] },
+  { id: "ntp", name: "Zeitserver (NTP)", ebene: 3, x: 12, braucht: ["strom", "netz"] },
+  { id: "dns", name: "DNS / DHCP", ebene: 3, x: 82, braucht: ["host", "speicher"] },
+  /* Anmeldung (Kerberos) braucht die richtige Zeit: eigener Zeitserver, sonst das Internet */
+  { id: "anmeldung", name: "Verzeichnis / Anmeldung", ebene: 3, x: 46, braucht: ["host", "speicher", "dns", "ntp"], ersatz: { ntp: "internet" } },
   { id: "dateien", name: "Dateiablage", ebene: 4, x: 10, braucht: ["host", "speicher", "dns", "anmeldung"] },
   { id: "mail", name: "E-Mail", ebene: 4, x: 30, braucht: ["host", "speicher", "dns", "anmeldung", "firewall", "internet"] },
   { id: "erp", name: "Fachanwendung / ERP", ebene: 4, x: 50, braucht: ["host", "speicher", "dns", "anmeldung"] },
@@ -46,6 +53,13 @@ const POS: Record<string, Knoten> = Object.fromEntries(KNOTEN.map((k) => [k.id, 
 
 type Schalter = Record<string, boolean>;
 const alleAn = (): Schalter => Object.fromEntries(KNOTEN.map((k) => [k.id, true]));
+/* Voreinstellung: typische kleine Umgebung, alles einmal vorhanden, aber ohne eigenen Zeitserver */
+const typisch = (): Schalter => ({ ...alleAn(), ntp: false });
+
+/** Tatsächlich gebrauchte Systeme: fehlt eines, tritt seine Ersatzquelle an die Stelle */
+function gebraucht(k: Knoten, vorhanden: Schalter) {
+  return k.braucht.map((d) => (!vorhanden[d] && k.ersatz?.[d] ? k.ersatz[d] : d));
+}
 const alleAus = (): Schalter => Object.fromEntries(KNOTEN.map((k) => [k.id, false]));
 
 /** Ausfall-Kaskade: Runde je ausgefallenem System (0 = angeklicktes). Leer, wenn es doppelt ausgelegt ist. */
@@ -60,7 +74,7 @@ function kaskade(start: string, vorhanden: Schalter, doppelt: Schalter) {
     r++;
     for (const k of KNOTEN) {
       if (!vorhanden[k.id] || runde.has(k.id)) continue;
-      if (k.braucht.some((d) => vorhanden[d] && runde.has(d) && runde.get(d)! < r)) {
+      if (gebraucht(k, vorhanden).some((d) => vorhanden[d] && runde.has(d) && runde.get(d)! < r)) {
         runde.set(k.id, r);
         neu = true;
       }
@@ -84,7 +98,7 @@ const HAKEN =
 
 export function AusfallNetz() {
   const ruhig = useRuhig();
-  const [vorhanden, setVorhanden] = useState<Schalter>(alleAn);
+  const [vorhanden, setVorhanden] = useState<Schalter>(typisch);
   const [doppelt, setDoppelt] = useState<Schalter>(alleAus);
   const [wahl, setWahl] = useState<string | null>(null);
 
@@ -145,6 +159,8 @@ export function AusfallNetz() {
   if (aktiv && uebernimmt) ergebnis = `${NAME[aktiv]} ist doppelt ausgelegt: Das zweite System übernimmt, nichts fällt aus.`;
   else if (aktiv && betroffen.length === 0) ergebnis = `Fällt ${NAME[aktiv]} aus, ist kein weiteres System betroffen.`;
   else if (aktiv) ergebnis = `Fällt ${NAME[aktiv]} aus, sind betroffen: ${betroffen.map((id) => NAME[id]).join(", ")}.`;
+  if (aktiv === "internet" && !vorhanden.ntp && runden.has("anmeldung"))
+    ergebnis += " Ohne eigenen Zeitserver holt sich die Anmeldung die Zeit aus dem Internet und fällt mit.";
 
   const doppeltListe = KNOTEN.filter((k) => vorhanden[k.id] && doppelt[k.id]).map((k) => k.name);
   const nachricht =
@@ -168,7 +184,8 @@ export function AusfallNetz() {
       <Feld titel="1 · Ihre Umgebung">
         <p className="max-w-measure text-sm text-text-muted">
           Haken Sie ab, was es bei Ihnen gibt und was doppelt ausgelegt ist. Voreingestellt ist eine typische kleine
-          Umgebung: alles einmal vorhanden, nichts doppelt.
+          Umgebung: alles einmal vorhanden, nichts doppelt und kein eigener Zeitserver. Probieren Sie die
+          Internetleitung mit und ohne Zeitserver.
         </p>
         <div className="grid gap-x-10 md:grid-cols-2">
           <div className="hidden grid-cols-[minmax(0,1fr)_5.5rem_5.5rem] gap-2 border-b border-border pb-2 md:grid">{kopfzeile}</div>
@@ -209,7 +226,7 @@ export function AusfallNetz() {
         <div className="relative mt-6 hidden h-[34rem] md:block" role="group" aria-label="Abhängigkeitsnetz">
           <svg className="absolute inset-0 size-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             {sichtbar.flatMap((k) =>
-              k.braucht
+              gebraucht(k, vorhanden)
                 .filter((d) => vorhanden[d])
                 .map((d) => {
                   const ziel = POS[d];

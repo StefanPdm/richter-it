@@ -17,6 +17,11 @@ export function AusfallNetzAnnahmen() {
         doppelte Auslegung, denn das Zurückspielen kostet Zeit.
       </p>
       <p>
+        Zeit: Die Anmeldung braucht eine genaue Uhrzeit (Kerberos lehnt standardmäßig Abweichungen über fünf Minuten
+        ab). Gibt es keinen eigenen Zeitserver, beziehen die Systeme die Zeit aus dem Internet. Dann hängt die Anmeldung
+        an der Internetleitung. Ein kleiner Zeitserver im Haus mit eigener Zeitquelle löst diese Abhängigkeit.
+      </p>
+      <p>
         Als einzelne Schwachstelle zählt ein System, das nicht doppelt ausgelegt ist und bei einem Ausfall mindestens drei
         weitere Systeme mitreißt.
       </p>
