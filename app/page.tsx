@@ -16,6 +16,7 @@ import { seitenMetadaten } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { Signallinie } from "@/components/effekte/signallinie";
 import { CtaBand } from "@/components/ui/cta-band";
+import { Fehler502 } from "@/components/sektionen/fehler-502";
 
 /* Startseite, Präsentationsversion "Leitstand im Abendlicht" (DESIGN.md).
    Rhythmus der Hintergründe, abwechselnd bewegt (B) und ruhig (R):
@@ -68,6 +69,7 @@ export default function Startseite() {
       <WerkzeugeTeaser />
       <Signallinie />
       <Haltung />
+      <Fehler502 />
       <Medienband />
       <Signallinie />
       <Referenzen />

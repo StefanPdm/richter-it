@@ -283,3 +283,44 @@ export const backupAblauf = [
     text: "Regelmäßige Prüfläufe lesen die Sicherungen zurück. Im Ernstfall ist klar, dass die Wiederherstellung funktioniert und wie lange sie dauert.",
   },
 ] as const;
+
+/* 502 mit Absicht: Daniels Idee aus dem Gespräch am 19.11.2026, Vorbild seine eigene
+   Fehlerseite auf formbricks.daniel-richter.info. Texte von Daniel bestätigen lassen. */
+export const fehler502 = {
+  titel: "502. Mit Absicht.",
+  einleitung:
+    "Ein 502 sieht aus wie ein Absturz. Oft ist er eine Entscheidung: Der Proxy vorne bleibt erreichbar, der Dienst dahinter ist bewusst getrennt. Lieber keine Antwort als eine ungeschützte.",
+  /** Zustände des Schemas, die Statuszeilen sind echte HTTP-Antworten */
+  verbunden: {
+    status: "HTTP/2 200 OK",
+    knopf: "Dienst trennen",
+    bild: "Dienst antwortet",
+    /** BEISPIEL: Anfragen-Protokoll im Bildschirm, illustrativ */
+    protokoll: [
+      "GET  /            200   14 ms",
+      "GET  /status      200    3 ms",
+      "POST /formular    200   41 ms",
+      "GET  /dashboard   200   22 ms",
+    ],
+  },
+  getrennt: {
+    status: "HTTP/2 502 Bad Gateway",
+    knopf: "Dienst wieder verbinden",
+    zeile: "Verbindung bewusst getrennt",
+    hinweis: "Der Dienst ist geschützt und kommt zurück, sobald er sicher ist.",
+  },
+  gruende: [
+    {
+      titel: "Wartung",
+      text: "Der Dienst bekommt ein Update. Der Proxy bleibt online und sagt ehrlich, dass dahinter gerade niemand antwortet, statt halbe Seiten auszuliefern.",
+    },
+    {
+      titel: "Sicherheitslücke",
+      text: "Eine Lücke ist bekannt, der Patch noch nicht da. Dann nehme ich den Dienst vom Netz, statt ihn offen laufen zu lassen.",
+    },
+    {
+      titel: "Isolation",
+      text: "Ein Dienst verhält sich auffällig. Er wird abgekoppelt und untersucht, der Rest der Infrastruktur läuft weiter.",
+    },
+  ],
+} as const;

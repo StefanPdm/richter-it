@@ -824,3 +824,71 @@
   inherits: false;
   initial-value: 0;
 }
+
+/* ---- 502 mit Absicht (Sektion Fehler502) ----
+   Daniels Fehlerseite übersetzt: statt rundem Zahnrad zwei gegenläufige Quadrate,
+   eckig und ohne Leuchten. Bei "weniger Bewegung" steht alles. */
+@layer components {
+  .f502-leitung {
+    position: relative;
+    display: block;
+    height: 1px;
+    background: var(--color-border-strong);
+  }
+  /* Datenpaket läuft vom Besucher zum Dienst, solange verbunden */
+  .f502-leitung::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    background: var(--color-brand);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .f502-leitung::after { animation: f502-paket 1.6s linear infinite; }
+  }
+  @keyframes f502-paket {
+    from { left: 0; opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    to { left: calc(100% - 5px); opacity: 0; }
+  }
+  .f502-leitung--getrennt {
+    background: repeating-linear-gradient(90deg, var(--color-border-strong) 0 4px, transparent 4px 8px);
+  }
+  .f502-leitung--getrennt::after { display: none; }
+
+  /* Sitzt in einem Feld, das die Diagonale beim Drehen aufnimmt (Breite / 1.42) */
+  .f502-ring {
+    position: relative;
+    width: 70%;
+    aspect-ratio: 1;
+    rotate: 45deg;
+    border: 1px solid color-mix(in srgb, var(--color-brand) 45%, transparent);
+    pointer-events: none;
+  }
+  .f502-ring::after {
+    content: "";
+    position: absolute;
+    inset: 14%;
+    border: 1px dashed color-mix(in srgb, var(--color-brand) 35%, transparent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .f502-ring { animation: f502-drehen 18s linear infinite; }
+    .f502-ring::after { animation: f502-drehen 9s linear infinite reverse; }
+  }
+  /* Protokoll: Zeilen laufen nacheinander ein, als kämen Anfragen an */
+  @media (prefers-reduced-motion: no-preference) {
+    .f502-protokoll li { animation: f502-zeile 3.2s steps(1) infinite; animation-delay: calc(var(--i) * 400ms); }
+  }
+  @keyframes f502-zeile {
+    0% { opacity: 0.35; }
+    8% { opacity: 1; color: var(--color-text); }
+    30%, 100% { opacity: 0.6; color: var(--color-text-muted); }
+  }
+  @keyframes f502-drehen {
+    from { rotate: 45deg; }
+    to { rotate: 405deg; }
+  }
+}

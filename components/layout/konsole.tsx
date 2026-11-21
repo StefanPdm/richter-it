@@ -28,6 +28,7 @@ const ZIELE: Record<string, { id: string; label: string }> = {
   ablauf: { id: "backup-ablauf", label: "Backup-Ablauf" },
   leitstand: { id: "leitstand", label: "Leitstand" },
   werkzeuge: { id: "werkzeuge", label: "Werkzeuge" },
+  "502": { id: "fehler-502", label: "502 mit Absicht" },
   referenzen: { id: "referenzen", label: "Referenzen" },
   person: { id: "ueber-mich", label: "Über mich" },
   partner: { id: "partner", label: "Partner" },

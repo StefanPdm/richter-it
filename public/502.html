@@ -1,0 +1,115 @@
+<!doctype html>
+<!--
+  Fehlerseite 502 für den Reverse Proxy (Caddy/nginx), wenn die Next.js-App bewusst
+  getrennt ist (Wartung, Sicherheitslücke, Isolation). Muss ohne die App funktionieren:
+  keine externen Dateien, Werte gespiegelt aus app/tokens.css (Kobalt). Bei Änderungen
+  an den Tokens hier nachziehen. Vorbild: Daniels Seite auf formbricks.daniel-richter.info.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#03060d">
+<meta http-equiv="refresh" content="60">
+<title>502 · Bewusst getrennt · Daniel Richter</title>
+<style>
+  :root {
+    --bg: #03060d; --surface: #0b1628; --border: #16243b; --border-strong: #2f4466;
+    --text: #e6efff; --muted: #8fa6c8; --brand: #4d94ff; --neon: #ff3bd4; --error: #e5534b;
+    --cta: #f0a24a; --cta-hover: #d98c34;
+    --display: "Arial Narrow", "Roboto Condensed", sans-serif;
+    --body: "Segoe UI", system-ui, sans-serif;
+    --mono: Consolas, "Courier New", monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--text); font-family: var(--body); line-height: 1.6;
+    display: grid; place-items: center; overflow: hidden; padding: 16px;
+  }
+  .daten { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .flaeche { position: fixed; inset: 0; pointer-events: none; }
+  .scanlines { background: repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.22) 0 1px, transparent 1px 4px); opacity: 0.55; }
+
+  /* Raster-Boden wie auf der Website */
+  .boden { position: fixed; inset: auto -20% -6% -20%; height: 42%; perspective: 480px; overflow: hidden; pointer-events: none;
+    mask-image: linear-gradient(to top, black 0%, black 20%, transparent 62%); }
+  .boden::before { content: ""; position: absolute; inset: -100% 0 0; transform: rotateX(62deg); transform-origin: bottom;
+    --linie: color-mix(in srgb, var(--brand) 30%, transparent);
+    background:
+      repeating-linear-gradient(90deg, transparent 0, var(--linie) 1px, var(--linie) 2px, transparent 3px, transparent 96px),
+      repeating-linear-gradient(0deg, transparent 0, var(--linie) 1px, var(--linie) 2px, transparent 3px, transparent 96px); }
+
+  /* HUD-Ecken */
+  .rahmen { position: fixed; inset: 16px; pointer-events: none;
+    --e: 18px; --s: 1px; --f: var(--brand);
+    background:
+      linear-gradient(var(--f), var(--f)) top left / var(--e) var(--s), linear-gradient(var(--f), var(--f)) top left / var(--s) var(--e),
+      linear-gradient(var(--f), var(--f)) top right / var(--e) var(--s), linear-gradient(var(--f), var(--f)) top right / var(--s) var(--e),
+      linear-gradient(var(--f), var(--f)) bottom left / var(--e) var(--s), linear-gradient(var(--f), var(--f)) bottom left / var(--s) var(--e),
+      linear-gradient(var(--f), var(--f)) bottom right / var(--e) var(--s), linear-gradient(var(--f), var(--f)) bottom right / var(--s) var(--e);
+    background-repeat: no-repeat; }
+  .ecke { position: fixed; }
+  .ecke--ol { top: 40px; left: 44px; border-left: 2px solid var(--brand); padding-left: 12px; }
+  .ecke--ur { right: 44px; bottom: 36px; text-align: right; }
+
+  main { position: relative; display: grid; justify-items: center; gap: 14px; text-align: center; max-width: 40rem; }
+  /* Feld nimmt die Diagonale des drehenden Quadrats auf, Zahl steht darunter */
+  .buehne { display: grid; place-items: center; width: clamp(6rem, 4rem + 6vw, 9rem); aspect-ratio: 1; }
+  .ring { position: relative; width: 70%; aspect-ratio: 1; rotate: 45deg; border: 1px solid color-mix(in srgb, var(--brand) 45%, transparent); }
+  .ring::after { content: ""; position: absolute; inset: 14%; border: 1px dashed color-mix(in srgb, var(--brand) 35%, transparent); }
+
+  h1 { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(3.5rem, 2rem + 5vw, 7rem); line-height: 0.9; color: var(--brand); }
+  .glitch { position: relative; display: inline-block; }
+  .glitch__kanal { position: absolute; inset: 0; opacity: 0; }
+  .glitch__kanal--a { color: var(--neon); }
+  .glitch__kanal--b { color: var(--error); }
+
+  .zeile { color: var(--text); }
+  p { margin: 0; color: var(--muted); max-width: 46ch; }
+  .status { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--border-strong); padding: 8px 14px; }
+  .punkt { width: 7px; height: 7px; border-radius: 999px; background: var(--brand); }
+
+  .kontakt { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 24px; margin-top: 10px; }
+  a { color: var(--text); text-decoration: underline; text-underline-offset: 4px; font-family: var(--mono); display: inline-flex; align-items: center; min-height: 44px; }
+  a:hover { color: var(--brand); }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .boden::before { animation: raster 7s linear infinite; }
+    .ring { animation: drehen 18s linear infinite; }
+    .ring::after { animation: drehen 9s linear infinite reverse; }
+    .punkt { animation: atmen 2.4s ease-in-out infinite; }
+    .glitch__kanal--a { animation: glitch-a 5s steps(1) infinite; }
+    .glitch__kanal--b { animation: glitch-b 5s steps(1) infinite; }
+  }
+  @keyframes raster { from { transform: rotateX(62deg) translateY(0); } to { transform: rotateX(62deg) translateY(96px); } }
+  @keyframes drehen { from { rotate: 45deg; } to { rotate: 405deg; } }
+  @keyframes atmen { 50% { opacity: 0.35; } }
+  @keyframes glitch-a { 0%, 91%, 100% { opacity: 0; transform: none; } 92% { opacity: 0.8; transform: translateX(-4px); clip-path: inset(15% 0 60% 0); } 95% { opacity: 0.8; transform: translateX(3px); clip-path: inset(55% 0 20% 0); } }
+  @keyframes glitch-b { 0%, 87%, 100% { opacity: 0; transform: none; } 88% { opacity: 0.7; transform: translateX(4px); clip-path: inset(60% 0 15% 0); } 90% { opacity: 0.7; transform: translateX(-3px); clip-path: inset(20% 0 55% 0); } }
+
+  @media (max-width: 40rem) { .ecke { display: none; } }
+</style>
+</head>
+<body>
+  <div class="flaeche scanlines" aria-hidden="true"></div>
+  <div class="boden" aria-hidden="true"></div>
+  <div class="rahmen" aria-hidden="true"></div>
+  <span class="ecke ecke--ol daten" aria-hidden="true">System_Status<br>/ 502</span>
+  <span class="ecke ecke--ur daten" aria-hidden="true">HTTP 502<br>Bad Gateway</span>
+
+  <main>
+    <div class="buehne" aria-hidden="true"><span class="ring"></span></div>
+    <h1><span class="glitch">502<span class="glitch__kanal glitch__kanal--a" aria-hidden="true">502</span><span class="glitch__kanal glitch__kanal--b" aria-hidden="true">502</span></span></h1>
+    <span class="daten zeile">Verbindung bewusst getrennt</span>
+    <p>Kein Absturz. Der Dienst hinter dieser Seite ist gerade mit Absicht vom Netz, für ein Update oder zu seinem Schutz. Er kommt zurück, sobald er sicher ist. Diese Seite lädt sich jede Minute neu.</p>
+    <span class="status daten"><span class="punkt" aria-hidden="true"></span>Proxy online · Dienst getrennt</span>
+    <div class="kontakt">
+      <a href="tel:+491739637427">+49 173 963 74 27</a>
+      <a href="mailto:kontakt@daniel-richter.it">kontakt@daniel-richter.it</a>
+    </div>
+  </main>
+</body>
+</html>
