@@ -7,7 +7,7 @@ import { meldeThema, type Anliegen } from "@/lib/kontakt-thema";
 import { leistungen, technik } from "@/lib/inhalte";
 import { site } from "@/lib/site";
 import { werkzeuge } from "@/lib/werkzeuge";
-import type { CheckErgebnis, Pruefung } from "@/lib/sicherheitscheck";
+import { STATUS_MARKE, type CheckErgebnis, type Pruefung } from "@/lib/sicherheitscheck";
 import type { WetterErgebnis } from "@/app/api/wetter/route";
 import type { PingErgebnis } from "@/app/api/ping/route";
 import { KonsoleWetter } from "./konsole-wetter";
@@ -74,12 +74,7 @@ type Zeile = { art: "ein" | "aus" | "fehler"; inhalt: ReactNode };
 
 const ALLE_WORTE = ["help", "check", "wetter", "ls", "cd", "leistungen", "werkzeuge", "open", "kontakt", "ping", "neofetch", "whoami", "clear", "exit", "uptime", "sudo", "spiel", "matrix"];
 
-const MARKE: Record<Pruefung["status"], { text: string; klasse: string }> = {
-  ok: { text: "[  OK  ]", klasse: "text-success" },
-  warn: { text: "[ WARN ]", klasse: "text-brand-dark" },
-  fehlt: { text: "[FEHLT ]", klasse: "text-error" },
-  info: { text: "[ INFO ]", klasse: "text-text-muted" },
-};
+const MARKE = STATUS_MARKE;
 
 /** Browser und System aus den Angaben, die jeder Browser mitschickt */
 function browserUndSystem() {

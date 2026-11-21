@@ -36,7 +36,9 @@ export function WerkzeugSeite({ slug, einleitung, annahmen, children }: Props) {
             <p className="max-w-measure text-lead text-text-muted">{einleitung}</p>
             <p className="daten flex items-center gap-2.5">
               <span className="status-punkt" aria-hidden="true" />
-              Rechnet nur in Ihrem Browser · keine Daten werden gesendet
+              {w.lauf === "server"
+                ? "Fragt nur öffentliche Angaben ab · nichts wird gespeichert"
+                : "Rechnet nur in Ihrem Browser · keine Daten werden gesendet"}
             </p>
           </div>
 
@@ -51,7 +53,7 @@ export function WerkzeugSeite({ slug, einleitung, annahmen, children }: Props) {
 
           <nav aria-label="Weitere Werkzeuge" className="grid gap-4 border-t border-border pt-8">
             <span className="daten">Weitere Werkzeuge</span>
-            <ul className="grid gap-(--gap-karten) sm:grid-cols-3">
+            <ul className="grid gap-(--gap-karten) sm:grid-cols-2 lg:grid-cols-4">
               {andere.map((x) => (
                 <li key={x.slug}>
                   <Link href={`/werkzeuge/${x.slug}`} className="zucken grid gap-1 border-l-2 border-border py-1 pl-4 hover:border-brand">

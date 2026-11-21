@@ -17,8 +17,8 @@ export default function Datenschutz() {
       <p>Anbieter, Zweck, Speicherdauer</p>
       <h2>Kontaktformular</h2>
       <p>Welche Daten, Zweck, Rechtsgrundlage, Speicherdauer</p>
-      {/* Beschreibt, was app/api/check, ping, wetter und ich tun. Rechtsgrundlage legt der Kunde fest. */}
-      <h2>Konsole: Sicherheits-Check, Ping, Wetter und whoami</h2>
+      {/* Beschreibt, was app/api/check, ki-check, ping, wetter und ich tun. Rechtsgrundlage legt der Kunde fest. */}
+      <h2>Konsole und Domain-Check: Sicherheits-Check, KI-Sichtbarkeit, Ping, Wetter und whoami</h2>
       <p>
         Die Konsole dieser Website (unten über die Leiste „Konsole“ oder die Taste ^) bietet einige Befehle, für die eine
         Anfrage an unseren Server nötig ist. Die Befehle werden nur ausgeführt, wenn Sie sie selbst eingeben. Die
@@ -31,6 +31,13 @@ export default function Datenschutz() {
         Startseite der Domain sowie ihr TLS-Zertifikat ab. Cloudflare erhält dabei nur die Domain, nicht Ihre IP-Adresse.
         Das Ergebnis wird nur an Ihren Browser zurückgegeben und nicht gespeichert. Mit „kontakt --ergebnis“ übernehmen Sie
         es auf Wunsch in das Kontaktformular.
+      </p>
+      <p>
+        <b>Werkzeug Domain-Check:</b> Die eingegebene Domain wird an unseren Server übermittelt. Für den Teil Sicherheit
+        geschieht dasselbe wie bei „check“. Für den Teil KI-Sichtbarkeit ruft der Server die Startseite der Domain sowie
+        die Dateien robots.txt, llms.txt und sitemap.xml ab, wie es ein Suchmaschinen-Crawler tut. Das Ergebnis wird nur an
+        Ihren Browser zurückgegeben und nicht gespeichert. Mit „Ergebnis besprechen“ übernehmen Sie es auf Wunsch in das
+        Kontaktformular.
       </p>
       <p>
         <b>ping &lt;domain&gt;:</b> Die eingegebene Domain wird an unseren Server übermittelt. Der Server baut viermal eine

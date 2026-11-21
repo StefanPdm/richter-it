@@ -1,5 +1,15 @@
-/** Werkzeuge: kleine Rechner und Checks, die nur im Browser rechnen. Reihenfolge = Anzeige. */
+/** Werkzeuge: kleine Rechner und Checks. Reihenfolge = Anzeige.
+    lauf: "browser" rechnet nur im Browser, "server" fragt öffentliche Angaben über unseren Server ab. */
 export const werkzeuge = [
+  {
+    slug: "domain-check",
+    kennung: "DNS",
+    titel: "Domain-Check",
+    kurz: "Wie sicher ist Ihre Domain, und finden ChatGPT & Co. Ihre Website?",
+    satz: "Eine Domain, zwei Antworten: Mail-Schutz, Zertifikat und Header, dazu die KI-Sichtbarkeit mit Punktzahl und Röntgenblick.",
+    dauer: "10 Sekunden",
+    lauf: "server",
+  },
   {
     slug: "souveraenitaet",
     kennung: "SOV",
@@ -7,6 +17,7 @@ export const werkzeuge = [
     kurz: "Wie abhängig ist Ihre IT von einzelnen Herstellern?",
     satz: "Zehn Fragen, ein Abhängigkeits-Profil und drei erste Schritte mit Open-Source-Alternativen.",
     dauer: "3 Minuten",
+    lauf: "browser",
   },
   {
     slug: "ausfall",
@@ -15,6 +26,7 @@ export const werkzeuge = [
     kurz: "Klicken Sie ein System an und sehen Sie, was alles mit ausfällt.",
     satz: "Ihre Umgebung als Netz: Abhängigkeiten und einzelne Schwachstellen ohne Ausweichweg auf einen Blick.",
     dauer: "2 Minuten",
+    lauf: "browser",
   },
   {
     slug: "vmware-ausstieg",
@@ -23,6 +35,7 @@ export const werkzeuge = [
     kurz: "Was kostet Proxmox im Vergleich zu Ihrer heutigen VMware-Lizenz?",
     satz: "Hosts und CPU-Sockel eingeben, Subscription-Stufe wählen, jährliche Kosten vergleichen.",
     dauer: "1 Minute",
+    lauf: "browser",
   },
   {
     slug: "cluster-planer",
@@ -31,6 +44,7 @@ export const werkzeuge = [
     kurz: "Wie groß muss ein Proxmox-Cluster für Ihre Maschinen sein?",
     satz: "Virtuelle Maschinen, Arbeitsspeicher und Speicher eingeben, Vorschlag für Knoten und Speicher erhalten.",
     dauer: "2 Minuten",
+    lauf: "browser",
   },
 ] as const;
 
