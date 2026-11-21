@@ -65,7 +65,8 @@ Eckig, keine Radien. Schatten nur für Schwebendes (Nach-oben-Knopf, Konsole). L
 Bei "weniger Bewegung": alles steht, Videos zeigen nur das Poster.
 
 **Ausnahme 502-Sektion** (Entscheidung Stefan, 21.11.2026): Zahnrad nach Daniels Entwurf mit
-leichtem Glow, nur dort und in `public/502.html`. Sonst gilt weiter: keine Glows.
+leichtem Glow, nur dort und in `public/502.html`. Ebenso die Dokument-Karten auf `/zusammenarbeit` beim
+Überfahren (leichter Glow von hinten, Wunsch Stefan 21.11.2026). Sonst gilt weiter: keine Glows.
 
 ## Bildsprache
 

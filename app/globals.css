@@ -1307,6 +1307,21 @@
     box-shadow: var(--shadow-float);
   }
   .dok--abnahme { border-color: color-mix(in srgb, var(--color-cta) 55%, var(--color-border-strong)); }
+  /* Hover (nur Maus): Blatt wächst minimal, leichter Glow von hinten.
+     Glow hier bewusst erlaubt (Wunsch Stefan, 21.11.2026), siehe DESIGN.md. */
+  .dok {
+    --glow: var(--color-brand);
+    transition: scale var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .dok.dok--abnahme { --glow: var(--color-cta); }  /* Abnahmeprotokoll leuchtet in Bernstein */
+  @media (hover: hover) and (pointer: fine) {
+    .dok:hover {
+      scale: 1.03;
+      box-shadow:
+        var(--shadow-float),
+        0 0 48px -6px color-mix(in srgb, var(--glow) 40%, transparent);
+    }
+  }
   .dok-zeile {
     display: block;
     height: 0.4rem;

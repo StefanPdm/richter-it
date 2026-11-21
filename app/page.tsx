@@ -22,7 +22,7 @@ import { Fehler502 } from "@/components/sektionen/fehler-502";
 /* Startseite, Präsentationsversion "Leitstand im Abendlicht" (DESIGN.md).
    Rhythmus der Hintergründe, abwechselnd bewegt (B) und ruhig (R):
    Hero B, VBS R, Kennzahlen B (Lichtfeger), Medienband B (Video), Leistungen R, Leitstand B (Datenstrom),
-   Haltung R, 502 B, Referenzen R, Zusammenarbeit (Band) R, Zitat R, Person B (Netz), Partner R,
+   Haltung R, 502 B, Referenzen R, Zitat R, Zusammenarbeit (Band) R, Person B (Netz), Partner R,
    Kontakt B (Kontrollraum). Backup (Messung, Ablauf) steht auf /backup, die Leistungskarte
    verweist darauf. Neue Sektionen nur nach Rückfrage (CLAUDE.md). Leitstand: Kontrollraum mit Kamerafahrt und Scan-Strahl. */
 
@@ -74,7 +74,6 @@ export default function Startseite() {
       <Fehler502 />
       <Signallinie />
       <Referenzen />
-      <ZusammenarbeitBand />
       <CtaBand
         satz="Ihr Projekt könnte Fall 04 sein."
         zusatz="Beschreiben Sie kurz Ihre Ausgangslage, Sie bekommen ein konkretes Angebot."
@@ -82,6 +81,7 @@ export default function Startseite() {
         thema={{ anliegen: "Angebot", betreff: "Angebot für mein Projekt" }}
       />
       <ZitatBand />
+      <ZusammenarbeitBand />
       <Person />
       <Signallinie />
       <Partner />
