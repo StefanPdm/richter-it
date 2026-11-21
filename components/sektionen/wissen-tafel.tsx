@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
-import { Fallblatt } from "@/components/effekte/fallblatt";
+import { Klappzeile } from "@/components/effekte/klappzeile";
 import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 import { dossiers } from "@/lib/wissen";
 
@@ -47,20 +47,21 @@ export function WissenTafel() {
             <span className="text-right">Status</span>
           </div>
           <ul className="grid">
-            {zeilen.map((d) => {
+            {zeilen.map((d, zeile) => {
               const bereit = d.status === "bereit";
               const inhalt = (
                 <>
-                  <Fallblatt text={d.kennung} buchstaben versatz={0.6} className="tafel__klappe text-brand-dark" />
-                  <span className="min-w-0">
-                    <Fallblatt text={zuschnitt(d.titel)} buchstaben versatz={0.35} className="tafel__klappe hidden text-text lg:inline-flex" />
+                  <Klappzeile text={d.kennung} zeile={zeile} className="text-brand-dark" />
+                  {/* Hüllen als flex: ohne Zeilenhöhe, sonst sitzen die Klappzellen höher als die Kennung */}
+                  <span className="flex min-w-0">
+                    <Klappzeile text={zuschnitt(d.titel)} zeile={zeile} spalte={7} className="hidden text-text lg:inline-flex" />
                     <span className="font-mono text-sm text-text uppercase lg:hidden">{d.titel.replace(/\.$/, "")}</span>
                   </span>
-                  <span className="hidden sm:block">
-                    <Fallblatt text={`${d.minuten} MIN`} buchstaben versatz={0.6} className="tafel__klappe text-text-muted" />
+                  <span className="hidden sm:flex">
+                    <Klappzeile text={`${d.minuten} MIN`} zeile={zeile} spalte={52} className="text-text-muted" />
                   </span>
-                  <span className="text-right">
-                    <Fallblatt text={bereit ? "BEREIT" : "BALD"} buchstaben versatz={0.6} className={`tafel__klappe ${bereit ? "text-success" : "text-text-muted"}`} />
+                  <span className="flex justify-end">
+                    <Klappzeile text={bereit ? "BEREIT" : "BALD"} zeile={zeile} spalte={59} className={bereit ? "text-success" : "text-text-muted"} />
                   </span>
                 </>
               );

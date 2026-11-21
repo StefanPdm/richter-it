@@ -349,8 +349,8 @@
   }
 
   /* ---- Hintergrund "Lichtfeger": Punktmatrix, ein Lichtband zieht langsam darüber ---- */
-  .hg-lichtfeger { position: relative; isolation: isolate; overflow: hidden; }
-  .hg-lichtfeger::before {
+  .hg-lichtfeger, .hg-punktmatrix { position: relative; isolation: isolate; overflow: hidden; }
+  .hg-lichtfeger::before, .hg-punktmatrix::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -1411,10 +1411,58 @@
   .tafel__zeile--link { transition: background-color var(--dur-fast) ease; }
   .tafel__zeile--link:hover { background: var(--color-surface); }
   .tafel__zeile--link:focus-visible { outline-offset: -2px; }
-  /* Klappzellen kleiner und enger als bei den Kennzahlen */
-  .tafel__klappe { gap: 2px; font-family: var(--font-mono); font-size: var(--text-sm); }
-  /* Fuge in der Klappenmitte dezenter, sonst verschwindet bei kleiner Schrift der Mittelstrich des E */
-  .tafel__klappe .fallblatt__zelle::after { opacity: 0.35; }
+
+  /* Klappzeile (klappzeile.tsx): echte Fallblätter aus zwei Hälften. Alle vier Blatthälften
+     liegen in derselben Zelle; clip-path schneidet sie auf oben oder unten zu, gedreht wird
+     um die Fuge in der Mitte. */
+  .klapp { display: inline-flex; gap: 2px; font-family: var(--font-mono); font-size: var(--text-sm); }
+  /* Feste Größe und contain: ein Zeichenwechsel berechnet nur die eigene Zelle neu,
+     nicht die ganze Seite (Hunderte Wechsel pro Sekunde beim Klappen) */
+  .klapp__zelle {
+    position: relative;
+    display: inline-grid;
+    width: calc(0.86em + 2px);
+    height: calc(1lh + 0.2em + 2px);
+    border: 1px solid var(--color-border);
+    contain: strict;
+  }
+  .klapp__zelle--leer { width: 0.4em; border-color: transparent; }
+  /* Halbbox: rechteckig abgeschnitten (overflow), das ist beim Bewegen viel leichter als clip-path.
+     Das Zeichen darin ist so hoch wie die ganze Zelle und wird oben oder unten angeschnitten. */
+  .klapp__blatt { position: absolute; inset-inline: 0; height: 50%; overflow: hidden; }
+  .klapp__zeichen {
+    position: absolute;
+    inset-inline: 0;
+    height: 200%;
+    display: grid;
+    place-items: center;
+    white-space: pre;
+  }
+  /* Obere Hälfte heller, untere dunkler: Licht fällt wie auf echte Blätter von oben */
+  .klapp__oben { top: 0; transform-origin: 50% 100%; background: var(--color-surface); }
+  .klapp__oben .klapp__zeichen { top: 0; }
+  .klapp__unten { bottom: 0; transform-origin: 50% 0; background: color-mix(in srgb, var(--color-surface) 70%, var(--color-bg)); }
+  .klapp__unten .klapp__zeichen { bottom: 0; }
+  /* Klappen nur in ihrer Phase sichtbar (data-phase aus klappzeile.tsx), halb zur Fuge gestaucht.
+     Die kippende obere Hälfte etwas dunkler, so liest sich das Stauchen als Kippen nach hinten. */
+  .klapp__klappe { visibility: hidden; }
+  .klapp__zelle[data-phase="a"] .klapp__klappe.klapp__oben {
+    visibility: visible;
+    transform: scaleY(0.5);
+    background: color-mix(in srgb, var(--color-surface) 80%, var(--color-bg));
+  }
+  .klapp__zelle[data-phase="b"] .klapp__klappe.klapp__unten { visibility: visible; transform: scaleY(0.5); }
+  /* Fuge zwischen den Hälften, liegt über den Blättern. Dezent, sonst verschluckt sie bei
+     kleiner Schrift den Mittelstrich von E und den Bindestrich */
+  .klapp__zelle:not(.klapp__zelle--leer)::after {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto;
+    z-index: 1;
+    height: 1px;
+    background: var(--color-bg);
+    opacity: 0.3;
+  }
 }
 
 /* ---- Fehlersuche (Dossier WIS-04): falsche Ebene zuckt kurz ---- */
