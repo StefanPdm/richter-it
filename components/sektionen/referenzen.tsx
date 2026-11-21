@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { Drehkarte } from "@/components/effekte/drehkarte";
 import { referenzen, stimmen } from "@/lib/inhalte";
@@ -5,8 +6,8 @@ import { site } from "@/lib/site";
 import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 
 /**
- * Anonyme Referenzen als Drehkarten: vorn das Ergebnis, hinten der Fall.
- * Kundenstimmen darunter. Alles BEISPIELE für die Präsentation.
+ * Anonyme Referenzen als Drehkarten: vorn das Ergebnis, hinten der Fall mit Link auf die
+ * Fallseite (/faelle/<slug>). Echte Fälle aus dem Gespräch, Kundenstimmen darunter (BEISPIEL).
  * Hintergrund ruhig (Wechsel zu Medienband und Person).
  */
 export function Referenzen() {
@@ -31,7 +32,7 @@ export function Referenzen() {
                 vorn={
                   <>
                     <span className="daten text-brand-dark">
-                      Fall {String(i + 1).padStart(2, "0")} · {r.branche}
+                      Fall {String(i + 1).padStart(2, "0")} · {r.bereich}
                     </span>
                     <p className="leuchten mt-6 font-display text-h2 font-medium text-brand-dark [font-stretch:72%]">{r.kurz}</p>
                     <h3 className="text-h3">{r.titel}</h3>
@@ -40,7 +41,7 @@ export function Referenzen() {
                 rueck={
                   <>
                     <span className="daten text-brand-dark">
-                      Fall {String(i + 1).padStart(2, "0")} · {r.branche}
+                      Fall {String(i + 1).padStart(2, "0")} · {r.bereich}
                     </span>
                     <dl className="grid gap-3">
                       {r.punkte.map((p) => (
@@ -51,6 +52,14 @@ export function Referenzen() {
                       ))}
                     </dl>
                   </>
+                }
+                rueckLink={
+                  <Link href={`/faelle/${r.slug}`} className="zucken group/fall inline-flex min-h-11 items-center gap-2 text-sm font-medium text-brand-dark">
+                    Ganzer Fall
+                    <span aria-hidden="true" className="transition-transform duration-(--dur-fast) ease-out [@media(hover:hover)]:group-hover/fall:translate-x-1">
+                      →
+                    </span>
+                  </Link>
                 }
               />
             </Reveal>

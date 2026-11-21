@@ -9,6 +9,8 @@ type Props = {
   /** Beschriftung der Knöpfe, z. B. "Fall ansehen" / "Zurück" */
   labelVorn?: string;
   labelRueck?: string;
+  /** Neben-Link in der Fußleiste der Rückseite, z. B. "Ganzer Fall" */
+  rueckLink?: ReactNode;
   className?: string;
 };
 
@@ -18,7 +20,7 @@ type Props = {
  * damit Screenreader und Tab nur die sichtbare Seite erreichen.
  * Weniger Bewegung: überblenden statt drehen (globals.css).
  */
-export function Drehkarte({ vorn, rueck, labelVorn = "Fall ansehen", labelRueck = "Zurück", className = "" }: Props) {
+export function Drehkarte({ vorn, rueck, labelVorn = "Fall ansehen", labelRueck = "Zurück", rueckLink, className = "" }: Props) {
   const [gedreht, setGedreht] = useState(false);
   const knopf =
     "daten inline-flex min-h-11 cursor-pointer items-center gap-2 border border-border px-3.5 transition-colors duration-(--dur-fast) hover:border-brand hover:text-text";
@@ -36,7 +38,7 @@ export function Drehkarte({ vorn, rueck, labelVorn = "Fall ansehen", labelRueck 
         </div>
         <div className="drehkarte__rueck hud-rahmen flex flex-col gap-4 border border-brand bg-surface p-[clamp(1.5rem,2.5vw,2.25rem)]" inert={!gedreht}>
           {rueck}
-          <KartenFuss>
+          <KartenFuss links={rueckLink}>
             <button type="button" className={knopf} onClick={() => setGedreht(false)}>
               <span aria-hidden="true">↺</span> {labelRueck}
             </button>

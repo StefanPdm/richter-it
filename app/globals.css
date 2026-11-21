@@ -1277,3 +1277,20 @@
     translate: 0 -0.6em;
   }
 }
+
+/* ---- Zeitleiste (Fall Altsystem): ein Feld pro Jahr, füllt sich nacheinander ---- */
+@layer components {
+  .zeitleiste__jahr {
+    height: 2.5rem;
+    background: var(--color-brand);
+    opacity: 0.85;
+  }
+  .zeitleiste__jahr--heute { background: var(--color-success); opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .zeitleiste__jahr { animation: zeitleiste-ein 400ms var(--ease-out) both; animation-delay: calc(var(--i) * 70ms + 200ms); }
+    .zeitleiste__jahr--heute { animation: zeitleiste-ein 400ms var(--ease-out) both, atmen 2.4s ease-in-out 2s infinite; animation-delay: calc(var(--i) * 70ms + 200ms), 2s; }
+  }
+  @keyframes zeitleiste-ein {
+    from { opacity: 0; transform: scaleY(0.2); }
+  }
+}

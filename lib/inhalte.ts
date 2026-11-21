@@ -208,39 +208,118 @@ export const grundsaetze = [
   },
 ] as const;
 
-/** BEISPIEL: Referenzen, anonymisiert und erfunden */
+/* Referenzen: drei echte Fälle aus dem Gespräch am 19.11.2026, anonym (keine Kunden,
+   keine Branche, die Rückschlüsse zulässt). Startseite zeigt die Kurzfassung als Drehkarte,
+   jeder Fall hat eine eigene Seite unter /faelle/<slug>. Vor dem Livegang von Daniel
+   prüfen lassen. Offene Angaben beginnen mit "[" und werden markiert. */
 export const referenzen = [
   {
-    branche: "Landesanstalt",
-    kurz: "15 min statt 8 h",
-    titel: "Backup in 15 statt 480 Minuten",
+    slug: "vbs-leistung",
+    bereich: "Virtualisierung",
+    kurz: "80 % trotz VBS",
+    titel: "Sicher und trotzdem schnell",
     punkte: [
-      { label: "Ausgangslage", wert: "Die nächtliche Sicherung einer 5-TB-Maschine lief bis in den Arbeitstag." },
-      { label: "Vorgehen", wert: "Inkrementelle Sicherung mit Deduplizierung, eigener Backup-Speicher." },
-      { label: "Ergebnis", wert: "15 Minuten, ohne große Umbauten." },
+      { label: "Ausgangslage", wert: "Mit aktiviertem VBS fiel die Datenrate eines virtuellen Windows-Servers von 25 auf 3 GB/s." },
+      { label: "Vorgehen", wert: "Konfiguration im Labor nachgebaut, mit Proxmox-Entwicklern abgestimmt, mit Benchmarks gemessen." },
+      { label: "Ergebnis", wert: "Credential Guard bleibt aktiv, bis zu 80 % der Leistung sind zurück." },
     ],
+    seite: {
+      beschreibung:
+        "VBS schützt Zugangsdaten, kostete hier aber fast 90 % der Datenrate. Mit dem richtigen Feinschliff bleibt der Schutz an und die Leistung kommt zurück.",
+      lead: "Ein Schutz, den Penetrationstests empfehlen, hat einen Windows-Server fast lahmgelegt. Abschalten war keine Option.",
+      fakten: [
+        { wert: "25 GB/s", label: "ohne VBS" },
+        { wert: "3 GB/s", label: "mit VBS, ohne Feinschliff" },
+        { wert: "bis 80 %", label: "Leistung mit Feinschliff" },
+      ],
+      abschnitte: [
+        {
+          titel: "Ausgangslage",
+          text: "Credential Guard erkennt und blockiert Versuche, Zugangsdaten über einen Server abzugreifen. Dafür muss Windows VBS aktivieren, eine eigene, abgeschottete Virtualisierungsebene. Läuft der Server selbst schon virtuell, stapeln sich zwei Ebenen. Im gemessenen Fall fiel die Datenrate eines virtuellen Windows-Servers von 25 auf 3 GB/s. Für eine stark genutzte Datenbank wäre das kaum noch nutzbar.",
+        },
+        {
+          titel: "Vorgehen",
+          text: "Ich habe die Umgebung im eigenen Labor nachgebaut und die Einstellungen von Hypervisor und Gastsystem Schritt für Schritt angepasst. Jede Änderung wurde mit Benchmarks gemessen und mit Proxmox-Entwicklern und Kollegen abgestimmt. So bleibt nachvollziehbar, welche Einstellung wie viel bringt.",
+        },
+        {
+          titel: "Ergebnis",
+          text: "VBS und Credential Guard bleiben aktiv. Mit den passenden Einstellungen kommen bis zu 80 Prozent der ursprünglichen Leistung zurück. Die Sicherheit läuft im Hintergrund, die Leistung spüren die Anwender im Alltag.",
+        },
+      ],
+    },
   },
   {
-    branche: "Kommunale Behörde",
-    kurz: "0 € Lizenzen",
-    titel: "Von VMware zu Proxmox in sechs Wochen",
+    slug: "firewall-engpass",
+    bereich: "Netzwerk",
+    kurz: "Flaschenhals gefunden",
+    titel: "Die Firewall, die alles bremste",
     punkte: [
-      { label: "Ausgangslage", wert: "Steigende Lizenzkosten, 60 virtuelle Maschinen." },
-      { label: "Vorgehen", wert: "Schrittweise Migration auf einen Proxmox-Cluster, ohne Ausfall im Betrieb." },
-      { label: "Ergebnis", wert: "Lizenzkosten für Virtualisierung auf null." },
+      { label: "Ausgangslage", wert: "Rund 2 PB Speicher, große Videodateien im internen Netz, zeitweise war die Infrastruktur nicht erreichbar." },
+      { label: "Vorgehen", wert: "Monitoring ausgewertet: Interner Verkehr lief durch die Firewall, die jedes Paket prüfte." },
+      { label: "Ergebnis", wert: "Verkehr zwischen internen Netzen über die Core-Switches, das Netz läuft wieder stabil." },
     ],
+    seite: {
+      beschreibung:
+        "Interner Datenverkehr lief durch die Firewall und legte das Netz zeitweise lahm. Die Lösung lag in der Wegführung, nicht in neuer Hardware.",
+      lead: "Große Videodateien auf dem Weg zum Speicher haben eine Firewall überlastet. Gefunden hat den Engpass das Monitoring.",
+      fakten: [
+        { wert: "2 PB", label: "Speicher im Netz" },
+        { wert: "8K / 16K", label: "Videodateien" },
+        { wert: "Core-Switch", label: "statt Firewall intern" },
+      ],
+      abschnitte: [
+        {
+          titel: "Ausgangslage",
+          text: "Die Umgebung hatte rund 2 Petabyte Speicher. Die Marketingabteilung schob regelmäßig 8K- und 16K-Videos durch das Netz zum Speicher. Zeitweise waren Teile der Infrastruktur nicht erreichbar, ohne dass ein Gerät ausgefallen wäre.",
+        },
+        {
+          titel: "Ursache",
+          text: "Das Monitoring zeigte die Firewall unter Volllast. Durch eine Fehlkonfiguration lief auch der Verkehr zwischen internen Netzen über sie. Sie prüfte jedes Paket auf Viren und blockierte unter Last ganze Netze. Eingerichtet hatte sie eine Fachfirma, einen Wartungsvertrag gab es nicht. Neue Netze wurden mit kopierten Einstellungen angelegt, samt unnötiger Prüfungen.",
+        },
+        {
+          titel: "Lösung und Ergebnis",
+          text: "Der Verkehr zwischen den internen Netzen läuft jetzt über die Core-Switches, die dafür gebaut sind. Die Firewall kümmert sich um das, wofür sie da ist: den Übergang nach außen. Netz und Datenübertragung laufen wieder stabil.",
+        },
+      ],
+    },
   },
   {
-    branche: "Mittelstand, Produktion",
-    kurz: "1 Login, MFA",
-    titel: "Ein Login für alle Systeme",
+    slug: "altsystem",
+    bereich: "Bestand",
+    kurz: "18 Jahre in Betrieb",
+    titel: "Weiter betreiben statt neu kaufen",
     punkte: [
-      { label: "Ausgangslage", wert: "Zwölf Anwendungen, zwölf Passwörter, kein zweiter Faktor." },
-      { label: "Vorgehen", wert: "Keycloak als zentrale Anmeldung mit Mehrfaktor-Schutz." },
-      { label: "Ergebnis", wert: "Ein Login, MFA für alle, Zugänge an einer Stelle steuerbar." },
+      { label: "Ausgangslage", wert: "Ein 18 Jahre altes System, neue Hardware stand im Raum." },
+      { label: "Vorgehen", wert: "Proxmox schrittweise aktualisiert, angepasst und optimiert." },
+      { label: "Ergebnis", wert: "Nicht so schnell wie neue Hardware, aber ausreichend und deutlich günstiger." },
     ],
+    seite: {
+      beschreibung:
+        "Ein 18 Jahre altes System läuft weiter, schrittweise aktualisiert und optimiert. Nicht so schnell wie neue Hardware, aber ausreichend und viel günstiger.",
+      lead: "Nicht jede Infrastruktur muss neu gekauft werden. Manchmal reicht es, das Vorhandene sauber nachzuziehen.",
+      fakten: [
+        { wert: "18 Jahre", label: "im Betrieb" },
+        { wert: "[Kosten neu]", label: "neue Hardware" },
+        { wert: "[Kosten Optimierung]", label: "Optimierung" },
+      ],
+      abschnitte: [
+        {
+          titel: "Ausgangslage",
+          text: "Ein System, das seit 18 Jahren läuft. Die naheliegende Antwort wäre neue Hardware gewesen, mit Beschaffung, Migration und dem Risiko, das jeder Umzug mit sich bringt.",
+        },
+        {
+          titel: "Vorgehen",
+          text: "Gemeinsam mit Kollegen habe ich Proxmox auf dem System schrittweise aktualisiert, an die Hardware angepasst und optimiert. Jeder Schritt wurde einzeln umgesetzt und geprüft, damit der Betrieb weiterlaufen konnte.",
+        },
+        {
+          titel: "Ergebnis",
+          text: "Das System läuft weiter. Die Leistung ist nicht mit neuer Hardware vergleichbar, reicht für die Aufgabe aber aus. Die Kosten lagen deutlich unter einer Neuanschaffung.",
+        },
+      ],
+    },
   },
 ] as const;
+export type Fall = (typeof referenzen)[number];
 
 /** BEISPIEL: Kundenstimmen, erfunden, Rollen statt Namen */
 export const stimmen = [

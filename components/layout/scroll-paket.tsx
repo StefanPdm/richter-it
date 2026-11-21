@@ -35,6 +35,7 @@ function seitenName(pfad: string) {
   const teil = pfad.split("/")[1] ?? "";
   if (teil === "werkzeuge") return "Werkzeuge";
   if (teil === "backup") return "Backup";
+  if (teil === "faelle") return "Fall";
   if (teil === "impressum") return "Impressum";
   if (teil === "datenschutz") return "Datenschutz";
   return "Route";
