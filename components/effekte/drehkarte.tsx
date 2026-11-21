@@ -26,9 +26,9 @@ export function Drehkarte({ vorn, rueck, labelVorn = "Fall ansehen", labelRueck 
     "daten inline-flex min-h-11 cursor-pointer items-center gap-2 border border-border px-3.5 transition-colors duration-(--dur-fast) hover:border-brand hover:text-text";
 
   return (
-    <div className={`drehkarte h-full ${className}`} data-gedreht={gedreht}>
-      <div className="drehkarte__innen">
-        <div className="drehkarte__vorn hud-rahmen flex flex-col gap-4 border border-border bg-surface p-[clamp(1.5rem,2.5vw,2.25rem)]" inert={gedreht}>
+    <div className={`drehkarte h-full min-w-0 ${className}`} data-gedreht={gedreht}>
+      <div className="drehkarte__innen min-w-0">
+        <div className="drehkarte__vorn hud-rahmen flex min-w-0 flex-col gap-4 border border-border bg-surface p-[clamp(1.5rem,2.5vw,2.25rem)]" inert={gedreht}>
           {vorn}
           <KartenFuss>
             <button type="button" className={knopf} onClick={() => setGedreht(true)} aria-expanded={gedreht}>
@@ -36,7 +36,7 @@ export function Drehkarte({ vorn, rueck, labelVorn = "Fall ansehen", labelRueck 
             </button>
           </KartenFuss>
         </div>
-        <div className="drehkarte__rueck hud-rahmen flex flex-col gap-4 border border-brand bg-surface p-[clamp(1.5rem,2.5vw,2.25rem)]" inert={!gedreht}>
+        <div className="drehkarte__rueck hud-rahmen flex min-w-0 flex-col gap-4 border border-brand bg-surface p-[clamp(1.5rem,2.5vw,2.25rem)]" inert={!gedreht}>
           {rueck}
           <KartenFuss links={rueckLink}>
             <button type="button" className={knopf} onClick={() => setGedreht(false)}>

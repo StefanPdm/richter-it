@@ -27,14 +27,18 @@ export function Referenzen() {
 
         <div className="grid gap-(--gap-karten) md:grid-cols-3">
           {referenzen.map((r, i) => (
-            <Reveal as="article" key={r.titel} index={i} className="md:min-h-[26rem]">
+            <Reveal as="article" key={r.titel} index={i} className="min-w-0 md:min-h-[26rem]">
               <Drehkarte
                 vorn={
                   <>
                     <span className="daten text-brand-dark">
                       Fall {String(i + 1).padStart(2, "0")} · {r.bereich}
                     </span>
-                    <p className="leuchten mt-6 font-display text-h2 font-medium text-brand-dark [font-stretch:72%]">{r.kurz}</p>
+                    {/* Etwas kleiner als text-h2, damit lange Wörter wie "Flaschenhals" in die Karte passen;
+                        schmaler wird mit Bindestrich getrennt */}
+                    <p className="leuchten mt-6 font-display text-[clamp(2.25rem,1.2rem+2.6vw,3.5rem)] leading-[0.95] font-medium text-balance hyphens-auto text-brand-dark [font-stretch:72%]">
+                      {r.kurz}
+                    </p>
                     <h3 className="text-h3">{r.titel}</h3>
                   </>
                 }

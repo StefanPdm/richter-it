@@ -464,6 +464,7 @@
   .drehkarte { perspective: 1400px; }
   .drehkarte__innen {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);  /* Spalte folgt der Kartenbreite, nicht dem längsten Wort */
     height: 100%;
     transform-style: preserve-3d;
     transition: transform 700ms var(--ease-in-out);
