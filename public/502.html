@@ -55,12 +55,19 @@
   .ecke--ur { right: 44px; bottom: 36px; text-align: right; }
 
   main { position: relative; display: grid; justify-items: center; gap: 14px; text-align: center; max-width: 40rem; }
-  /* Feld nimmt die Diagonale des drehenden Quadrats auf, Zahl steht darunter */
-  .buehne { display: grid; place-items: center; width: clamp(6rem, 4rem + 6vw, 9rem); aspect-ratio: 1; }
-  .ring { position: relative; width: 70%; aspect-ratio: 1; rotate: 45deg; border: 1px solid color-mix(in srgb, var(--brand) 45%, transparent); }
-  .ring::after { content: ""; position: absolute; inset: 14%; border: 1px dashed color-mix(in srgb, var(--brand) 35%, transparent); }
+  /* Zahnrad nach Daniels Entwurf, leichter Glow */
+  .feld { position: relative; width: clamp(7rem, 5rem + 6vw, 11rem); aspect-ratio: 1; }
+  .feld::before { content: ""; position: absolute; inset: 8%; border-radius: 50%; background: rgb(77 148 255 / 0.16); filter: blur(24px); }
+  .kreis { position: absolute; border-radius: 50%; border: 1px solid rgb(77 148 255 / 0.25); }
+  .kreis--1 { inset: 8%; } .kreis--2 { inset: 14%; border-color: rgb(77 148 255 / 0.38); } .kreis--3 { inset: 23%; border-style: dashed; }
+  .bogen { position: absolute; inset: 11%; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--brand); border-right-color: #2f78e8;
+    filter: drop-shadow(0 0 5px rgb(77 148 255 / 0.7)); }
+  .zahnrad { position: absolute; inset: 18.5%; filter: drop-shadow(0 0 4px rgb(77 148 255 / 0.75)) drop-shadow(0 0 14px rgb(77 148 255 / 0.3)); }
+  .nabe { position: absolute; inset: 42%; border-radius: 50%; border: 2px solid var(--brand);
+    background: radial-gradient(circle, var(--bg) 0 45%, #0d1e3a 50%, var(--bg) 70%); box-shadow: 0 0 8px rgb(77 148 255 / 0.6); }
 
-  h1 { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(3.5rem, 2rem + 5vw, 7rem); line-height: 0.9; color: var(--brand); }
+  h1 { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(3.5rem, 2rem + 5vw, 7rem); line-height: 0.9; color: var(--brand);
+    text-shadow: 0 0 6px rgb(77 148 255 / 0.65), 0 0 24px rgb(77 148 255 / 0.35); }
   .glitch { position: relative; display: inline-block; }
   .glitch__kanal { position: absolute; inset: 0; opacity: 0; }
   .glitch__kanal--a { color: var(--neon); }
@@ -69,7 +76,7 @@
   .zeile { color: var(--text); }
   p { margin: 0; color: var(--muted); max-width: 46ch; }
   .status { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--border-strong); padding: 8px 14px; }
-  .punkt { width: 7px; height: 7px; border-radius: 999px; background: var(--brand); }
+  .punkt { width: 7px; height: 7px; border-radius: 999px; background: var(--brand); box-shadow: 0 0 8px var(--brand); }
 
   .kontakt { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 24px; margin-top: 10px; }
   a { color: var(--text); text-decoration: underline; text-underline-offset: 4px; font-family: var(--mono); display: inline-flex; align-items: center; min-height: 44px; }
@@ -78,14 +85,14 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .boden::before { animation: raster 7s linear infinite; }
-    .ring { animation: drehen 18s linear infinite; }
-    .ring::after { animation: drehen 9s linear infinite reverse; }
+    .zahnrad { animation: drehen 12s linear infinite; }
+    .bogen { animation: drehen 18s linear infinite; }
     .punkt { animation: atmen 2.4s ease-in-out infinite; }
     .glitch__kanal--a { animation: glitch-a 5s steps(1) infinite; }
     .glitch__kanal--b { animation: glitch-b 5s steps(1) infinite; }
   }
   @keyframes raster { from { transform: rotateX(62deg) translateY(0); } to { transform: rotateX(62deg) translateY(96px); } }
-  @keyframes drehen { from { rotate: 45deg; } to { rotate: 405deg; } }
+  @keyframes drehen { to { rotate: 360deg; } }
   @keyframes atmen { 50% { opacity: 0.35; } }
   @keyframes glitch-a { 0%, 91%, 100% { opacity: 0; transform: none; } 92% { opacity: 0.8; transform: translateX(-4px); clip-path: inset(15% 0 60% 0); } 95% { opacity: 0.8; transform: translateX(3px); clip-path: inset(55% 0 20% 0); } }
   @keyframes glitch-b { 0%, 87%, 100% { opacity: 0; transform: none; } 88% { opacity: 0.7; transform: translateX(4px); clip-path: inset(60% 0 15% 0); } 90% { opacity: 0.7; transform: translateX(-3px); clip-path: inset(20% 0 55% 0); } }
@@ -101,7 +108,17 @@
   <span class="ecke ecke--ur daten" aria-hidden="true">HTTP 502<br>Bad Gateway</span>
 
   <main>
-    <div class="buehne" aria-hidden="true"><span class="ring"></span></div>
+    <div class="feld" aria-hidden="true">
+      <span class="kreis kreis--1"></span><span class="kreis kreis--2"></span><span class="kreis kreis--3"></span>
+      <span class="bogen"></span>
+      <svg class="zahnrad" viewBox="0 0 200 200">
+        <defs><linearGradient id="v" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2f78e8"/><stop offset="45%" stop-color="#4d94ff"/><stop offset="100%" stop-color="#0d1e3a"/></linearGradient></defs>
+        <path fill="url(#v)" fill-rule="evenodd" stroke="#4d94ff" stroke-width="2" d="M86 8L114 8L118 25L132 30L145 18L166 34L157 49L166 62L183 63L190 90L174 97L174 112L190 120L183 147L166 148L157 162L166 177L145 192L132 180L118 185L114 200L86 200L82 185L68 180L55 192L34 177L43 162L34 148L17 147L10 120L26 112L26 97L10 90L17 63L34 62L43 49L34 34L55 18L68 30L82 25ZM100 48A52 52 0 1 0 100 152A52 52 0 1 0 100 48Z"/>
+        <circle cx="100" cy="100" r="37" fill="#03060d" stroke="#4d94ff" stroke-width="4"/>
+        <circle cx="100" cy="100" r="25" fill="#03060d" stroke="#2f78e8" stroke-width="2"/>
+      </svg>
+      <span class="nabe"></span>
+    </div>
     <h1><span class="glitch">502<span class="glitch__kanal glitch__kanal--a" aria-hidden="true">502</span><span class="glitch__kanal glitch__kanal--b" aria-hidden="true">502</span></span></h1>
     <span class="daten zeile">Verbindung bewusst getrennt</span>
     <p>Kein Absturz. Der Dienst hinter dieser Seite ist gerade mit Absicht vom Netz, für ein Update oder zu seinem Schutz. Er kommt zurück, sobald er sicher ist. Diese Seite lädt sich jede Minute neu.</p>

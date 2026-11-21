@@ -28,14 +28,14 @@
   }
 
   /* Überschriften: Archivo schmal, monumental (Idee: Infrastruktur als Architektur) */
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-stretch: 72%;
     font-weight: 560;
     letter-spacing: -0.01em;
     text-wrap: balance;
   }
-  h3 { font-stretch: 85%; }
+  h3, h4 { font-stretch: 85%; }
   p { text-wrap: pretty; }
   button, input, select, textarea, nav { font-family: var(--font-ui); }
 
@@ -826,8 +826,8 @@
 }
 
 /* ---- 502 mit Absicht (Sektion Fehler502) ----
-   Daniels Fehlerseite übersetzt: statt rundem Zahnrad zwei gegenläufige Quadrate,
-   eckig und ohne Leuchten. Bei "weniger Bewegung" steht alles. */
+   Optik nach Daniels Fehlerseite: drehendes Zahnrad, leichter Glow, wenige Animationen.
+   Bei "weniger Bewegung" steht alles. */
 @layer components {
   .f502-leitung {
     position: relative;
@@ -860,24 +860,55 @@
   .f502-leitung--getrennt::after { display: none; }
 
   /* Sitzt in einem Feld, das die Diagonale beim Drehen aufnimmt (Breite / 1.42) */
-  .f502-ring {
-    position: relative;
-    width: 70%;
-    aspect-ratio: 1;
-    rotate: 45deg;
-    border: 1px solid color-mix(in srgb, var(--color-brand) 45%, transparent);
-    pointer-events: none;
-  }
-  .f502-ring::after {
+  /* Zahnrad nach Daniels Entwurf. Glow hier bewusst erlaubt (Entscheidung Stefan, 21.11.2026),
+     nur leicht und nur in dieser Sektion. */
+  .f502-feld { position: relative; display: block; aspect-ratio: 1; }
+  .f502-feld::before {
     content: "";
     position: absolute;
-    inset: 14%;
-    border: 1px dashed color-mix(in srgb, var(--color-brand) 35%, transparent);
+    inset: 8%;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-brand) 16%, transparent);
+    filter: blur(22px);
+  }
+  .f502-kreis { position: absolute; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--color-brand) 25%, transparent); }
+  .f502-kreis--1 { inset: 8%; }
+  .f502-kreis--2 { inset: 14%; border-color: color-mix(in srgb, var(--color-brand) 38%, transparent); }
+  .f502-kreis--3 { inset: 23%; border-style: dashed; }
+  .f502-bogen {
+    position: absolute;
+    inset: 11%;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    border-top-color: var(--color-brand);
+    border-right-color: var(--color-brand-darker);
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--color-brand) 70%, transparent));
+  }
+  .f502-zahnrad {
+    position: absolute;
+    inset: 18.5%;
+    filter:
+      drop-shadow(0 0 4px color-mix(in srgb, var(--color-brand) 75%, transparent))
+      drop-shadow(0 0 14px color-mix(in srgb, var(--color-brand) 30%, transparent));
+  }
+  .f502-nabe {
+    position: absolute;
+    inset: 42%;
+    border-radius: 999px;
+    border: 2px solid var(--color-brand);
+    background: radial-gradient(circle, var(--color-bg) 0 45%, var(--color-brand-soft) 50%, var(--color-bg) 70%);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--color-brand) 60%, transparent);
+  }
+  .f502-zahl {
+    text-shadow:
+      0 0 6px color-mix(in srgb, var(--color-brand) 65%, transparent),
+      0 0 24px color-mix(in srgb, var(--color-brand) 35%, transparent);
   }
   @media (prefers-reduced-motion: no-preference) {
-    .f502-ring { animation: f502-drehen 18s linear infinite; }
-    .f502-ring::after { animation: f502-drehen 9s linear infinite reverse; }
+    .f502-zahnrad { animation: f502-drehen 12s linear infinite; }
+    .f502-bogen { animation: f502-drehen 18s linear infinite; }
   }
+
   /* Protokoll: Zeilen laufen nacheinander ein, als kämen Anfragen an */
   @media (prefers-reduced-motion: no-preference) {
     .f502-protokoll li { animation: f502-zeile 3.2s steps(1) infinite; animation-delay: calc(var(--i) * 400ms); }
@@ -888,7 +919,6 @@
     30%, 100% { opacity: 0.6; color: var(--color-text-muted); }
   }
   @keyframes f502-drehen {
-    from { rotate: 45deg; }
-    to { rotate: 405deg; }
+    to { rotate: 360deg; }
   }
 }

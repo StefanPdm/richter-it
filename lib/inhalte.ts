@@ -305,10 +305,13 @@ export const fehler502 = {
   },
   getrennt: {
     status: "HTTP/2 502 Bad Gateway",
-    knopf: "Dienst wieder verbinden",
+    knopf: "Dienst wieder einschalten",
     zeile: "Verbindung bewusst getrennt",
     hinweis: "Der Dienst ist geschützt und kommt zurück, sobald er sicher ist.",
   },
+  /** Einleitung über den Gründen: macht klar, warum der 502 eingeschaltet ist */
+  gruendeTitel: "Warum ich einen Dienst bewusst trenne",
+  gruendeText: "Drei typische Gründe, aus denen ein 502 gewollt ist. In jedem Fall ist er die sicherere Antwort.",
   gruende: [
     {
       titel: "Wartung",

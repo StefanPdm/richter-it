@@ -31,13 +31,48 @@ function Leitung({ getrennt = false }: { getrennt?: boolean }) {
   );
 }
 
+/* Zahnradform aus Daniels Fehlerseite (formbricks.daniel-richter.info), viewBox 200 */
+const ZAHNRAD =
+  "M86 8L114 8L118 25L132 30L145 18L166 34L157 49L166 62L183 63L190 90L174 97L174 112L190 120L183 147L166 148L157 162L166 177L145 192L132 180L118 185L114 200L86 200L82 185L68 180L55 192L34 177L43 162L34 148L17 147L10 120L26 112L26 97L10 90L17 63L34 62L43 49L34 34L55 18L68 30L82 25Z" +
+  "M100 48A52 52 0 1 0 100 152A52 52 0 1 0 100 48Z";
+
 /**
- * 502 mit Absicht: Besucher trennen selbst den Dienst hinter dem Proxy und sehen,
- * was dann ankommt. Daniels Fehlerseite in die Formensprache der Seite übersetzt
- * (eckig, ohne Leuchten). Darunter drei Gründe, warum man bewusst trennt.
+ * Drehendes Zahnrad nach Daniels Entwurf: Ringe, ein umlaufender Bogen, das Zahnrad
+ * selbst und die Nabe. Leichter Glow als bewusste Ausnahme für diese Stelle.
+ * Bei "weniger Bewegung" steht alles.
+ */
+function Zahnrad() {
+  return (
+    <span aria-hidden="true" className="f502-feld size-[clamp(6rem,4rem+5vw,9rem)]">
+      <span className="f502-kreis f502-kreis--1" />
+      <span className="f502-kreis f502-kreis--2" />
+      <span className="f502-kreis f502-kreis--3" />
+      <span className="f502-bogen" />
+      <svg viewBox="0 0 200 200" className="f502-zahnrad">
+        <defs>
+          <linearGradient id="zahnrad-verlauf" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" style={{ stopColor: "var(--color-brand-darker)" }} />
+            <stop offset="45%" style={{ stopColor: "var(--color-brand)" }} />
+            <stop offset="100%" style={{ stopColor: "var(--color-brand-soft)" }} />
+          </linearGradient>
+        </defs>
+        <path d={ZAHNRAD} fill="url(#zahnrad-verlauf)" fillRule="evenodd" className="stroke-brand" strokeWidth="2" />
+        <circle cx="100" cy="100" r="37" className="fill-bg stroke-brand" strokeWidth="4" />
+        <circle cx="100" cy="100" r="25" className="fill-bg stroke-brand-darker" strokeWidth="2" />
+      </svg>
+      <span className="f502-nabe" />
+    </span>
+  );
+}
+
+/**
+ * 502 mit Absicht: startet mit getrenntem Dienst, Besucher sehen zuerst die 502 und
+ * schalten den Dienst selbst wieder ein. Optik nach Daniels Fehlerseite:
+ * Zahnrad, leichter Glow, wenige Animationen. Darunter drei Gründe, warum man bewusst trennt.
  */
 export function Fehler502() {
-  const [getrennt, setGetrennt] = useState(false);
+  /* Startet getrennt: Besucher sehen zuerst die 502 und schalten den Dienst selbst wieder ein */
+  const [getrennt, setGetrennt] = useState(true);
   const z = getrennt ? fehler502.getrennt : fehler502.verbunden;
 
   return (
@@ -88,11 +123,8 @@ export function Fehler502() {
                     Bad Gateway
                   </span>
                   <div className="relative grid justify-items-center gap-2 px-6 text-center">
-                    {/* Gegenstück zu Daniels Zahnrad: über der Zahl, nicht dahinter */}
-                    <span aria-hidden="true" className="grid size-[clamp(4.5rem,3rem+4vw,7rem)] place-items-center">
-                      <span className="f502-ring" />
-                    </span>
-                    <span className="font-display text-[clamp(3rem,2rem+3vw,5rem)] leading-none font-semibold text-brand [font-stretch:80%]">
+                    <Zahnrad />
+                    <span className="f502-zahl font-display text-[clamp(3rem,2rem+3vw,5rem)] leading-none font-semibold text-brand [font-stretch:80%]">
                       <Glitch text="502" takt="5s" />
                     </span>
                     <span className="daten text-text">{fehler502.getrennt.zeile}</span>
@@ -118,11 +150,15 @@ export function Fehler502() {
           </Reveal>
         </div>
 
-        <div className="mt-[clamp(3rem,6vw,5rem)] grid grid-cols-1 gap-[clamp(2rem,4vw,3.5rem)] md:grid-cols-3">
+        <Reveal className="mt-[clamp(3rem,6vw,5rem)] mb-[clamp(1.5rem,3vw,2.5rem)] grid gap-2">
+          <h3 className="font-display text-h3 font-medium [font-stretch:80%]">{fehler502.gruendeTitel}</h3>
+          <p className="max-w-measure text-text-muted">{fehler502.gruendeText}</p>
+        </Reveal>
+        <div className="grid grid-cols-1 gap-[clamp(2rem,4vw,3.5rem)] md:grid-cols-3">
           {fehler502.gruende.map((g, i) => (
             <Reveal key={g.titel} index={i} className="grid content-start gap-3.5 border-t border-border pt-5.5">
               <span className="daten">0{i + 1}</span>
-              <h3 className="text-h3">{g.titel}</h3>
+              <h4 className="text-h3">{g.titel}</h4>
               <p className="text-text-muted">{g.text}</p>
             </Reveal>
           ))}
