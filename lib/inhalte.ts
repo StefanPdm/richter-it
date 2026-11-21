@@ -93,12 +93,14 @@ export const leistungen = [
     titel: "Planung und Architektur",
     text: "Manchmal liegt die Herausforderung im Detail. Ich betrachte das Gesamtbild und plane mit Ihnen die Lösung, bevor etwas umgebaut wird.",
     technik: ["Analyse", "Konzept", "Audit"],
+    seite: { pfad: "/zusammenarbeit", label: "So arbeiten wir" },
   },
   {
     kennung: "PERF",
     titel: "Proxmox VE und Performance",
     text: "Die Stabilität eines Unternehmens ruht auf seiner Infrastruktur. {Proxmox VE|Proxmox} als {Hypervisor}, abgestimmt auf Ihre Hardware und Ihre Last.",
     technik: ["Proxmox VE", "Linux", "ZFS"],
+    seite: { pfad: "/proxmox", label: "Im Detail" },
   },
   {
     kennung: "BKP",
@@ -106,13 +108,14 @@ export const leistungen = [
     text: "Sicherungen, die in ihr Zeitfenster passen. Und ein geübter Weg, wie die Daten im Ernstfall zurückkommen.",
     technik: ["Proxmox Backup", "Deduplizierung"],
     /** Eigene Seite mit Messung und Ablauf, die Karte verweist darauf */
-    seite: { pfad: "/backup", label: "Backup im Detail" },
+    seite: { pfad: "/backup", label: "Im Detail" },
   },
   {
     kennung: "NET",
     titel: "Firewall mit OPNsense",
     text: "OPNsense ist mehr als eine Firewall. Mit dem Partnernetzwerk entstehen Lösungen, die Unternehmen auch intern absichern.",
     technik: ["OPNsense", "VPN", "Segmentierung"],
+    seite: { pfad: "/faelle/firewall-engpass", label: "Zum Fall" },
   },
   {
     kennung: "IAM",
@@ -125,6 +128,7 @@ export const leistungen = [
     titel: "Observability und Automatisierung",
     text: "Wiederkehrende Arbeit blockiert IT-Teams. {Playbooks|Playbook} und ein vollständiger Blick auf alle Systeme schaffen wieder Raum für Weiterentwicklung.",
     technik: ["Ansible", "Grafana", "Semaphore UI"],
+    seite: { pfad: "/automatisierung", label: "Im Detail" },
   },
 ] as const;
 
@@ -530,3 +534,76 @@ export const zusammenarbeit = {
     },
   ],
 } as const;
+
+/* Leistungsseiten /proxmox und /automatisierung. Inhalte aus dem Gespräch am 19.11.2026
+   (Proxmox-Aufbau, Upgrade 8 auf 9, NTP und DNS in der Clusterplanung, Patchmon bei
+   200 Servern, Notabschaltung bei Stromausfall). Von Daniel fachlich prüfen lassen. */
+export const leistungsseiten = {
+  proxmox: {
+    pfad: "/proxmox",
+    name: "Proxmox VE",
+    titel: "Proxmox, das mehr kann als installiert.",
+    lead: "Proxmox einzurichten ist heute einfach. Den Unterschied macht der Feinschliff: Cluster, die sauber geplant sind, Upgrades ohne Ausfall und Leistung trotz Sicherheitsfunktionen.",
+    beschreibung:
+      "Proxmox VE mit Feinschliff: Cluster planen, Upgrades von 8 auf 9 im laufenden Betrieb, Leistung trotz VBS. Open Source, ohne Lizenzkosten pro Prozessor.",
+    fakten: [
+      { wert: "KVM · QEMU", label: "Virtualisierung" },
+      { wert: "Debian", label: "Grundlage" },
+      { wert: "8 → 9", label: "Upgrade im Betrieb" },
+    ],
+    abschnitte: [
+      {
+        titel: "Was Proxmox ist",
+        text: "Proxmox VE fügt bewährte Bausteine zusammen: KVM und QEMU für virtuelle Maschinen, dazu Container, aufgebaut auf Debian mit Ergänzungen aus Ubuntu. Open Source, nutzbar ohne Lizenzkosten pro Prozessor. Wer die Bausteine kennt, weiß auch, wo es klemmen kann.",
+      },
+      {
+        titel: "Cluster, die mitdenken",
+        text: "Mehrere Server, die als ein System arbeiten. Zur Planung gehört, was außerhalb des Clusters liegt: Gibt es einen eigenen Zeitserver, wenn das Internet ausfällt? Hängt alles an einem einzigen DNS-Server? Zwei synchronisierte DNS-Server lassen Updates zu, ohne dass etwas stehen bleibt.",
+      },
+      {
+        titel: "Upgrades ohne Überraschung",
+        text: "Der Wechsel von Proxmox 8 auf 9 ist kein Klick. Ich prüfe vorher, was sich ändert, auch in Debian darunter: Ein neuer Kernel unterstützt etwa ältere Netzwerkkarten nicht mehr, und nach dem Update ist das Netz weg. Dann plane ich den Ablauf und setze ihn im laufenden Betrieb um.",
+      },
+      {
+        titel: "Leistung, auch im Bestand",
+        text: "Sicherheitsfunktionen wie VBS kosten ohne Feinschliff viel Leistung, mit den richtigen Einstellungen bleiben bis zu 80 Prozent. Und ein System, das 18 Jahre läuft, muss nicht neu gekauft werden, wenn es sich sauber nachziehen lässt.",
+      },
+    ],
+    faelle: ["vbs-leistung", "altsystem"],
+    werkzeuge: ["cluster-planer", "vmware-ausstieg"],
+  },
+  automatisierung: {
+    pfad: "/automatisierung",
+    name: "Automatisierung",
+    titel: "Automatisierung, die Zeit zurückgibt.",
+    lead: "Wiederkehrende Arbeit blockiert IT-Teams. Playbooks, Patch-Management und Monitoring nehmen sie ab: nachvollziehbar, dokumentiert und auf allen Servern gleich.",
+    beschreibung:
+      "Ansible-Playbooks, automatisches Patch-Management und Monitoring mit Grafana: wiederkehrende IT-Arbeit automatisieren, auf allen Servern gleich.",
+    fakten: [
+      { wert: "200+", label: "Server je Umgebung" },
+      { wert: "täglich", label: "Abgleich Sicherheitsmeldungen" },
+      { wert: "Ansible", label: "Playbooks, Semaphore UI" },
+    ],
+    abschnitte: [
+      {
+        titel: "Updates bei 200 Servern",
+        text: "Von Hand ist das kaum zu schaffen. Werkzeuge wie Patchmon gleichen täglich bekannte Sicherheitslücken mit Ihren Maschinen ab, spielen Updates auf betroffenen Systemen ein und melden per E-Mail, was gefunden und erledigt wurde. Teile davon sind kostenlos.",
+      },
+      {
+        titel: "Playbooks statt Handarbeit",
+        text: "Wie ein Server eingerichtet wird, steht in einem Ansible-Playbook. Es läuft automatisch, auf jedem Server gleich, und ist zugleich die Dokumentation. Mit Semaphore UI starten Sie Läufe per Klick und sehen, was passiert ist.",
+      },
+      {
+        titel: "Notfälle, die sich selbst regeln",
+        text: "Fällt der Strom aus, fahren die Systeme in der richtigen Reihenfolge herunter, ohne dass jemand eingreifen muss. Gebaut hat das ein Partner aus meinem Netzwerk, der auf Automatisierung und Scripting spezialisiert ist.",
+      },
+      {
+        titel: "Sehen, was läuft",
+        text: "Monitoring mit Grafana zeigt Auslastung, Engpässe und Ausfälle, bevor Anwender sie bemerken. Genau so wurde der Firewall-Engpass gefunden. Den Observability-Stack gibt es offen auf GitHub.",
+      },
+    ],
+    faelle: ["firewall-engpass"],
+    werkzeuge: ["ausfall"],
+  },
+} as const;
+export type Leistungsseite = (typeof leistungsseiten)[keyof typeof leistungsseiten];

@@ -34,6 +34,8 @@ const ZIELE: Record<string, { id: string; label: string; pfad?: string }> = {
   "502": { id: "fehler-502", label: "502 mit Absicht" },
   referenzen: { id: "referenzen", label: "Referenzen" },
   zusammenarbeit: { id: "", label: "So arbeiten wir", pfad: "/zusammenarbeit" },
+  proxmox: { id: "", label: "Proxmox VE", pfad: "/proxmox" },
+  automatisierung: { id: "", label: "Automatisierung", pfad: "/automatisierung" },
   person: { id: "ueber-mich", label: "Über mich" },
   partner: { id: "partner", label: "Partner" },
   kontakt: { id: "kontakt", label: "Kontakt" },

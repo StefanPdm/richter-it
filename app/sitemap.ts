@@ -8,6 +8,8 @@ const seiten: { pfad: string; geaendert: string }[] = [
   { pfad: "/datenschutz", geaendert: "2026-10-31" },
   { pfad: "/backup", geaendert: "2026-11-21" },
   { pfad: "/zusammenarbeit", geaendert: "2026-11-21" },
+  { pfad: "/proxmox", geaendert: "2026-11-21" },
+  { pfad: "/automatisierung", geaendert: "2026-11-21" },
   { pfad: "/faelle/vbs-leistung", geaendert: "2026-11-21" },
   { pfad: "/faelle/firewall-engpass", geaendert: "2026-11-21" },
   { pfad: "/faelle/altsystem", geaendert: "2026-11-21" },

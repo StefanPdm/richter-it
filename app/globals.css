@@ -1370,3 +1370,13 @@
   .ablauf-blatt::after { width: 65%; }
   .ablauf-blatt--abnahme { border-color: var(--color-cta); }
 }
+
+/* ---- Schichtenmodell (Proxmox-Seite): Ebenen bauen sich von unten auf ---- */
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    .schicht { animation: schicht-ein 500ms var(--ease-out) both; animation-delay: calc(var(--i) * 140ms + 300ms); }
+  }
+  @keyframes schicht-ein {
+    from { opacity: 0; translate: 0 0.75rem; }
+  }
+}

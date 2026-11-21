@@ -38,6 +38,8 @@ function seitenName(pfad: string) {
   if (teil === "backup") return "Backup";
   if (teil === "faelle") return "Fall";
   if (teil === "zusammenarbeit") return "Zusammenarbeit";
+  if (teil === "proxmox") return "Proxmox";
+  if (teil === "automatisierung") return "Automatisierung";
   if (teil === "impressum") return "Impressum";
   if (teil === "datenschutz") return "Datenschutz";
   return "Route";

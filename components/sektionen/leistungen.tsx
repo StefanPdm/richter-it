@@ -63,7 +63,7 @@ export function Leistungen() {
                   )
                 }
               >
-                <ThemaLink thema={{ anliegen: "Angebot", betreff: `Anfrage: ${l.titel}` }}>Dazu anfragen</ThemaLink>
+                <ThemaLink thema={{ anliegen: "Angebot", betreff: `Anfrage: ${l.titel}` }}>Jetzt anfragen</ThemaLink>
               </KartenFuss>
             </LichtkegelKarte>
           </Reveal>
