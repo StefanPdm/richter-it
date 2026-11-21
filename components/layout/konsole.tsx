@@ -8,6 +8,7 @@ import { leistungen, technik } from "@/lib/inhalte";
 import { site } from "@/lib/site";
 import { werkzeuge } from "@/lib/werkzeuge";
 import { STATUS_MARKE, type CheckErgebnis, type Pruefung } from "@/lib/sicherheitscheck";
+import type { KiErgebnis } from "@/lib/ki-check";
 import type { WetterErgebnis } from "@/app/api/wetter/route";
 import type { PingErgebnis } from "@/app/api/ping/route";
 import { KonsoleWetter } from "./konsole-wetter";
@@ -16,7 +17,7 @@ import { KonsoleWetter } from "./konsole-wetter";
  * Konsole: öffnet sich mit der Taste links neben der 1 (^ bzw. `) oder mit ~.
  * Echte Befehle, die die Seite bedienen: Sektionen ansteuern, Werkzeuge öffnen,
  * Kontakt mit Thema. Dazu zwei Prüfungen über eigene API-Routen:
- * check <domain> (app/api/check) und whoami (app/api/ich). Gespeichert wird nichts.
+ * check <domain> (app/api/check), ki <domain> (app/api/ki-check) und whoami (app/api/ich). Gespeichert wird nichts.
  */
 
 const PROMPT = "gast@daniel-richter.it:~$";
@@ -53,6 +54,7 @@ const THEMEN: Record<string, Anliegen> = {
 const BEFEHLE = [
   ["help", "diese Übersicht"],
   ["check <domain>", "Sicherheit einer Domain prüfen: Mail-Schutz, HTTPS, Zertifikat, Header"],
+  ["ki <domain>", "KI-Sichtbarkeit: dürfen ChatGPT, Claude und Co. lesen, und was verstehen sie"],
   ["whoami", "was jede Website über Sie sieht: IP, Browser, System"],
   ["wetter [ort]", "Wetterbericht, ohne Ort für Potsdam"],
   ["ls", "Sektionen der Startseite"],
@@ -60,7 +62,7 @@ const BEFEHLE = [
   ["leistungen", "was Daniel macht"],
   ["werkzeuge", "Rechner und Checks, open <name> öffnet eines"],
   ["kontakt [--thema x]", "zum Formular, Thema: gespraech, angebot, audit, backup"],
-  ["kontakt --ergebnis", "letztes check-Ergebnis ins Kontaktformular übernehmen"],
+  ["kontakt --ergebnis", "letztes Ergebnis von check oder ki ins Kontaktformular übernehmen"],
   ["ping [domain]", "Antwortzeit messen, ohne Domain: Ihr Browser zu dieser Website"],
   ["ping daniel", "wie Sie Daniel erreichen"],
   ["neofetch", "das System in Kürze"],
@@ -72,9 +74,33 @@ const BEFEHLE = [
 
 type Zeile = { art: "ein" | "aus" | "fehler"; inhalt: ReactNode };
 
-const ALLE_WORTE = ["help", "check", "wetter", "ls", "cd", "leistungen", "werkzeuge", "open", "kontakt", "ping", "neofetch", "whoami", "clear", "exit", "uptime", "sudo", "spiel", "matrix"];
+const ALLE_WORTE = ["help", "check", "ki", "wetter", "ls", "cd", "leistungen", "werkzeuge", "open", "kontakt", "ping", "neofetch", "whoami", "clear", "exit", "uptime", "sudo", "spiel", "matrix"];
 
 const MARKE = STATUS_MARKE;
+
+/** Prüfliste im Stil der Bootmeldungen, gemeinsam für check und ki */
+function Pruefliste({ pruefungen }: { pruefungen: Pruefung[] }) {
+  return (
+    <ul className="grid gap-1 py-1">
+      {pruefungen.map((x) => (
+        <li key={x.id} className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3">
+          <span className={`whitespace-pre ${MARKE[x.status].klasse}`}>{MARKE[x.status].text}</span>
+          <span>
+            <span className="text-text">{x.titel}</span>
+            {x.wert && <span className="text-text-muted"> · {x.wert}</span>}
+            {x.hinweis && <span className="block text-text-muted">↳ {x.hinweis}</span>}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Mängel einer Prüfliste als Zeilen für das Kontaktformular */
+const maengel = (pruefungen: Pruefung[]) =>
+  pruefungen
+    .filter((x) => x.status === "warn" || x.status === "fehlt")
+    .map((x) => `- ${x.titel}: ${x.status === "fehlt" ? "fehlt" : "Hinweis"}${x.wert && x.wert !== "fehlt" ? ` (${x.wert})` : ""}`);
 
 /** Browser und System aus den Angaben, die jeder Browser mitschickt */
 function browserUndSystem() {
@@ -120,8 +146,8 @@ export function Konsole() {
   }, []);
   const verlauf = useRef<string[]>([]);
   const position = useRef(-1);
-  /* letztes Ergebnis von check, für kontakt --ergebnis */
-  const letzterCheck = useRef<{ domain: string; text: string } | null>(null);
+  /* letztes Ergebnis von check oder ki, für kontakt --ergebnis */
+  const letzterCheck = useRef<{ domain: string; betreff: string; text: string } | null>(null);
 
   function anhaengen(neu: Zeile[]) {
     setZeilen((z) => [...z, ...neu].slice(-80));
@@ -144,32 +170,11 @@ export function Konsole() {
     const bilanz = `${zahl("ok")} in Ordnung · ${zahl("warn")} Hinweise · ${zahl("fehlt")} fehlen`;
     letzterCheck.current = {
       domain: daten.domain,
-      text: [
-        `Security-Check für ${daten.domain}: ${bilanz}.`,
-        ...daten.pruefungen
-          .filter((x) => x.status === "warn" || x.status === "fehlt")
-          .map((x) => `- ${x.titel}: ${x.status === "fehlt" ? "fehlt" : "Hinweis"}${x.wert && x.wert !== "fehlt" ? ` (${x.wert})` : ""}`),
-        "Ich möchte das Ergebnis besprechen.",
-      ].join("\n"),
+      betreff: `Security-Check ${daten.domain}`,
+      text: [`Security-Check für ${daten.domain}: ${bilanz}.`, ...maengel(daten.pruefungen), "Ich möchte das Ergebnis besprechen."].join("\n"),
     };
     anhaengen([
-      {
-        art: "aus",
-        inhalt: (
-          <ul className="grid gap-1 py-1">
-            {daten.pruefungen.map((x) => (
-              <li key={x.id} className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3">
-                <span className={`whitespace-pre ${MARKE[x.status].klasse}`}>{MARKE[x.status].text}</span>
-                <span>
-                  <span className="text-text">{x.titel}</span>
-                  {x.wert && <span className="text-text-muted"> · {x.wert}</span>}
-                  {x.hinweis && <span className="block text-text-muted">↳ {x.hinweis}</span>}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ),
-      },
+      { art: "aus", inhalt: <Pruefliste pruefungen={daten.pruefungen} /> },
       { art: "aus", inhalt: <span className="text-text">{daten.domain}: {bilanz}</span> },
       {
         art: "aus",
@@ -180,6 +185,66 @@ export function Konsole() {
         ),
       },
     ]);
+  }
+
+  /* KI-Sichtbarkeit: dieselbe Prüfung wie im Werkzeug Domain-Check, kompakt mit Röntgenblick */
+  async function pruefeKi(eingabe: string) {
+    let daten: KiErgebnis;
+    try {
+      const r = await fetch(`/api/ki-check?domain=${encodeURIComponent(eingabe)}`, { cache: "no-store" });
+      daten = (await r.json()) as KiErgebnis;
+    } catch {
+      anhaengen([{ art: "fehler", inhalt: "ki: Prüfung gerade nicht erreichbar." }]);
+      return;
+    }
+    if (!daten.ok) {
+      anhaengen([{ art: "fehler", inhalt: `ki: ${daten.fehler}` }]);
+      return;
+    }
+    const { lesart } = daten;
+    letzterCheck.current = {
+      domain: daten.domain,
+      betreff: `KI-Check ${daten.domain}`,
+      text: [`KI-Sichtbarkeit für ${daten.domain}: ${daten.punkte} von 100 Punkten.`, ...maengel(daten.pruefungen), "Ich möchte das Ergebnis besprechen."].join("\n"),
+    };
+    const zeilen: Zeile[] = [
+      { art: "aus", inhalt: <Pruefliste pruefungen={daten.pruefungen} /> },
+      { art: "aus", inhalt: <span className="text-text">{daten.domain}: KI-Sichtbarkeit {daten.punkte}/100</span> },
+    ];
+    if (daten.hebel.length)
+      zeilen.push({
+        art: "aus",
+        inhalt: (
+          <ol className="grid gap-0.5">
+            {daten.hebel.map((h, i) => (
+              <li key={h}>
+                <span className="text-brand-dark">Hebel {i + 1}</span> {h}
+              </li>
+            ))}
+          </ol>
+        ),
+      });
+    zeilen.push(
+      {
+        art: "aus",
+        inhalt: (
+          <span className="text-text-muted">
+            So liest eine KI die Startseite: {lesart.titel ? `„${lesart.titel}“` : "ohne Titel"} · {lesart.woerter} Wörter
+            {lesart.typen.length ? ` · ${lesart.typen.join(", ")}` : " · keine strukturierten Daten"}
+          </span>
+        ),
+      },
+      {
+        art: "aus",
+        inhalt: (
+          <>
+            <b className="text-brand-dark">open domain-check</b> zeigt den ganzen Röntgenblick, <b className="text-brand-dark">kontakt --ergebnis</b> übernimmt
+            das Ergebnis ins Kontaktformular.
+          </>
+        ),
+      },
+    );
+    anhaengen(zeilen);
   }
 
   /* Ping: mit Ziel als TCP-Ping vom Server (app/api/ping), ohne Ziel vom Browser zur Website.
@@ -383,6 +448,11 @@ export function Konsole() {
         void pruefeDomain(arg);
         return [{ art: "aus", inhalt: `prüfe ${arg} · DNS, Mail-Schutz, HTTPS, Zertifikat, Header …` }];
       }
+      case "ki": {
+        if (!arg) return [{ art: "fehler", inhalt: "ki: Domain fehlt, z. B. ki beispiel.de" }];
+        void pruefeKi(arg);
+        return [{ art: "aus", inhalt: `lese ${arg} wie ein Sprachmodell · robots.txt, strukturierte Daten, Text …` }];
+      }
       case "wetter": {
         /* Ortsname in Originalschreibung, nicht kleingeschrieben */
         const ort = rest.join(" ").trim() || "Potsdam";
@@ -441,10 +511,10 @@ export function Konsole() {
       case "kontakt": {
         if (/--ergebnis/.test(arg)) {
           const c = letzterCheck.current;
-          if (!c) return [{ art: "fehler", inhalt: "kontakt: Noch kein Ergebnis. Zuerst check <domain> ausführen." }];
+          if (!c) return [{ art: "fehler", inhalt: "kontakt: Noch kein Ergebnis. Zuerst check <domain> oder ki <domain> ausführen." }];
           window.setTimeout(() => {
             springe("kontakt");
-            meldeThema({ anliegen: "Audit", betreff: `Security-Check ${c.domain}`, nachricht: c.text });
+            meldeThema({ anliegen: "Audit", betreff: c.betreff, nachricht: c.text });
           }, 250);
           return [{ art: "aus", inhalt: `→ Kontakt · Ergebnis für ${c.domain} übernommen` }];
         }
