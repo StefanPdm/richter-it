@@ -159,7 +159,8 @@
   --press-scale: 0.97;
 }
 
-@media (width >= 48rem) {
+/* Flache Leiste nur mit Maus, Touch-Tablets behalten das 44px-Tippziel */
+@media (width >= 48rem) and (pointer: fine) {
   :root { --leiste-h: 2rem; }
 }
 
