@@ -12,7 +12,7 @@ import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
  */
 export function Medienband() {
   return (
-    <section aria-labelledby="drohne-titel" className="relative aspect-[21/9] min-h-[26rem] max-w-full overflow-hidden border-y border-border md:min-h-[34rem]">
+    <section id="drohne" aria-labelledby="drohne-titel" className="scroll-mt-(--header-h) relative aspect-[21/9] min-h-[26rem] max-w-full overflow-hidden border-y border-border md:min-h-[34rem]">
       <KiVideo
         szene="rackreihen"
         video={{ mp4: "/medien/serverhalle.mp4", webm: "/medien/serverhalle.webm", poster: "/medien/serverhalle-poster.webp" }}
@@ -46,7 +46,7 @@ export function Medienband() {
 /** Haltung: drei Grundsätze, der dritte als Zitat von Daniel. */
 export function Haltung() {
   return (
-    <section aria-labelledby="haltung-titel" className="relative isolate py-(--section-y)">
+    <section id="haltung" aria-labelledby="haltung-titel" className="scroll-mt-(--header-h) relative isolate py-(--section-y)">
       <Sektionsgrund licht="mitte-unten" motiv="scan" warm />
       <div className="mx-auto max-w-wide px-(--gutter)">
         <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">

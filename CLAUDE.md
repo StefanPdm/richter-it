@@ -42,6 +42,12 @@ durch freigegebene Angaben ersetzen oder löschen. Nie ungeprüft veröffentlich
 - Logo: `public/logo/logo-maske.png` ist eine Übergangslösung aus Daniels PNG.
   Sobald die Vektordatei da ist, ersetzen.
 - Kein `!important`, kein `transition: all`.
+- **Startseite geändert (neue, umbenannte, verschobene oder entfernte Sektion):** immer den
+  Scroll-Indikator oben mitziehen. Die Namen stehen in `ABSCHNITTE` in
+  `components/layout/scroll-paket.tsx`, Schlüssel ist die `id` der `<section>`. Jede inhaltliche
+  Sektion braucht dafür eine `id` (ausgenommen Hero und schmale Bänder wie Laufband und
+  Kennzahlen, dort zeigt der Indikator weiter den vorherigen Namen). Im selben Zug prüfen: Sprungziele der Konsole
+  (`ZIELE` in `components/layout/konsole.tsx`) und die Navigation in `lib/site.ts`.
 
 ## Prüfen vor jeder Abgabe
 

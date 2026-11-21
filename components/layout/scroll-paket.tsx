@@ -9,11 +9,17 @@ import { usePathname } from "next/navigation";
  * (scroll-driven animations); hier wird nur der Name des sichtbaren Abschnitts ermittelt.
  */
 
+/* Reihenfolge wie auf der Startseite (app/page.tsx). Neue oder umbenannte Sektionen hier
+   nachtragen, sonst bleibt beim Scrollen der Name der vorherigen Sektion stehen (CLAUDE.md). */
 const ABSCHNITTE: Record<string, string> = {
-  leistungen: "Leistungen",
   messung: "Backup",
+  "backup-ablauf": "Backup-Fluss",
+  leistungen: "Leistungen",
   leitstand: "Leitstand",
   werkzeuge: "Werkzeuge",
+  haltung: "Haltung",
+  "fehler-502": "502",
+  drohne: "Inspektion",
   referenzen: "Referenzen",
   "ueber-mich": "Über mich",
   partner: "Partner",
