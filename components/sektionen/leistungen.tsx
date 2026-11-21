@@ -7,6 +7,7 @@ import { ThemaLink } from "@/components/ui/thema-knopf";
 import { leistungen } from "@/lib/inhalte";
 import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 import { MitBegriffen } from "@/components/ui/begriff";
+import { KartenFuss } from "@/components/ui/karten-fuss";
 
 /**
  * Leistungen als Module eines Leitstands: Kennung, Titel, Satz, Technik. Lichtkegel folgt der Maus.
@@ -50,17 +51,20 @@ export function Leistungen() {
                   </span>
                 ))}
               </div>
-              <div className="mt-auto flex flex-wrap items-center gap-x-6">
-                {"seite" in l && (
-                  <Link href={l.seite.pfad} className="zucken group/seite inline-flex min-h-11 items-center gap-2 text-sm font-medium text-text hover:text-brand-dark">
-                    {l.seite.label}
-                    <span aria-hidden="true" className="transition-transform duration-(--dur-fast) ease-out [@media(hover:hover)]:group-hover/seite:translate-x-1">
-                      →
-                    </span>
-                  </Link>
-                )}
+              <KartenFuss
+                links={
+                  "seite" in l && (
+                    <Link href={l.seite.pfad} className="zucken group/seite inline-flex min-h-11 items-center gap-2 text-sm font-medium text-text hover:text-brand-dark">
+                      {l.seite.label}
+                      <span aria-hidden="true" className="transition-transform duration-(--dur-fast) ease-out [@media(hover:hover)]:group-hover/seite:translate-x-1">
+                        →
+                      </span>
+                    </Link>
+                  )
+                }
+              >
                 <ThemaLink thema={{ anliegen: "Angebot", betreff: `Anfrage: ${l.titel}` }}>Dazu anfragen</ThemaLink>
-              </div>
+              </KartenFuss>
             </LichtkegelKarte>
           </Reveal>
         ))}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { KartenFuss } from "@/components/ui/karten-fuss";
 
 type Props = {
   vorn: ReactNode;
@@ -20,22 +21,26 @@ type Props = {
 export function Drehkarte({ vorn, rueck, labelVorn = "Fall ansehen", labelRueck = "Zurück", className = "" }: Props) {
   const [gedreht, setGedreht] = useState(false);
   const knopf =
-    "daten mt-auto inline-flex min-h-11 cursor-pointer items-center gap-2 self-start border border-border px-3.5 transition-colors duration-(--dur-fast) hover:border-brand hover:text-text";
+    "daten inline-flex min-h-11 cursor-pointer items-center gap-2 border border-border px-3.5 transition-colors duration-(--dur-fast) hover:border-brand hover:text-text";
 
   return (
     <div className={`drehkarte h-full ${className}`} data-gedreht={gedreht}>
       <div className="drehkarte__innen">
         <div className="drehkarte__vorn hud-rahmen flex flex-col gap-4 border border-border bg-surface p-[clamp(1.5rem,2.5vw,2.25rem)]" inert={gedreht}>
           {vorn}
-          <button type="button" className={knopf} onClick={() => setGedreht(true)} aria-expanded={gedreht}>
-            {labelVorn} <span aria-hidden="true">↻</span>
-          </button>
+          <KartenFuss>
+            <button type="button" className={knopf} onClick={() => setGedreht(true)} aria-expanded={gedreht}>
+              {labelVorn} <span aria-hidden="true">↻</span>
+            </button>
+          </KartenFuss>
         </div>
         <div className="drehkarte__rueck hud-rahmen flex flex-col gap-4 border border-brand bg-surface p-[clamp(1.5rem,2.5vw,2.25rem)]" inert={!gedreht}>
           {rueck}
-          <button type="button" className={knopf} onClick={() => setGedreht(false)}>
-            <span aria-hidden="true">↺</span> {labelRueck}
-          </button>
+          <KartenFuss>
+            <button type="button" className={knopf} onClick={() => setGedreht(false)}>
+              <span aria-hidden="true">↺</span> {labelRueck}
+            </button>
+          </KartenFuss>
         </div>
       </div>
     </div>

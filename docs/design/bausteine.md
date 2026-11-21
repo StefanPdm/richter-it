@@ -124,3 +124,16 @@ Erklärungen stehen im Glossar `begriffe` in `lib/inhalte.ts`.
 In Texten aus `lib/inhalte.ts`: `{Schlüssel}` oder `{Anzeige|Schlüssel}`, gerendert mit
 `<MitBegriffen text={...} />`. Nicht mit `[` beginnen lassen (das markiert offene Inhalte).
 Pro Absatz höchstens zwei Begriffe, sonst wird der Text unruhig.
+
+## Aktionen in Karten (Projekt Daniel Richter IT)
+
+Buttons und Aktions-Links in Karten stehen in einer **Fußleiste**: feine Trennlinie
+(`border-t`), links Nebensächliches (Neben-Link, Dauer, Statuszeile), rechts die Aktion.
+Baustein: `components/ui/karten-fuss.tsx` (`<KartenFuss links={...}>Aktion</KartenFuss>`).
+
+- Die Fußleiste sitzt immer am unteren Kartenrand, damit Aktionen in Kartenreihen auf einer
+  Linie stehen. Die Karte dafür als `flex flex-col` anlegen.
+- Hauptaktion rechts, Neben-Link links. Höchstens zwei Aktionen pro Karte.
+- Handy (unter `sm`): beides linksbündig untereinander.
+- Gilt nur für Karten. Buttons in Hero, Aufruf-Bändern, Formularen und Fließtext bleiben
+  links, dort führen sie den Lesefluss weiter.

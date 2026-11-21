@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Kontakt } from "@/components/sektionen/kontakt";
 import { seitenMetadaten } from "@/lib/seo";
 import { werkzeuge } from "@/lib/werkzeuge";
+import { KartenFuss } from "@/components/ui/karten-fuss";
 
 export const metadata = seitenMetadaten({
   titel: "Werkzeuge für Ihre IT-Infrastruktur",
@@ -31,19 +32,18 @@ export default function Werkzeuge() {
               <li key={w.slug}>
                 <Link
                   href={`/werkzeuge/${w.slug}`}
-                  className="hud-rahmen group grid h-full content-start gap-4 border border-border bg-surface p-[clamp(1.5rem,3vw,2.5rem)] transition-colors duration-(--dur-base) hover:border-brand"
+                  className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.5rem,3vw,2.5rem)] transition-colors duration-(--dur-base) hover:border-brand"
                 >
-                  <span className="flex items-baseline justify-between gap-4">
-                    <span className="daten text-brand-dark">
-                      {String(i + 1).padStart(2, "0")} · {w.kennung}
-                    </span>
-                    <span className="daten">{w.dauer}</span>
+                  <span className="daten text-brand-dark">
+                    {String(i + 1).padStart(2, "0")} · {w.kennung}
                   </span>
                   <span className="text-h3 font-medium">{w.titel}</span>
                   <span className="text-text-muted">{w.satz}</span>
-                  <span className="mt-2 inline-flex items-center gap-2 font-medium text-brand-dark">
-                    Werkzeug öffnen <span aria-hidden="true" className="transition-transform duration-(--dur-fast) group-hover:translate-x-1">→</span>
-                  </span>
+                  <KartenFuss links={<span className="daten">{w.dauer}</span>} className="mt-2">
+                    <span className="inline-flex min-h-11 items-center gap-2 font-medium text-brand-dark">
+                      Werkzeug öffnen <span aria-hidden="true" className="transition-transform duration-(--dur-fast) group-hover:translate-x-1">→</span>
+                    </span>
+                  </KartenFuss>
                 </Link>
               </li>
             ))}

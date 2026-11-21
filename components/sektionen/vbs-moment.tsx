@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { MitBegriffen } from "@/components/ui/begriff";
 import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 import { vbs } from "@/lib/inhalte";
+import { KartenFuss } from "@/components/ui/karten-fuss";
 
 const HOECHSTWERT = vbs.stufen[0].wert;
 /** Farbe der Füllung je Stufe: ungeschützt leise, Einbruch rot, Feinschliff Akzent */
@@ -90,23 +91,28 @@ export function VbsMoment() {
               })}
             </ul>
 
-            {/* Schutzstatus und Schalter */}
-            <div className="grid gap-5 border-t border-border pt-6">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className="daten">Schutz · {vbs.schutzName}</span>
-                <span className={`daten flex items-center gap-2.5 ${aktuell.schutz ? "text-success" : "text-text-muted"}`}>
-                  <span className={aktuell.schutz ? "status-punkt" : "vbs-punkt-aus"} aria-hidden="true" />
-                  {aktuell.schutz ? "Aktiv" : "Aus"}
-                </span>
-              </div>
-              <p className="min-h-[1.6em] text-text" aria-live="polite">
-                {aktuell.zeile}
-              </p>
-              {/* Lockt bis zum Feinschliff alle paar Sekunden mit dem Zucken vom Hover */}
-              <Button variante="secondary" onClick={weiter} className={`justify-self-start ${stufe < 2 ? "vbs-locken" : ""}`}>
+            {/* Schutzstatus */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6">
+              <span className="daten">Schutz · {vbs.schutzName}</span>
+              <span className={`daten flex items-center gap-2.5 ${aktuell.schutz ? "text-success" : "text-text-muted"}`}>
+                <span className={aktuell.schutz ? "status-punkt" : "vbs-punkt-aus"} aria-hidden="true" />
+                {aktuell.schutz ? "Aktiv" : "Aus"}
+              </span>
+            </div>
+
+            {/* Fußleiste: Statuszeile links, Schalter rechts. Der Schalter lockt bis zum
+                Feinschliff alle paar Sekunden mit dem Zucken vom Hover. */}
+            <KartenFuss
+              links={
+                <p className="text-text" aria-live="polite">
+                  {aktuell.zeile}
+                </p>
+              }
+            >
+              <Button variante="secondary" onClick={weiter} className={stufe < 2 ? "vbs-locken" : ""}>
                 {aktuell.knopf}
               </Button>
-            </div>
+            </KartenFuss>
           </div>
         </Reveal>
       </div>
