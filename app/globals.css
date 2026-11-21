@@ -1416,3 +1416,10 @@
   /* Fuge in der Klappenmitte dezenter, sonst verschwindet bei kleiner Schrift der Mittelstrich des E */
   .tafel__klappe .fallblatt__zelle::after { opacity: 0.35; }
 }
+
+/* ---- Fehlersuche (Dossier WIS-04): falsche Ebene zuckt kurz ---- */
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    .fehlersuche__ebene--daneben { animation: vbs-zucken 500ms steps(1) 1; }
+  }
+}

@@ -215,7 +215,7 @@ export const dossiers: readonly Dossier[] = [
           "Proxmox liefert dafür ein Prüfskript (pve8to9), das bekannte Stolpersteine vor dem Upgrade meldet. Im Cluster werden die Knoten nacheinander aktualisiert, die virtuellen Maschinen ziehen vorher per Live-Migration auf andere Knoten um.",
       },
     ],
-    ausprobieren: { art: "schichten", nach: 0, satz: "So sind die Bausteine geschichtet, und an diesen Stellen setzt der Feinschliff an." },
+    ausprobieren: { art: "schichten", nach: 1, satz: "Drei Störungen aus der Praxis: Tippen Sie auf die Ebene, in der Sie die Ursache vermuten." },
     fuerSie: {
       text: "Wenn bei Ihnen ein großes Proxmox-Upgrade ansteht oder nach Updates Merkwürdiges passiert, lohnt ein Blick auf die Ebene darunter.",
       fall: "altsystem",
@@ -282,3 +282,27 @@ export const dossiers: readonly Dossier[] = [
 export const bereiche = ["Sicherheit", "Virtualisierung", "Netzwerk", "Betrieb"] as const;
 export const fertigeDossiers = dossiers.filter((d) => d.status === "bereit");
 export const dossier = (slug: string) => dossiers.find((d) => d.slug === slug);
+
+/* Fehlersuche im Dossier WIS-04: Schichten von oben nach unten, drei Störungen mit der
+   Ebene, in der die Ursache liegt. Von Daniel prüfen lassen. */
+export const fehlersuche = {
+  schichten: ["VMs · Container", "KVM · QEMU · LXC", "Proxmox VE · Debian", "Hardware"],
+  stoerungen: [
+    {
+      symptom: "Nach einem Kernel-Update ist das Netzwerk weg.",
+      ursache: 2,
+      erklaerung: "Richtig: Der neue Kernel unterstützt die ältere Netzwerkkarte nicht mehr. Kein Proxmox-Fehler, sondern eine Ebene darunter. Ich prüfe vor Updates die Hardware gegen die Versionshinweise und halte den alten Kernel als Rückweg bereit.",
+    },
+    {
+      symptom: "Ein Windows-Server wird nach dem Aktivieren von VBS sehr langsam.",
+      ursache: 1,
+      erklaerung: "Richtig: VBS öffnet eine zweite Virtualisierungsebene innerhalb der ersten. Hier entscheidet die Konfiguration von KVM und QEMU, wie viel Leistung ankommt, etwa der CPU-Typ der virtuellen Maschine.",
+    },
+    {
+      symptom: "Mehrere VMs hängen zeitweise, im Protokoll tauchen Lesefehler auf.",
+      ursache: 3,
+      erklaerung: "Richtig: Lesefehler deuten auf einen Datenträger, der aufgibt. Die VMs zeigen das Symptom, die Ursache ist die Hardware. Ich prüfe den Zustand der Datenträger und ersetze sie, bevor Daten verloren gehen.",
+    },
+  ],
+  daneben: "Hier zeigt sich das Problem, die Ursache liegt woanders. Versuchen Sie eine andere Ebene.",
+} as const;

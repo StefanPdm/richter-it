@@ -7,7 +7,7 @@ import { Tiefe } from "@/components/wissen/wissen-liste";
 import { VbsInstrument } from "@/components/sektionen/vbs-moment";
 import { AusfallNetz } from "@/components/werkzeuge/ausfall-netz";
 import { Fehler502Demo } from "@/components/sektionen/fehler-502";
-import { Schichten } from "@/components/leistungen/schichten";
+import { Fehlersuche } from "@/components/leistungen/fehlersuche";
 import { FirewallSchema } from "@/components/faelle/firewall-schema";
 import { referenzen } from "@/lib/inhalte";
 import { dossier, fertigeDossiers, type Ausprobieren } from "@/lib/wissen";
@@ -31,7 +31,7 @@ function Element({ art }: { art: Ausprobieren }) {
   if (art === "vbs") return <VbsInstrument />;
   if (art === "ausfall") return <AusfallNetz />;
   if (art === "502") return <Fehler502Demo kompakt />;
-  if (art === "schichten") return <Schichten />;
+  if (art === "schichten") return <Fehlersuche />;
   return <FirewallSchema />;
 }
 
