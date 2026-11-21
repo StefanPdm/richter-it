@@ -380,8 +380,8 @@ export const vbs = {
   einheit: "GB/s",
   /** Drei Zustände, die Besucher nacheinander durchschalten */
   stufen: [
-    { name: "Ohne VBS", wert: 25, schutz: false, knopf: "VBS aktivieren", zeile: "Schnell, aber Zugangsdaten ungeschützt." },
-    { name: "VBS an", wert: 3, schutz: true, knopf: "Feinschliff anwenden", zeile: "Geschützt, aber die Leistung bricht ein." },
+    { name: "VBS (aus)", wert: 25, schutz: false, knopf: "VBS aktivieren", zeile: "Schnell, aber Zugangsdaten ungeschützt." },
+    { name: "VBS (an)", wert: 3, schutz: true, knopf: "Feinschliff anwenden", zeile: "Geschützt, aber die Leistung bricht ein." },
     { name: "Mit Feinschliff", wert: 20, schutz: true, knopf: "Noch einmal", zeile: "Geschützt und bis zu 80 % der Leistung." },
   ],
   schutzName: "Credential Guard",

@@ -101,7 +101,8 @@ export function VbsMoment() {
               <p className="min-h-[1.6em] text-text" aria-live="polite">
                 {aktuell.zeile}
               </p>
-              <Button variante="secondary" onClick={weiter} className="justify-self-start">
+              {/* Lockt bis zum Feinschliff alle paar Sekunden mit dem Zucken vom Hover */}
+              <Button variante="secondary" onClick={weiter} className={`justify-self-start ${stufe < 2 ? "vbs-locken" : ""}`}>
                 {aktuell.knopf}
               </Button>
             </div>

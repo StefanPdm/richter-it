@@ -1246,6 +1246,18 @@
     45% { opacity: 0.4; translate: 0 0; }
     60%, 100% { opacity: 1; }
   }
+  /* Schalter lockt: das Hover-Zucken läuft von selbst alle 4,5 s, solange es noch etwas
+     zu schalten gibt. Beim Überfahren mit der Maus übernimmt das normale Zucken. */
+  @media (prefers-reduced-motion: no-preference) {
+    .vbs-locken { animation: vbs-locken 4.5s steps(1) 1.5s infinite; }
+    .vbs-locken:hover { animation: zucken 260ms steps(1) 1; }
+  }
+  @keyframes vbs-locken {
+    /* translate statt transform: die Drückbewegung (scale) des Knopfs bleibt erhalten */
+    0% { text-shadow: -2px 0 var(--color-neon), 2px 0 var(--color-error); translate: 1px 0; border-color: var(--color-neon); }
+    2% { text-shadow: 2px 0 var(--color-neon), -2px 0 var(--color-error); translate: -1px 0; }
+    4%, 100% { text-shadow: none; translate: 0 0; border-color: var(--color-brand-dark); }
+  }
   .vbs-punkt-aus {
     width: 7px;
     height: 7px;
