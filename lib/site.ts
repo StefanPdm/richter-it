@@ -13,10 +13,7 @@ export const site = {
   email: "kontakt@daniel-richter.it",
   adresse: { strasse: "Tiroler Damm 16B", plz: "14478", ort: "Potsdam", land: "DE" },
   github: "https://github.com/danielrichterit/grafana-stack",
-  social: [
-    { label: "Instagram", href: "https://www.instagram.com/itisdanielrichter/" },
-    { label: "Facebook", href: "https://www.facebook.com/itdanny" },
-  ],
+  /* Keine Social-Media-Links: Daniels berufliche Auflagen (Gespräch 19.11.2026) */
   navigation: [
     { label: "Leistungen", href: "/#leistungen" },
     { label: "Backup", href: "/#messung" },

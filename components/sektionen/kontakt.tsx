@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 import zentrale from "@/public/images/kontrollraum-zentrale.jpg";
 
 /**
- * Kontakt: Telefon, E-Mail, Formular (Felder wie auf der bestehenden Website), Social Links.
+ * Kontakt: Telefon, E-Mail, Formular (Felder wie auf der bestehenden Website). Keine Social Links.
  * Erstgespräch aus dem bisherigen Audit-Angebot. Hintergrund bewegt: Kontrollraum mit Kamerafahrt.
  */
 export function Kontakt() {
@@ -49,14 +49,6 @@ export function Kontakt() {
               </Reveal>
             ))}
           </div>
-          <Reveal index={2} className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <span className="daten">Folgen</span>
-            {site.social.map((s) => (
-              <a key={s.href} href={s.href} className="zucken inline-flex min-h-11 items-center underline underline-offset-4 hover:text-brand-dark">
-                {s.label}
-              </a>
-            ))}
-          </Reveal>
         </div>
         <Reveal index={1}>
           <KontaktFormular />
