@@ -124,7 +124,7 @@ export function KontaktFormular() {
       </p>
       <button
         type="submit"
-        className="schnitt zucken inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 justify-self-start bg-brand-dark px-6 py-3 text-sm font-medium text-text-inverse transition-[transform,background-color] duration-(--dur-fast) ease-out hover:bg-brand-darker active:scale-(--press-scale)"
+        className="schnitt zucken inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 justify-self-start bg-cta px-6 py-3 text-sm font-medium text-text-inverse transition-[transform,background-color] duration-(--dur-fast) ease-out hover:bg-cta-hover active:scale-(--press-scale)"
       >
         {KNOPF[anliegen]} <span aria-hidden="true">→</span>
       </button>

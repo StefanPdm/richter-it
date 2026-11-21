@@ -2,41 +2,42 @@
    Design-Tokens Daniel Richter IT (Tailwind v4)
    Einzige Quelle für Farbe, Schrift, Größen, Form und Bewegung.
 
-   Drei Farbwelten zur Auswahl durch Daniel (Stand 31.10.2026):
-   Bernstein (Standard, hier in @theme), Kobalt, Beton (unten als
-   [data-welt]-Blöcke). Gleiche Rollen, andere Werte. Nach der Wahl
-   bleibt eine Welt in @theme, die Blöcke unten entfallen.
+   Farbwelt: Kobalt mit Bernstein als Akzent für Handlungsaufforderungen
+   (Entscheidung Daniel, Gespräch 19.11.2026). Bernstein greift die Bildwelt auf.
    Kontraste gerechnet mit kontrast.mjs, Werte in DESIGN.md.
    ===================================================================== */
 
 @theme static {
-  /* --- Farbe: Bernstein ------------------------------------------- */
+  /* --- Farbe: Kobalt ---------------------------------------------- */
   --color-*: initial;
-  --color-bg:           #0c0a08;  /* Grund */
-  --color-bg-alt:       #15120e;  /* Wechselfläche */
-  --color-surface:      #1c1813;  /* Karten, Kontaktband */
-  --color-border:       #2e2820;  /* Linien, nur Deko */
-  --color-border-strong:#5a4e3e;
-  --color-text:         #f2ebe0;  /* 16.7:1 auf bg */
-  --color-text-muted:   #b3a690;  /* 8.3:1 auf bg */
-  --color-text-inverse: #0c0a08;  /* Text auf Knopf */
-  --color-brand:        #f0a24a;  /* Akzent: Balken, Linien, große Schrift */
-  --color-brand-dark:   #f0a24a;  /* Akzent als Text und Knopffläche, 9.4:1 */
-  --color-brand-darker: #d98c34;  /* Knopf Hover */
-  --color-brand-soft:   #2a2014;  /* zarte Akzentfläche */
+  --color-bg:           #03060d;  /* Grund */
+  --color-bg-alt:       #060c18;  /* Wechselfläche */
+  --color-surface:      #0b1628;  /* Karten, Kontaktband */
+  --color-border:       #16243b;  /* Linien, nur Deko */
+  --color-border-strong:#2f4466;
+  --color-text:         #e6efff;  /* 17.5:1 auf bg */
+  --color-text-muted:   #8fa6c8;  /* 8.2:1 auf bg */
+  --color-text-inverse: #03060d;  /* Text auf Akzentflächen */
+  --color-brand:        #4d94ff;  /* Akzent: Balken, Linien, große Schrift */
+  --color-brand-dark:   #4d94ff;  /* Akzent als Text, sekundäre Knöpfe, 6.8:1 */
+  --color-brand-darker: #2f78e8;
+  --color-brand-soft:   #0d1e3a;  /* zarte Akzentfläche */
 
-  --color-logo-hell:    #ffcf8a;
-  --color-logo-dunkel:  #f0a24a;
+  /* Handlungsaufforderung: Bernstein, passend zur Bildwelt. Nur primäre Knöpfe. */
+  --color-cta:          #f0a24a;  /* Knopffläche, mit text-inverse 9.6:1 */
+  --color-cta-hover:    #d98c34;
 
-  /* Neon: zweite Akzentfarbe nur für Effekte (Glitch, Signallinien), nie für Fließtext.
-     Bernstein: Cyan wie die LEDs im Serverhallen-Video, 13:1 auf bg */
-  --color-neon:         #2ee6ff;
+  --color-logo-hell:    #41beea;  /* Originalfarbe Logo */
+  --color-logo-dunkel:  #3a7fd6;  /* Original #2e59a6 aufgehellt, sonst 2.99:1 */
+
+  /* Neon: zweite Akzentfarbe nur für Effekte (Glitch, Signallinien), nie für Fließtext. */
+  --color-neon:         #ff3bd4;  /* Magenta, 6.6:1 */
 
   /* Platzhalter-Szenen bis die KI-Videos da sind */
-  --color-media-licht:  #ffcf8a;
-  --color-media-dunst:  #6b4a26;
-  --color-media-turm:   #0a0806;
-  --color-media-signal: #f0a24a;
+  --color-media-licht:  #9cc4ff;
+  --color-media-dunst:  #10306a;
+  --color-media-turm:   #02040a;
+  --color-media-signal: #4d94ff;
 
   --color-success: #3fa34d;
   --color-error:   #e5534b;
@@ -87,54 +88,6 @@
   --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);  /* Terminal aus der Statusleiste */
-}
-
-/* --- Farbwelt Kobalt (aus dem First Draft) -------------------------- */
-:root[data-welt="kobalt"] {
-  color-scheme: dark;
-  --color-bg:           #03060d;
-  --color-bg-alt:       #060c18;
-  --color-surface:      #0b1628;
-  --color-border:       #16243b;
-  --color-border-strong:#2f4466;
-  --color-text:         #e6efff;  /* 17.5:1 */
-  --color-text-muted:   #8fa6c8;  /* 8.2:1 */
-  --color-text-inverse: #03060d;
-  --color-brand:        #4d94ff;
-  --color-brand-dark:   #4d94ff;  /* 6.8:1 */
-  --color-brand-darker: #2f78e8;
-  --color-brand-soft:   #0d1e3a;
-  --color-logo-hell:    #41beea;  /* Originalfarbe Logo */
-  --color-logo-dunkel:  #3a7fd6;  /* Original #2e59a6 aufgehellt, sonst 2.99:1 */
-  --color-neon:         #ff3bd4;  /* Magenta, 6.6:1 */
-  --color-media-licht:  #9cc4ff;
-  --color-media-dunst:  #10306a;
-  --color-media-turm:   #02040a;
-  --color-media-signal: #4d94ff;
-}
-
-/* --- Farbwelt Beton (hell, sachlich) -------------------------------- */
-:root[data-welt="beton"] {
-  color-scheme: light;
-  --color-bg:           #ecebe7;
-  --color-bg-alt:       #e0ded8;
-  --color-surface:      #f6f5f2;
-  --color-border:       #cfccc4;
-  --color-border-strong:#9a968d;
-  --color-text:         #141414;  /* 15.4:1 */
-  --color-text-muted:   #55534e;  /* 6.4:1 */
-  --color-text-inverse: #ffffff;
-  --color-brand:        #d9480f;  /* nur Flächen, Balken, große Schrift (3.6:1) */
-  --color-brand-dark:   #a8380b;  /* Text 5.4:1, Knopf mit Weiß 6.5:1 */
-  --color-brand-darker: #8a2e09;
-  --color-brand-soft:   #f3ddd1;
-  --color-logo-hell:    #c8501a;
-  --color-logo-dunkel:  #a8380b;
-  --color-neon:         #0a7f8c;  /* Petrol, 4.0:1: nur Grafik, nie Text */
-  --color-media-licht:  #fbfaf7;
-  --color-media-dunst:  #c9c5bc;
-  --color-media-turm:   #6f6c66;
-  --color-media-signal: #d9480f;
 }
 
 /* Tokens ohne eigene Utility */

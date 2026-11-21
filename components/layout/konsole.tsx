@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
-import { FARBWELTEN, istFarbwelt, setzeFarbwelt } from "@/lib/farbwelt";
 import { meldeThema, type Anliegen } from "@/lib/kontakt-thema";
 import { leistungen, technik } from "@/lib/inhalte";
 import { site } from "@/lib/site";
@@ -15,7 +14,7 @@ import { KonsoleWetter } from "./konsole-wetter";
 /*
  * Konsole: öffnet sich mit der Taste links neben der 1 (^ bzw. `) oder mit ~.
  * Echte Befehle, die die Seite bedienen: Sektionen ansteuern, Werkzeuge öffnen,
- * Farbwelt wechseln, Kontakt mit Thema. Dazu zwei Prüfungen über eigene API-Routen:
+ * Kontakt mit Thema. Dazu zwei Prüfungen über eigene API-Routen:
  * check <domain> (app/api/check) und whoami (app/api/ich). Gespeichert wird nichts.
  */
 
@@ -51,7 +50,6 @@ const BEFEHLE = [
   ["cd <ziel>", "zu einer Sektion springen, z. B. cd leitstand"],
   ["leistungen", "was Daniel macht"],
   ["werkzeuge", "Rechner und Checks, open <name> öffnet eines"],
-  ["farbe <welt>", "Farbwelt wechseln: bernstein, kobalt, beton"],
   ["kontakt [--thema x]", "zum Formular, Thema: gespraech, angebot, audit, backup"],
   ["kontakt --ergebnis", "letztes check-Ergebnis ins Kontaktformular übernehmen"],
   ["ping [domain]", "Antwortzeit messen, ohne Domain: Ihr Browser zu dieser Website"],
@@ -63,7 +61,7 @@ const BEFEHLE = [
 
 type Zeile = { art: "ein" | "aus" | "fehler"; inhalt: ReactNode };
 
-const ALLE_WORTE = ["help", "check", "wetter", "ls", "cd", "leistungen", "werkzeuge", "open", "farbe", "kontakt", "ping", "neofetch", "whoami", "clear", "exit", "uptime", "sudo"];
+const ALLE_WORTE = ["help", "check", "wetter", "ls", "cd", "leistungen", "werkzeuge", "open", "kontakt", "ping", "neofetch", "whoami", "clear", "exit", "uptime", "sudo"];
 
 const MARKE: Record<Pruefung["status"], { text: string; klasse: string }> = {
   ok: { text: "[  OK  ]", klasse: "text-success" },
@@ -425,11 +423,6 @@ export function Konsole() {
           router.push(`/werkzeuge/${w.slug}`);
         }, 250);
         return [{ art: "aus", inhalt: `→ ${w.titel}` }];
-      }
-      case "farbe": {
-        if (!istFarbwelt(arg)) return [{ art: "fehler", inhalt: `farbe: ${FARBWELTEN.map((w) => w.id).join(", ")}` }];
-        setzeFarbwelt(arg);
-        return [{ art: "aus", inhalt: `Farbwelt: ${FARBWELTEN.find((w) => w.id === arg)?.name}` }];
       }
       case "kontakt": {
         if (/--ergebnis/.test(arg)) {

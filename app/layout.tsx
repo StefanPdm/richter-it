@@ -2,12 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { FarbweltWaehler } from "@/components/farbwelt/farbwelt-waehler";
 import { NachOben } from "@/components/layout/nach-oben";
 import { Konsole } from "@/components/layout/konsole";
 import { Statusleiste } from "@/components/layout/statusleiste";
 import { ScrollPaket } from "@/components/layout/scroll-paket";
-import { FRUEH_SKRIPT, STANDARD_WELT, WAEHLER_AKTIV } from "@/lib/farbwelt";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -39,22 +37,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0c0a08", // pruefen:erlaubt (= --color-bg Bernstein, Metadaten brauchen den Wert)
+  themeColor: "#03060d", // pruefen:erlaubt (= --color-bg, Metadaten brauchen den Wert)
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={site.sprache}
-      data-welt={STANDARD_WELT}
       className={`${display.variable} ${body.variable} ${mono.variable}`}
-      suppressHydrationWarning
     >
-      {WAEHLER_AKTIV && (
-        <head>
-          <script dangerouslySetInnerHTML={{ __html: FRUEH_SKRIPT }} />
-        </head>
-      )}
       <body className="flex min-h-dvh flex-col">
         <div className="scroll-fortschritt" aria-hidden="true" />
         <ScrollPaket />
@@ -69,10 +60,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
-        <NachOben ueberWaehler={WAEHLER_AKTIV} />
+        <NachOben />
         <Statusleiste />
         <Konsole />
-        {WAEHLER_AKTIV && <FarbweltWaehler />}
       </body>
     </html>
   );

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { site } from "@/lib/site";
 import { ThemaKnopf } from "@/components/ui/thema-knopf";
 
-/** Footer: Anschrift, Rechtliches, KI-Hinweis. Unten Platz für Farbwelt-Wähler und Statusleiste. */
+/** Footer: Anschrift, Rechtliches, KI-Hinweis. Unten Platz für die Statusleiste. */
 export function Footer() {
   const { adresse } = site;
   return (

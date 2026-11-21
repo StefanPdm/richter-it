@@ -4,7 +4,7 @@ Kurzfassung des Designsystems für die Entwicklung. Werte verbindlich in `app/to
 
 - Entwurf: https://claude.ai/artifact/UU35VK79KxjcVECB8BDXSj
 - Briefing: `..\briefing.md`, Analyse mit Quellen: `..\analyse.md`
-- Stand: 31.10.2026. Farbwelt: **offen**, Daniel wählt zwischen drei Welten.
+- Stand: 21.11.2026. Farbwelt: **Kobalt mit Bernstein-Akzent** (entschieden 19.11.2026).
 
 ## Wirkung
 
@@ -13,23 +13,29 @@ Professionell, ruhig-souverän, technisch-filmisch. Auf keinen Fall: Angstmarket
 Idee: Auf dieser Seite wird Infrastruktur zu Architektur: monumental, ruhig, und die
 Messwerte sind die Beweise.
 
-## Farbe: drei Welten zur Auswahl
+## Farbe: Kobalt mit Bernstein-Akzent
 
+Entscheidung Daniel im Gespräch am 19.11.2026: Kobalt als Grundwelt (Blau steht für IT
+und hält das Logo wiedererkennbar), Bernstein als dritte Farbe. Bernstein greift das
+warme Licht der Bildwelt auf und ist **nur** für primäre Handlungsaufforderungen da
+("Gespräch vereinbaren", Formular absenden). Alles andere Akzentuierte bleibt Blau.
 Kontraste gerechnet mit `kontrast.mjs` (Skill design-startpunkt).
 
-| Rolle | Token | Bernstein | Kobalt | Beton |
-|---|---|---|---|---|
-| Grund | `bg` | #0c0a08 | #03060d | #ecebe7 |
-| Wechselfläche | `bg-alt` | #15120e | #060c18 | #e0ded8 |
-| Karten, Kontakt | `surface` | #1c1813 | #0b1628 | #f6f5f2 |
-| Text | `text` | #f2ebe0 (16.7:1) | #e6efff (17.5:1) | #141414 (15.4:1) |
-| Text leise | `text-muted` | #b3a690 (8.3:1) | #8fa6c8 (8.2:1) | #55534e (6.4:1) |
-| Akzent Fläche | `brand` | #f0a24a | #4d94ff | #d9480f (nur groß, 3.6:1) |
-| Akzent Text, Knopf | `brand-dark` | #f0a24a (9.4:1) | #4d94ff (6.8:1) | #a8380b (5.4:1) |
-| Logo hell / dunkel | `logo-hell/-dunkel` | #ffcf8a / #f0a24a | #41beea / #3a7fd6 | #c8501a / #a8380b |
+| Rolle | Token | Wert |
+|---|---|---|
+| Grund | `bg` | #03060d |
+| Wechselfläche | `bg-alt` | #060c18 |
+| Karten, Kontakt | `surface` | #0b1628 |
+| Text | `text` | #e6efff (17.5:1) |
+| Text leise | `text-muted` | #8fa6c8 (8.2:1) |
+| Akzent Fläche | `brand` | #4d94ff |
+| Akzent Text, sekundärer Knopf | `brand-dark` | #4d94ff (6.8:1) |
+| Primärer Knopf | `cta` / `cta-hover` | #f0a24a / #d98c34, Text `text-inverse` 9.6:1 / 7.5:1 |
+| Logo hell / dunkel | `logo-hell/-dunkel` | #41beea / #3a7fd6 |
+| Effekte (Glitch, Signal) | `neon` | #ff3bd4, nie Fließtext |
 
-Kobalt nutzt das Original-Cyan des Logos. Das Original-Dunkelblau #2e59a6 erreicht auf
-dem Kobalt-Grund nur 2.99:1 und ist deshalb aufgehellt.
+Das Logo nutzt das Original-Cyan. Das Original-Dunkelblau #2e59a6 erreicht auf dem
+Grund nur 2.99:1 und ist deshalb aufgehellt.
 
 ## Schrift
 
@@ -43,7 +49,7 @@ Alle über `next/font`, selbst ausgeliefert. Skala `text-xs` bis `text-display`.
 
 ## Form und Raum
 
-Eckig, keine Radien. Schatten nur für den schwebenden Farbwelt-Wähler. Linien in
+Eckig, keine Radien. Schatten nur für Schwebendes (Nach-oben-Knopf, Konsole). Linien in
 `border` trennen Bereiche. Container 1400px, Sektionsabstand 72-160px fluid.
 
 ## Bewegung
@@ -55,7 +61,6 @@ Eckig, keine Radien. Schatten nur für den schwebenden Farbwelt-Wähler. Linien 
 | Sektionen | Reveal einmal beim Scrollen, versetzt |
 | Leistungen | Akzentlinie wächst beim Hover |
 | Medienband | KI-Video 02 (bis dahin gezeichnete Rack-Reihen) |
-| Farbwelt-Wechsel | Farben blenden in 600 ms über |
 
 Bei "weniger Bewegung": alles steht, Videos zeigen nur das Poster.
 

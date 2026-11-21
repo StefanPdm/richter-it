@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { FARBWELT_EREIGNIS } from "@/lib/farbwelt";
 import { rgba } from "@/components/medien/szenen";
 
 type Knoten = { x: number; y: number; vx: number; vy: number; r: number };
@@ -22,7 +21,7 @@ export function Netzwerk({ className = "", dichte = 1 }: Props) {
     if (!canvas || !ctx) return;
 
     const ruhig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let farbe = getComputedStyle(document.documentElement).getPropertyValue("--color-brand").trim();
+    const farbe = getComputedStyle(document.documentElement).getPropertyValue("--color-brand").trim();
     let b = 0, h = 0, bild = 0, sichtbar = true;
     let knoten: Knoten[] = [];
     const maus = { x: -9999, y: -9999 };
@@ -92,10 +91,6 @@ export function Netzwerk({ className = "", dichte = 1 }: Props) {
       if (ruhig) zeichne();
     };
     const raus = () => { maus.x = -9999; maus.y = -9999; };
-    const neueWelt = () => window.setTimeout(() => {
-      farbe = getComputedStyle(document.documentElement).getPropertyValue("--color-brand").trim();
-      zeichne();
-    }, 30);
 
     baue();
     zeichne();
@@ -109,7 +104,6 @@ export function Netzwerk({ className = "", dichte = 1 }: Props) {
     beobachter.observe(canvas);
     const groesse = new ResizeObserver(() => { baue(); zeichne(); });
     groesse.observe(canvas);
-    window.addEventListener(FARBWELT_EREIGNIS, neueWelt);
     if (!ruhig) bild = requestAnimationFrame(schleife);
 
     return () => {
@@ -118,7 +112,6 @@ export function Netzwerk({ className = "", dichte = 1 }: Props) {
       groesse.disconnect();
       flaeche.removeEventListener("pointermove", bewegt);
       flaeche.removeEventListener("pointerleave", raus);
-      window.removeEventListener(FARBWELT_EREIGNIS, neueWelt);
     };
   }, [dichte]);
 

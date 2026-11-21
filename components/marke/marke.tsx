@@ -8,7 +8,7 @@ type Props = {
 };
 
 /**
- * Bildzeichen (Originalform aus Daniels Logo, Farbe aus der Farbwelt)
+ * Bildzeichen (Originalform aus Daniels Logo, Farbe aus den Tokens)
  * plus Schriftzug in der Display-Schrift.
  */
 export function Marke({ groesse = "klein", className = "" }: Props) {

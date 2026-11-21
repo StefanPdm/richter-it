@@ -24,13 +24,12 @@ import {
   WebGLRenderer,
   type Material,
 } from "three";
-import { FARBWELT_EREIGNIS } from "@/lib/farbwelt";
 import { SCHRITTE, fortschrittVon } from "./fortschritt";
 
 /*
  * Backup-Fluss: Server-Rack (Standort A) → Datenwolke → Deduplizierung → Verschlüsselungsring
  * → Übertragung → Backup-Speicher (Standort B) → Wiederherstellung zurück ins Rack.
- * Alles prozedural (keine Modelle), Farben aus den CSS-Tokens der aktiven Farbwelt.
+ * Alles prozedural (keine Modelle), Farben aus den CSS-Tokens.
  * Die Position hängt am Scrollen, dazu kleine Dauerbewegung, solange die Szene im Bild ist.
  */
 
@@ -381,11 +380,6 @@ export function starteBackupFluss(canvas: HTMLCanvasElement, quelle: Element) {
     }
   });
   groesse.observe(canvas);
-  const weltWechsel = () => {
-    farbenLesen();
-    if (!laeuft) renderer.render(szene, kamera);
-  };
-  window.addEventListener(FARBWELT_EREIGNIS, weltWechsel);
   document.addEventListener("visibilitychange", pruefen);
 
   groesseAnpassen();
@@ -396,7 +390,6 @@ export function starteBackupFluss(canvas: HTMLCanvasElement, quelle: Element) {
     stopp();
     beobachter.disconnect();
     groesse.disconnect();
-    window.removeEventListener(FARBWELT_EREIGNIS, weltWechsel);
     document.removeEventListener("visibilitychange", pruefen);
     blockNetz.dispose();
     huelle.dispose();

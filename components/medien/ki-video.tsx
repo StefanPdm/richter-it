@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
-import { FARBWELT_EREIGNIS } from "@/lib/farbwelt";
 import { megastruktur, rackreihen, type Farben, type Szene } from "./szenen";
 
 type Props = {
@@ -50,7 +49,7 @@ export function KiVideo({ szene, video, className = "" }: Props) {
 
     const s = SZENEN[szene]();
     const bewegt = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let farben = farbenLesen();
+    const farben = farbenLesen();
     let b = 0, h = 0, sichtbar = true, bild = 0;
 
     const groesse = () => {
@@ -69,8 +68,6 @@ export function KiVideo({ szene, video, className = "" }: Props) {
       if (sichtbar) zeichne(zeit);
       bild = requestAnimationFrame(schleife);
     };
-    /* Farbwelt gewechselt: Farben nach dem Übergang neu lesen */
-    const neueWelt = () => window.setTimeout(() => { farben = farbenLesen(); zeichne(); }, 30);
 
     groesse();
     zeichne();
@@ -78,14 +75,12 @@ export function KiVideo({ szene, video, className = "" }: Props) {
     beobachter.observe(canvas);
     const groessenWaechter = new ResizeObserver(() => { groesse(); zeichne(); });
     groessenWaechter.observe(canvas);
-    window.addEventListener(FARBWELT_EREIGNIS, neueWelt);
     if (bewegt) bild = requestAnimationFrame(schleife);
 
     return () => {
       cancelAnimationFrame(bild);
       beobachter.disconnect();
       groessenWaechter.disconnect();
-      window.removeEventListener(FARBWELT_EREIGNIS, neueWelt);
     };
   }, [szene, video]);
 

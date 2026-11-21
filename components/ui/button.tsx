@@ -21,7 +21,7 @@ const basis =
   "disabled:pointer-events-none disabled:opacity-50";
 
 const varianten: Record<Variante, string> = {
-  primary: "schnitt bg-brand-dark text-text-inverse hover:bg-brand-darker",
+  primary: "schnitt bg-cta text-text-inverse hover:bg-cta-hover",
   secondary: "border border-brand-dark text-brand-dark hover:bg-brand-soft",
   inverse: "bg-text-on-dark text-bg-dark hover:bg-white",
 };

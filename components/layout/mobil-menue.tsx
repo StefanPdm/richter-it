@@ -91,7 +91,7 @@ export function MobilMenue() {
               <a
                 href="#kontakt"
                 onClick={kontakt}
-                className="schnitt inline-flex min-h-12 items-center justify-center gap-2 bg-brand-dark px-6 font-medium text-text-inverse"
+                className="schnitt inline-flex min-h-12 items-center justify-center gap-2 bg-cta px-6 font-medium text-text-inverse"
               >
                 {site.aktion.label} <span aria-hidden="true">→</span>
               </a>

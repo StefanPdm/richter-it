@@ -21,9 +21,9 @@ durch freigegebene Angaben ersetzen oder löschen. Nie ungeprüft veröffentlich
 - Kurzfassung und alle Werte in `DESIGN.md`.
 - Entwurf, auf dem die Seite beruht: https://claude.ai/artifact/UU35VK79KxjcVECB8BDXSj
   (claude.ai-Artifact, mit dem Artifact-Werkzeug lesen, nicht per Web-Abruf).
-- **Farbwelt ist noch nicht entschieden.** Drei Welten (Bernstein, Kobalt, Beton) liegen in
-  `app/tokens.css`. Neue Komponenten müssen in allen drei funktionieren: nur Token-Klassen.
-  Umschalter: `components/farbwelt/`, gesteuert über `.env`.
+- **Farbwelt: Kobalt mit Bernstein-Akzent** (Entscheidung Daniel, 19.11.2026). Bernstein
+  (`cta`, `cta-hover`) nur für primäre Knöpfe, alles andere Akzentuierte bleibt `brand`.
+  Nur Token-Klassen, Werte in `app/tokens.css`.
 - Neue Seiten folgen `docs/design/seitentypen.md` und `docs/design/bausteine.md`.
   Fehlt ein Screen: Aufbau vorschlagen und Stefan zeigen, bevor gebaut wird.
 - Stil: Paket 4 und 5 (Tech-dunkel, Experience). Keine Kicker über Überschriften,

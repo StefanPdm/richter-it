@@ -126,7 +126,7 @@ export function ErgebnisKnopf({ thema, children = "Ergebnis besprechen" }: { the
     <a
       href="#kontakt"
       onClick={(e) => zumFormular(e, thema)}
-      className="schnitt zucken inline-flex min-h-12 items-center justify-center gap-2 justify-self-start bg-brand-dark px-6 font-medium text-text-inverse transition-colors duration-(--dur-fast) hover:bg-brand-darker"
+      className="schnitt zucken inline-flex min-h-12 items-center justify-center gap-2 justify-self-start bg-cta px-6 font-medium text-text-inverse transition-colors duration-(--dur-fast) hover:bg-cta-hover"
     >
       {children} <span aria-hidden="true">→</span>
     </a>

@@ -1,6 +1,6 @@
 /*
   Gezeichnete Platzhalter für die KI-Videos (video-briefing.md).
-  Reine Zeichenfunktionen: Farben kommen aus den Tokens der aktiven Farbwelt.
+  Reine Zeichenfunktionen: Farben kommen aus den Tokens.
 */
 
 export type Farben = { licht: string; dunst: string; turm: string; signal: string; grund: string };

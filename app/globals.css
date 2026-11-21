@@ -56,7 +56,7 @@
   /* Offene Inhalte im Entwurf sichtbar markieren */
   .offen { color: var(--color-brand-dark); }
 
-  /* Logo: Originalform als Maske, Farbe aus der Farbwelt.
+  /* Logo: Originalform als Maske, Farbe aus den Tokens.
      Ersetzen, sobald Daniels Vektordatei da ist. */
   .logo-bild {
     display: block;

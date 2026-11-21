@@ -39,7 +39,7 @@ in Paket 1 und 3 nur, wenn er Information trägt (Bereich, Ort). In Paket 4 und 
 | **FAQ** | `<details>`-Liste, 5-8 Fragen | erzeugt `FAQPage`-JSON-LD, nur wenn sichtbar |
 | **Formular / Anfrage** | 4-6 Felder, Pflichtfelder markiert, Datenschutzhinweis | Schutz nach qualitaet.md. Live-Schätzung optional (Mustang) |
 | **Karte** | Zwei-Klick-Lösung, erst nach Einwilligung laden | OpenStreetMap (Zahnarzt) |
-| **CTA-Band** | Satz + ein Button, volle Breite | `brand-dark` oder `bg-dark` |
+| **CTA-Band** | Satz + ein Button, volle Breite | `surface` mit HUD-Rahmen, Knopf `cta` |
 
 ## Erlebnis-Bausteine (Paket 4 und 5)
 
@@ -60,7 +60,7 @@ Regeln für Bewegung in [bewegung.md](bewegung.md), für 3D in [3d.md](3d.md).
 
 | Variante | Einsatz |
 |---|---|
-| `--primary` | eine Hauptaktion pro Sektion, Fläche `brand-dark`, Text `text-inverse` |
+| `--primary` | eine Hauptaktion pro Sektion, Fläche `cta` (Bernstein), Hover `cta-hover`, Text `text-inverse` |
 | `--secondary` | Rahmen `brand`, Text `brand-dark`, Fläche transparent |
 | `--inverse` | auf dunklen Flächen |
 | `--arrow` | Pfeil rechts, bewegt sich beim Hover 2px |
