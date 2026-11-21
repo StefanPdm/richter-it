@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
+import { KonsoleMatrix, Paketlauf } from "@/components/layout/konsole-spiele";
 import { meldeThema, type Anliegen } from "@/lib/kontakt-thema";
 import { leistungen, technik } from "@/lib/inhalte";
 import { site } from "@/lib/site";
@@ -63,13 +64,15 @@ const BEFEHLE = [
   ["ping [domain]", "Antwortzeit messen, ohne Domain: Ihr Browser zu dieser Website"],
   ["ping daniel", "wie Sie Daniel erreichen"],
   ["neofetch", "das System in Kürze"],
+  ["spiel", "Paketlauf: springen Sie über Latenzspitzen und sammeln Sie ACKs"],
+  ["matrix", "?"],
   ["clear", "Ausgabe leeren"],
   ["exit", "Konsole schließen (oder Esc)"],
 ] as const;
 
 type Zeile = { art: "ein" | "aus" | "fehler"; inhalt: ReactNode };
 
-const ALLE_WORTE = ["help", "check", "wetter", "ls", "cd", "leistungen", "werkzeuge", "open", "kontakt", "ping", "neofetch", "whoami", "clear", "exit", "uptime", "sudo"];
+const ALLE_WORTE = ["help", "check", "wetter", "ls", "cd", "leistungen", "werkzeuge", "open", "kontakt", "ping", "neofetch", "whoami", "clear", "exit", "uptime", "sudo", "spiel", "matrix"];
 
 const MARKE: Record<Pruefung["status"], { text: string; klasse: string }> = {
   ok: { text: "[  OK  ]", klasse: "text-success" },
@@ -114,6 +117,12 @@ export function Konsole() {
   const router = useRouter();
   const [zeilen, setZeilen] = useState<Zeile[]>([]);
   const [text, setText] = useState("");
+  /* Bühne über der Ausgabe: Spiel oder Zeichenregen. Esc kehrt zur Konsole zurück. */
+  const [buehne, setBuehne] = useState<"spiel" | "matrix" | null>(null);
+  const zurueck = useCallback(() => {
+    setBuehne(null);
+    window.setTimeout(() => eingabe.current?.focus(), 0);
+  }, []);
   const verlauf = useRef<string[]>([]);
   const position = useRef(-1);
   /* letztes Ergebnis von check, für kontakt --ergebnis */
@@ -297,6 +306,7 @@ export function Konsole() {
   }
 
   function schliessen() {
+    setBuehne(null);
     dialog.current?.close();
   }
 
@@ -488,6 +498,14 @@ export function Konsole() {
         return [{ art: "aus", inhalt: "selbstständig seit 2019" }];
       case "sudo":
         return [{ art: "fehler", inhalt: "Netter Versuch. Admin-Rechte gibt es nach dem Erstgespräch: kontakt" }];
+      case "spiel":
+        setBuehne("spiel");
+        return [{ art: "aus", inhalt: "Paketlauf gestartet. Esc kehrt zur Konsole zurück." }];
+      case "matrix":
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return [{ art: "aus", inhalt: "Der Zeichenregen ist bei „weniger Bewegung“ abgeschaltet." }];
+        setBuehne("matrix");
+        return [{ art: "aus", inhalt: "Folgen Sie dem weißen Kaninchen." }];
       case "clear":
         return [];
       case "exit":
@@ -529,7 +547,19 @@ export function Konsole() {
   }
 
   return (
-    <dialog ref={dialog} className="konsole" aria-label="Konsole" onClick={(e) => e.target === dialog.current && schliessen()}>
+    <dialog
+      ref={dialog}
+      className="konsole"
+      aria-label="Konsole"
+      onClick={(e) => e.target === dialog.current && schliessen()}
+      onCancel={(e) => {
+        /* Esc im Spiel oder Zeichenregen: zurück zur Konsole statt schließen */
+        if (buehne) {
+          e.preventDefault();
+          zurueck();
+        }
+      }}
+    >
       <div className="relative isolate flex h-full flex-col">
         <div aria-hidden="true" className="scanlines -z-10" />
         <div className="flex items-center justify-between gap-4 border-b border-border px-(--gutter) py-2.5">
@@ -541,7 +571,11 @@ export function Konsole() {
             <span className="hidden sm:inline">Esc · </span>schließen
           </button>
         </div>
-        <div className="min-h-0 flex-1 overflow-y-auto px-(--gutter) py-4 font-mono text-sm leading-relaxed" aria-live="polite">
+        {/* Rahmen: Spiel und Zeichenregen liegen über dem sichtbaren Ausschnitt, nicht im Scrollinhalt */}
+        <div className="relative min-h-0 flex-1">
+          {buehne === "spiel" && <Paketlauf beenden={zurueck} />}
+          {buehne === "matrix" && <KonsoleMatrix beenden={zurueck} />}
+        <div className="h-full overflow-y-auto px-(--gutter) py-4 font-mono text-sm leading-relaxed" aria-live="polite">
           {zeilen.map((z, i) => (
             <div key={i} className={z.art === "fehler" ? "text-error" : z.art === "ein" ? "text-text" : "text-text-muted"}>
               {z.art === "ein" ? (
@@ -554,6 +588,7 @@ export function Konsole() {
             </div>
           ))}
           <div ref={ende} />
+        </div>
         </div>
         <form onSubmit={senden} className="flex items-center gap-3 border-t border-border px-(--gutter) py-3 font-mono text-sm">
           <label htmlFor="konsole-eingabe" className="shrink-0 text-brand-dark">
