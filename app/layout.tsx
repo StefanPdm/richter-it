@@ -45,6 +45,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang={site.sprache}
       className={`${display.variable} ${body.variable} ${mono.variable}`}
+      /* Weiches Scrollen (globals.css) nur innerhalb einer Seite: Next.js schaltet es
+         beim Seitenwechsel ab, damit die neue Seite sofort oben steht */
+      data-scroll-behavior="smooth"
     >
       <body className="flex min-h-dvh flex-col">
         <div className="scroll-fortschritt" aria-hidden="true" />
