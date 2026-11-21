@@ -14,6 +14,7 @@ import { zumFormular } from "@/lib/kontakt-thema";
 export function MobilMenue() {
   const dialog = useRef<HTMLDialogElement>(null);
   const [offen, setOffen] = useState(false);
+  const [aufgeklappt, setAufgeklappt] = useState(false);
 
   function oeffnen() {
     dialog.current?.showModal();
@@ -77,22 +78,41 @@ export function MobilMenue() {
                 <ul className="grid">
                   {site.navigation.map((punkt, i) => (
                     <li key={punkt.href} className="menue__punkt border-b border-border" style={{ "--i": i } as CSSProperties}>
-                      <a href={punkt.href} onClick={geheZu} className="zucken flex items-baseline gap-4 py-4">
-                        <span className="daten text-brand-dark">{String(i + 1).padStart(2, "0")}</span>
-                        <span className="font-display text-h2 leading-none font-medium [font-stretch:72%]">{punkt.label}</span>
-                      </a>
-                      {/* Unterseiten eingerückt unter dem Punkt */}
+                      <div className="flex items-center justify-between gap-3">
+                        <a href={punkt.href} onClick={geheZu} className="zucken flex items-baseline gap-4 py-4">
+                          <span className="daten text-brand-dark">{String(i + 1).padStart(2, "0")}</span>
+                          <span className="font-display text-h2 leading-none font-medium [font-stretch:72%]">{punkt.label}</span>
+                        </a>
+                        {"unter" in punkt && (
+                          <button
+                            type="button"
+                            aria-expanded={aufgeklappt}
+                            aria-controls="mobil-unter"
+                            aria-label={aufgeklappt ? punkt.label + " zuklappen" : punkt.label + " aufklappen"}
+                            onClick={() => setAufgeklappt((a) => !a)}
+                            className="grid size-11 shrink-0 cursor-pointer place-items-center border border-border text-brand-dark"
+                          >
+                            <svg aria-hidden="true" viewBox="0 0 12 12" className={"size-3 transition-transform duration-(--dur-base) " + (aufgeklappt ? "rotate-45" : "")}>
+                              <path d="M6 1v10M1 6h10" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                      {/* Unterseiten: klappen animiert auf, eingeklappt inert */}
                       {"unter" in punkt && (
-                        <ul className="-mt-1 grid gap-0.5 pb-3 pl-10">
-                          {punkt.unter.map((u) => (
-                            <li key={u.href}>
-                              <a href={u.href} onClick={geheZu} className="flex min-h-11 items-center gap-3 text-text-muted hover:text-text">
-                                <span aria-hidden="true" className="h-px w-3 bg-border-strong" />
-                                {u.label}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
+                        <div id="mobil-unter" data-offen={aufgeklappt} inert={!aufgeklappt} className="mobil-unter">
+                          <ul className="grid min-h-0 gap-0.5 overflow-hidden pl-10">
+                            {punkt.unter.map((u, j) => (
+                              <li key={u.href} className="mobil-unter__punkt" style={{ "--i": j } as CSSProperties}>
+                                <a href={u.href} onClick={geheZu} className="flex min-h-11 items-center gap-3 text-text-muted hover:text-text">
+                                  <span aria-hidden="true" className="h-px w-3 bg-brand" />
+                                  {u.label}
+                                </a>
+                              </li>
+                            ))}
+                            <li aria-hidden="true" className="h-3" />
+                          </ul>
+                        </div>
                       )}
                     </li>
                   ))}

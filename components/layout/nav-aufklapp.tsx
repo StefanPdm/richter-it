@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useId, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
 type Unterpunkt = { label: string; href: string; satz: string };
 
@@ -79,11 +79,12 @@ export function NavAufklapp({ label, href, unter }: Props) {
       </button>
 
       {/* Brücke: unsichtbarer Streifen zwischen Knopf und Panel, damit die Maus nicht "herausfällt" */}
-      <div id={id} hidden={!offen} className="nav-panel absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4">
-        <div className="hud-rahmen grid w-[22rem] gap-1 border border-border-strong bg-surface p-3 shadow-float">
+      {/* Panel bleibt im Dokument, damit es animiert auf- und zugehen kann; geschlossen inert */}
+      <div id={id} data-offen={offen} inert={!offen} className="nav-panel absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4">
+        <div className="nav-panel__karte hud-rahmen grid w-[22rem] gap-1 border border-border-strong bg-surface p-3 shadow-float">
           <ul className="grid">
             {unter.map((u, i) => (
-              <li key={u.href}>
+              <li key={u.href} className="nav-panel__punkt" style={{ "--i": i } as CSSProperties}>
                 <Link
                   href={u.href}
                   onClick={() => setOffen(false)}
@@ -100,7 +101,8 @@ export function NavAufklapp({ label, href, unter }: Props) {
           <Link
             href={href}
             onClick={() => setOffen(false)}
-            className="daten mt-1 flex min-h-11 items-center justify-between border-t border-border px-3 pt-1 hover:text-text"
+            style={{ "--i": unter.length } as CSSProperties}
+            className="nav-panel__punkt daten mt-1 flex min-h-11 items-center justify-between border-t border-border px-3 pt-1 hover:text-text"
           >
             Alle Leistungen auf einen Blick <span aria-hidden="true">→</span>
           </Link>
