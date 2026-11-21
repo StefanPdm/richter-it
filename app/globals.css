@@ -1564,3 +1564,7 @@
     .mobil-unter { transition: none; }
   }
 }
+
+/* Header nur bei offenem Aufklappmenü über Scroll-Balken und Datenpaket (z 60).
+   Außerhalb der Layer, damit es die Tailwind-Klasse z-50 am Header überstimmt. */
+.kopfzeile:has(.nav-panel[data-offen="true"]) { z-index: 90; }

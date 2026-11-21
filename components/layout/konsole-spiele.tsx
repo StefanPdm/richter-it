@@ -35,11 +35,14 @@ function anpassen(c: HTMLCanvasElement) {
 type Props = { /** Rückkehr zur Konsole */ beenden: () => void };
 
 /**
- * Easter Egg "matrix": Zeichenregen in Kobalt über der Ausgabe, etwa acht Sekunden.
- * Jede Taste oder ein Klick beendet ihn früher.
+ * Easter Egg "matrix": Zeichenregen in Kobalt über der Ausgabe. Läuft, bis er über den
+ * Knopf "Ausschalten" oder mit Esc beendet wird.
  */
 export function KonsoleMatrix({ beenden }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
+  const knopf = useRef<HTMLButtonElement>(null);
+  /* Fokus auf den Ausschalter, damit Enter oder Leertaste ihn sofort bedienen */
+  useEffect(() => knopf.current?.focus(), []);
 
   useEffect(() => {
     const c = ref.current;
@@ -52,7 +55,6 @@ export function KonsoleMatrix({ beenden }: Props) {
     let y = Array.from({ length: spalten }, () => Math.random() * -40);
     let bild = 0;
     let zuletzt = 0;
-    const start = performance.now();
 
     const schritt = (t: number) => {
       bild = requestAnimationFrame(schritt);
@@ -70,7 +72,6 @@ export function KonsoleMatrix({ beenden }: Props) {
         ctx.fillText(z, i * GROESSE, py);
         y[i] = py > h && Math.random() > 0.96 ? 0 : y[i] + 1;
       }
-      if (t - start > 8000) beenden();
     };
     bild = requestAnimationFrame(schritt);
 
@@ -80,21 +81,24 @@ export function KonsoleMatrix({ beenden }: Props) {
       y = Array.from({ length: spalten }, () => Math.random() * -40);
     });
     groesse.observe(c.parentElement!);
-    const taste = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") beenden();
-    };
-    window.addEventListener("keydown", taste);
     return () => {
       cancelAnimationFrame(bild);
       groesse.disconnect();
-      window.removeEventListener("keydown", taste);
     };
-  }, [beenden]);
+  }, []);
 
   return (
-    <div className="absolute inset-0 z-10 bg-bg" onClick={beenden}>
+    <div className="absolute inset-0 z-10 bg-bg">
       <canvas ref={ref} aria-hidden="true" className="block" />
-      <span className="daten absolute right-4 bottom-3 bg-bg/80 px-2 py-1">Taste drücken zum Beenden</span>
+      <button
+        ref={knopf}
+        type="button"
+        onClick={beenden}
+        className="daten absolute right-4 bottom-3 inline-flex min-h-11 cursor-pointer items-center gap-2 border border-border-strong bg-bg/90 px-3.5 text-text transition-colors duration-(--dur-fast) hover:border-brand"
+      >
+        <span aria-hidden="true" className="size-2 bg-brand" />
+        Ausschalten
+      </button>
     </div>
   );
 }

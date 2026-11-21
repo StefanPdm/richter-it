@@ -505,7 +505,7 @@ export function Konsole() {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
           return [{ art: "aus", inhalt: "Der Zeichenregen ist bei „weniger Bewegung“ abgeschaltet." }];
         setBuehne("matrix");
-        return [{ art: "aus", inhalt: "Folgen Sie dem weißen Kaninchen." }];
+        return [{ art: "aus", inhalt: "Folgen Sie dem weißen Kaninchen. Ausschalten mit dem Knopf oder Esc." }];
       case "clear":
         return [];
       case "exit":
