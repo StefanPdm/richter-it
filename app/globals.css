@@ -1295,3 +1295,63 @@
     from { opacity: 0; transform: scaleY(0.2); }
   }
 }
+
+/* ---- Zusammenarbeit: stilisierte Dokumente ---- */
+@layer components {
+  .dok {
+    position: relative;
+    margin: 0;
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    background: linear-gradient(to bottom, var(--color-surface), color-mix(in srgb, var(--color-surface) 80%, var(--color-bg)));
+    border: 1px solid var(--color-border-strong);
+    box-shadow: var(--shadow-float);
+  }
+  .dok--abnahme { border-color: color-mix(in srgb, var(--color-cta) 55%, var(--color-border-strong)); }
+  .dok-zeile {
+    display: block;
+    height: 0.4rem;
+    background: var(--color-border-strong);
+    opacity: 0.6;
+  }
+  /* Stempel auf dem Abnahmeprotokoll: Bernstein, leicht schräg */
+  .dok-stempel {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.25rem;
+    padding: 0.4rem 0.75rem;
+    border: 2px solid var(--color-cta);
+    color: var(--color-cta);
+    rotate: -8deg;
+    letter-spacing: 0.18em;
+  }
+  /* Stempel kommt einmal mit Schwung, sobald das Blatt eingeblendet wird */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal="sichtbar"] .dok-stempel { animation: stempel 500ms var(--ease-out) 600ms both; }
+  }
+  @keyframes stempel {
+    from { opacity: 0; scale: 1.6; rotate: -14deg; }
+    60% { opacity: 1; scale: 0.96; }
+    to { scale: 1; rotate: -8deg; }
+  }
+
+  /* Band auf der Startseite: Mini-Blätter, verbunden durch eine Leitung */
+  .ablauf-blatt {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 0.3rem;
+    width: 2.75rem;
+    height: 3.4rem;
+    padding: 0.55rem 0.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+  }
+  .ablauf-blatt::before,
+  .ablauf-blatt::after {
+    content: "";
+    height: 2px;
+    background: var(--color-border-strong);
+  }
+  .ablauf-blatt::after { width: 65%; }
+  .ablauf-blatt--abnahme { border-color: var(--color-cta); }
+}

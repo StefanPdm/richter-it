@@ -488,3 +488,45 @@ export const zitat = {
   von: "Daniel Richter",
   rolle: "IT-Infrastruktur, Potsdam",
 } as const;
+
+/* Zusammenarbeit: Ablauf aus dem Gespräch am 19.11.2026. Kostenloses Audit (etwa eine
+   Stunde), Projektplan mit Aufgaben und Terminen, Team aus dem Partnernetz, Umsetzung und
+   Tests, Abnahmeprotokoll (Daniel: viele Dienstleister nutzen es nicht konsequent).
+   Startseite: Band mit Teaser, Seite /zusammenarbeit ausführlich. Von Daniel prüfen lassen. */
+export const zusammenarbeit = {
+  titel: "Vom ersten Gespräch bis zur Abnahme.",
+  teaser: "Fünf Schritte, jeder mit einem Ergebnis, das Sie in der Hand halten.",
+  lead: "Jeder Schritt endet mit einem Dokument, das Sie behalten: von der Notiz aus dem ersten Gespräch bis zum unterschriebenen Abnahmeprotokoll. So wissen Sie jederzeit, wo das Projekt steht.",
+  schritte: [
+    {
+      kurz: "Audit",
+      titel: "Kostenloses Audit",
+      dokument: "Audit-Notiz",
+      text: "Etwa eine Stunde, kostenlos. Ich höre zu, schaue mir Ihre Infrastruktur an und suche die Engpässe. Am Ende steht eine Notiz mit dem, was ich gesehen habe, und den Aufgaben, die sich lohnen.",
+    },
+    {
+      kurz: "Plan",
+      titel: "Projektplan",
+      dokument: "Projektplan",
+      text: "Wenn es weitergeht, wird aus den Aufgaben ein Plan mit Terminen und klaren Zuständigkeiten. Geschult in Scrum, arbeite ich in überschaubaren Abschnitten, die Sie verfolgen können.",
+    },
+    {
+      kurz: "Team",
+      titel: "Team aus dem Partnernetz",
+      dokument: "Teamaufstellung",
+      text: "Für jedes Projekt stelle ich das passende Team zusammen, etwa für Automatisierung, Netzwerk oder Hardware. Sie haben einen Ansprechpartner: mich.",
+    },
+    {
+      kurz: "Tests",
+      titel: "Umsetzung und Tests",
+      dokument: "Testprotokoll",
+      text: "Umgesetzt wird Schritt für Schritt, im laufenden Betrieb. Jede Änderung wird gemessen und getestet, bevor die nächste kommt. Auch die Wiederherstellung.",
+    },
+    {
+      kurz: "Abnahme",
+      titel: "Abnahmeprotokoll",
+      dokument: "Abnahmeprotokoll",
+      text: "Am Ende steht ein Abnahmeprotokoll: Was vereinbart war, was umgesetzt ist, unterschrieben von beiden Seiten. Viele IT-Dienstleister lassen das weg. Ich nicht.",
+    },
+  ],
+} as const;

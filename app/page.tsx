@@ -3,6 +3,7 @@ import { Hero } from "@/components/sektionen/hero";
 import { Laufband } from "@/components/sektionen/laufband";
 import { VbsMoment } from "@/components/sektionen/vbs-moment";
 import { ZitatBand } from "@/components/sektionen/zitat-band";
+import { ZusammenarbeitBand } from "@/components/sektionen/zusammenarbeit-band";
 import { Kennzahlen } from "@/components/sektionen/kennzahlen";
 import { Leistungen } from "@/components/sektionen/leistungen";
 import { Leitstand } from "@/components/sektionen/leitstand";
@@ -20,8 +21,8 @@ import { Fehler502 } from "@/components/sektionen/fehler-502";
 
 /* Startseite, Präsentationsversion "Leitstand im Abendlicht" (DESIGN.md).
    Rhythmus der Hintergründe, abwechselnd bewegt (B) und ruhig (R):
-   Hero B, VBS R, Kennzahlen B (Lichtfeger), Leistungen R, Leitstand B (Datenstrom),
-   Haltung R, 502 B, Medienband B (Video), Referenzen R, Zitat R, Person B (Netz), Partner R,
+   Hero B, VBS R, Kennzahlen B (Lichtfeger), Medienband B (Video), Leistungen R, Leitstand B (Datenstrom),
+   Haltung R, 502 B, Referenzen R, Zusammenarbeit (Band) R, Zitat R, Person B (Netz), Partner R,
    Kontakt B (Kontrollraum). Backup (Messung, Ablauf) steht auf /backup, die Leistungskarte
    verweist darauf. Neue Sektionen nur nach Rückfrage (CLAUDE.md). Leitstand: Kontrollraum mit Kamerafahrt und Scan-Strahl. */
 
@@ -57,7 +58,8 @@ export default function Startseite() {
       <Laufband />
       <VbsMoment />
       <Kennzahlen />
-      <Signallinie />
+      {/* Drohnenvideo weit oben: Wunsch Daniel (21.11.2026) */}
+      <Medienband />
       <Leistungen />
       <CtaBand
         satz="Nicht sicher, wo es hakt?"
@@ -70,9 +72,9 @@ export default function Startseite() {
       <Signallinie />
       <Haltung />
       <Fehler502 />
-      <Medienband />
       <Signallinie />
       <Referenzen />
+      <ZusammenarbeitBand />
       <CtaBand
         satz="Ihr Projekt könnte Fall 04 sein."
         zusatz="Beschreiben Sie kurz Ihre Ausgangslage, Sie bekommen ein konkretes Angebot."

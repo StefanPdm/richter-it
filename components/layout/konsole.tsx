@@ -33,6 +33,7 @@ const ZIELE: Record<string, { id: string; label: string; pfad?: string }> = {
   haltung: { id: "haltung", label: "Haltung" },
   "502": { id: "fehler-502", label: "502 mit Absicht" },
   referenzen: { id: "referenzen", label: "Referenzen" },
+  zusammenarbeit: { id: "", label: "So arbeiten wir", pfad: "/zusammenarbeit" },
   person: { id: "ueber-mich", label: "Über mich" },
   partner: { id: "partner", label: "Partner" },
   kontakt: { id: "kontakt", label: "Kontakt" },
@@ -337,7 +338,8 @@ export function Konsole() {
   function springe(id: string, pfad = "/") {
     schliessen();
     const el = id ? document.getElementById(id) : document.body;
-    if (el && (id === "" || window.location.pathname === pfad)) {
+    /* Schon auf der richtigen Seite: dorthin scrollen, sonst die Seite öffnen */
+    if (el && window.location.pathname === pfad) {
       const ruhig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (id) el.scrollIntoView({ behavior: ruhig ? "auto" : "smooth", block: "start" });
       else window.scrollTo({ top: 0 });
