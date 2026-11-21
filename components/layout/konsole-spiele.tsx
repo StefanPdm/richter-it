@@ -52,11 +52,12 @@ export function KonsoleMatrix({ beenden }: Props) {
 
   /* Vollbild-Zustand mit dem Browser abgleichen (Esc beendet es dort von selbst) */
   useEffect(() => {
-    const wechsel = () => setVoll(document.fullscreenElement === huelle.current);
+    const el = huelle.current;
+    const wechsel = () => setVoll(document.fullscreenElement === el);
     document.addEventListener("fullscreenchange", wechsel);
     return () => {
       document.removeEventListener("fullscreenchange", wechsel);
-      if (document.fullscreenElement === huelle.current) void document.exitFullscreen().catch(() => {});
+      if (el && document.fullscreenElement === el) void document.exitFullscreen().catch(() => {});
     };
   }, []);
 
