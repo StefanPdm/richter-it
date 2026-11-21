@@ -7,8 +7,9 @@ import { NavAufklapp } from "@/components/layout/nav-aufklapp";
 
 /** Header: Marke, höchstens 6 Menüpunkte (einer davon mit Aufklappmenü), eine Aktion. Klebt oben. */
 export function Header() {
+  /* z-70: über Scroll-Balken und Paket-Anzeige (z 60), damit das Aufklappmenü darüber liegt */
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-bg transition-colors duration-(--dur-welt)">
+    <header className="sticky top-0 z-70 border-b border-border bg-bg transition-colors duration-(--dur-welt)">
       <div className="mx-auto flex min-h-(--header-h) max-w-wide items-center justify-between gap-3 px-(--gutter) sm:gap-6">
         <Marke />
         <nav aria-label="Hauptmenü" className="hidden md:block">
