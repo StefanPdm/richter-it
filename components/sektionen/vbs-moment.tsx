@@ -69,8 +69,12 @@ export function VbsInstrument() {
       </ul>
 
       {/* Schutzstatus */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6">
-        <span className="daten">Schutz · {vbs.schutzName}</span>
+      {/* Status bleibt rechts in der Zeile; Handy ohne "Schutz ·", damit es auch schmal passt */}
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-t border-border pt-6">
+        <span className="daten">
+          <span className="max-sm:hidden">Schutz · </span>
+          {vbs.schutzName}
+        </span>
         <span className={`daten flex items-center gap-2.5 ${aktuell.schutz ? "text-success" : "text-text-muted"}`}>
           <span className={aktuell.schutz ? "status-punkt" : "vbs-punkt-aus"} aria-hidden="true" />
           {aktuell.schutz ? "Aktiv" : "Aus"}
