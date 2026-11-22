@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Kontakt } from "@/components/sektionen/kontakt";
 import { Dokument } from "@/components/zusammenarbeit/dokument";
@@ -48,12 +47,6 @@ export default function Zusammenarbeit() {
       <section aria-labelledby="zusammenarbeit-seite-titel" className="relative isolate border-b border-border pt-[clamp(3rem,7vw,6rem)] pb-[clamp(2.5rem,5vw,4rem)]">
         <Sektionsgrund licht="links-oben" motiv="lineal" />
         <div className="mx-auto grid max-w-wide grid-cols-1 gap-6 px-(--gutter)">
-          <nav aria-label="Brotkrumen" className="daten flex flex-wrap items-center gap-x-2">
-            <Link href="/" className="inline-flex min-h-11 min-w-11 items-center hover:text-text">
-              Start
-            </Link>
-            / <span className="text-text">Zusammenarbeit</span>
-          </nav>
           <h1 id="zusammenarbeit-seite-titel" className="titel-linie max-w-[18ch] text-h2">
             {zusammenarbeit.titel}
           </h1>

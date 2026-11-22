@@ -77,16 +77,6 @@ export function LeistungsSeite({ daten, grafik }: Props) {
       <section aria-labelledby="leistung-titel" className="relative isolate border-b border-border pt-[clamp(3rem,7vw,6rem)] pb-[clamp(2.5rem,5vw,4rem)]">
         <Sektionsgrund licht="links-oben" motiv="lineal" />
         <div className="mx-auto grid max-w-wide grid-cols-1 gap-6 px-(--gutter)">
-          <nav aria-label="Brotkrumen" className="daten flex flex-wrap items-center gap-x-2">
-            <Link href="/" className="inline-flex min-h-11 min-w-11 items-center hover:text-text">
-              Start
-            </Link>
-            /
-            <Link href="/#leistungen" className="inline-flex min-h-11 items-center hover:text-text">
-              Leistungen
-            </Link>
-            / <span className="text-text">{daten.name}</span>
-          </nav>
           <h1 id="leistung-titel" className="titel-linie max-w-[18ch] text-h2">
             {daten.titel}
           </h1>

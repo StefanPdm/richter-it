@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Sektionsgrund } from "@/components/effekte/sektionsgrund";
 import { begriffe } from "@/lib/inhalte";
@@ -29,16 +28,6 @@ export default function Begriffe() {
         <Sektionsgrund licht="rechts-oben" motiv="lineal" />
         <div className="mx-auto grid max-w-wide grid-cols-1 gap-14 px-(--gutter)">
           <div className="grid gap-5">
-            <nav aria-label="Brotkrumen" className="daten flex flex-wrap items-center gap-x-2">
-              <Link href="/" className="inline-flex min-h-11 min-w-11 items-center hover:text-text">
-                Start
-              </Link>
-              /
-              <Link href="/wissen" className="inline-flex min-h-11 items-center hover:text-text">
-                Wissen
-              </Link>
-              / <span className="text-text">Glossar</span>
-            </nav>
             <h1 id="glossar-titel" className="titel-linie text-h2">
               Glossar
             </h1>

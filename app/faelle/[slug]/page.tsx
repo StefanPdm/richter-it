@@ -77,16 +77,6 @@ export default async function FallSeite({ params }: Seite) {
         <Sektionsgrund licht="links-oben" motiv="lineal" />
         {/* grid-cols-1: Spalte folgt der Breite, nicht dem längsten Wort (sonst Überbreite) */}
         <div className="mx-auto grid max-w-wide grid-cols-1 gap-6 px-(--gutter)">
-          <nav aria-label="Brotkrumen" className="daten flex flex-wrap items-center gap-x-2">
-            <Link href="/" className="inline-flex min-h-11 min-w-11 items-center hover:text-text">
-              Start
-            </Link>
-            /
-            <Link href="/#referenzen" className="inline-flex min-h-11 items-center hover:text-text">
-              Referenzen
-            </Link>
-            / <span className="text-text">Fall {nummer}</span>
-          </nav>
           <span className="daten text-brand-dark">
             Fall {nummer} · {fall.bereich}
           </span>

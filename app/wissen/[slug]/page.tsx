@@ -44,16 +44,6 @@ export default async function DossierSeite({ params }: Seite) {
 
   const kopf = (
     <>
-      <nav aria-label="Brotkrumen" className="daten flex flex-wrap items-center gap-x-2">
-        <Link href="/" className="inline-flex min-h-11 min-w-11 items-center hover:text-text">
-          Start
-        </Link>
-        /
-        <Link href="/wissen" className="inline-flex min-h-11 items-center hover:text-text">
-          Wissen
-        </Link>
-        / <span className="text-text">{d.kennung}</span>
-      </nav>
       <span className="daten flex flex-wrap items-center gap-x-5 gap-y-2">
         <span className="text-brand-dark">
           {d.kennung} · {d.bereich}

@@ -24,12 +24,6 @@ export function WerkzeugSeite({ slug, einleitung, annahmen, children }: Props) {
       <section aria-labelledby="werkzeug-titel" className="py-(--section-y)">
         <div className="mx-auto grid max-w-wide gap-14 px-(--gutter)">
           <div className="grid gap-5">
-            <nav aria-label="Pfad" className="daten">
-              <Link href="/werkzeuge" className="inline-flex min-h-11 items-center hover:text-text">
-                Werkzeuge
-              </Link>{" "}
-              / <span className="text-brand-dark">{w.kennung}</span>
-            </nav>
             <h1 id="werkzeug-titel" className="titel-linie max-w-[18ch] text-h2">
               {w.titel}
             </h1>

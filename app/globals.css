@@ -607,6 +607,55 @@
     70%, 100% { transform: translateY(105%); }
   }
 
+  /* ---- Seitenwechsel (components/layout/seitenwechsel.tsx) ----
+     Nur der Inhalt wird abgelöst: alte Seite geht schnell nach oben weg, neue kommt etwas
+     ruhiger von unten. Die restliche Seite (Header, Statusleiste) wechselt ohne Bewegung.
+     Bei "weniger Bewegung" stehen Dauer und Weg über die Tokens auf 0. */
+  ::view-transition { pointer-events: none; }  /* Klicks während des Wechsels gehen nicht verloren */
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+  ::view-transition-old(.seite-aus) { animation: seite-aus var(--dur-fast) var(--ease-out) both; }
+  ::view-transition-new(.seite-ein) { animation: seite-ein var(--dur-base) var(--ease-out) calc(var(--dur-fast) * 0.6) both; }
+  @keyframes seite-aus { to { opacity: 0; transform: translateY(calc(var(--rise) * -0.6)); } }
+  @keyframes seite-ein { from { opacity: 0; transform: translateY(var(--rise)); } }
+
+  /* Scanlinie: läuft einmal über die neue Seite. Eigener Übergangsname, damit sie über dem
+     einblendenden Inhalt liegt; ihr Bild im Übergang ist live, die Linie bewegt sich also mit. */
+  .seitenscan {
+    position: fixed;
+    inset: var(--header-h) 0 0;
+    z-index: 40;
+    pointer-events: none;
+    overflow: hidden;
+    view-transition-name: seitenscan;
+  }
+  .seitenscan::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 22vh;
+    background: linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--color-neon) 12%, transparent) 88%, color-mix(in srgb, var(--color-neon) 60%, transparent) 99%, transparent 100%);
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .seitenscan::before { animation: seitenscan var(--dur-welt) var(--ease-in-out) both; }
+  }
+  @keyframes seitenscan {
+    0% { transform: translateY(-100%); opacity: 0.9; }
+    85% { opacity: 0.9; }
+    100% { transform: translateY(calc(100svh - var(--header-h))); opacity: 0; }
+  }
+  ::view-transition-group(seitenscan) { animation: none; z-index: 40; }
+  ::view-transition-old(seitenscan) { display: none; }
+  ::view-transition-new(seitenscan) { animation: none; }
+
+  /* Seitenkopf: am Desktop Platz für die Kennung des Scroll-Pakets (PKT …) oben links */
+  .seitenkopf { padding-block: 0.25rem; }
+  @media (width >= 40rem) {
+    .seitenkopf { padding-top: 1.75rem; }
+  }
+
   /* ---- Handymenü (components/layout/mobil-menue.tsx) ---- */
   .menue { margin: 0; padding: 0; border: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; background: var(--color-bg); color: var(--color-text); }
   .menue::backdrop { background: transparent; }

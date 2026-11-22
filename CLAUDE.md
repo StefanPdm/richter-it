@@ -49,6 +49,8 @@ durch freigegebene Angaben ersetzen oder löschen. Nie ungeprüft veröffentlich
   Sektion braucht dafür eine `id` (ausgenommen Hero und schmale Bänder wie Laufband und
   Kennzahlen, dort zeigt der Indikator weiter den vorherigen Namen). Im selben Zug prüfen: Sprungziele der Konsole
   (`ZIELE` in `components/layout/konsole.tsx`) und die Navigation in `lib/site.ts`.
+- **Neue Unterseite:** Namen für den Seitenkopf (Brotkrumen) in `lib/seitenpfad.ts` eintragen.
+  Der Kopf kommt zentral aus dem Layout, keine eigenen Brotkrumen auf der Seite bauen.
 
 ## Prüfen vor jeder Abgabe
 

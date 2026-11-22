@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Messung } from "@/components/sektionen/messung";
 import { BackupAblauf } from "@/components/sektionen/backup-ablauf";
@@ -48,12 +47,6 @@ export default function Backup() {
       <section aria-labelledby="backup-titel" className="relative isolate border-b border-border pt-[clamp(3rem,7vw,6rem)] pb-[clamp(2.5rem,5vw,4rem)]">
         <Sektionsgrund licht="links-oben" motiv="lineal" />
         <div className="mx-auto grid max-w-wide gap-6 px-(--gutter)">
-          <nav aria-label="Brotkrumen" className="daten">
-            <Link href="/" className="inline-flex min-h-11 min-w-11 items-center hover:text-text">
-              Start
-            </Link>{" "}
-            / <span className="text-text">Backup</span>
-          </nav>
           <h1 id="backup-titel" className="titel-linie max-w-[18ch] text-h2">
             Backup, das in sein Zeitfenster passt.
           </h1>

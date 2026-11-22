@@ -6,6 +6,8 @@ import { NachOben } from "@/components/layout/nach-oben";
 import { Konsole } from "@/components/layout/konsole";
 import { Statusleiste } from "@/components/layout/statusleiste";
 import { ScrollPaket } from "@/components/layout/scroll-paket";
+import { Seitenkopf } from "@/components/layout/seitenkopf";
+import { Seitenwechsel } from "@/components/layout/seitenwechsel";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -60,7 +62,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <Header />
         <main id="inhalt" className="flex-1">
-          {children}
+          <Seitenwechsel>
+            <Seitenkopf />
+            {children}
+          </Seitenwechsel>
         </main>
         <Footer />
         <NachOben />
