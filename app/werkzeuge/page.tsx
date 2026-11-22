@@ -16,7 +16,7 @@ export default function Werkzeuge() {
   return (
     <>
       <section aria-labelledby="werkzeuge-titel" className="py-(--section-y)">
-        <div className="mx-auto grid max-w-wide gap-[clamp(2rem,4vw,3.5rem)] px-(--gutter)">
+        <div className="mx-auto grid max-w-wide gap-[clamp(2.75rem,5vw,3.5rem)] px-(--gutter)">
           <div className="grid gap-5">
             <span className="daten">Werkzeuge · ohne Anmeldung</span>
             <h1 id="werkzeuge-titel" className="titel-linie max-w-[16ch] text-h2">
@@ -32,7 +32,7 @@ export default function Werkzeuge() {
               <li key={w.slug} className="md:first:col-span-2">
                 <Link
                   href={`/werkzeuge/${w.slug}`}
-                  className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.5rem,3vw,2.5rem)] transition-colors duration-(--dur-base) hover:border-brand"
+                  className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.75rem,4vw,2.5rem)] transition-colors duration-(--dur-base) hover:border-brand"
                 >
                   <span className="daten text-brand-dark">
                     {String(i + 1).padStart(2, "0")} · {w.kennung}

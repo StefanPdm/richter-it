@@ -27,7 +27,7 @@ export default function Begriffe() {
       />
       <section aria-labelledby="glossar-titel" className="relative isolate py-(--section-y)">
         <Sektionsgrund licht="rechts-oben" motiv="lineal" />
-        <div className="mx-auto grid max-w-wide grid-cols-1 gap-[clamp(2rem,4vw,3.5rem)] px-(--gutter)">
+        <div className="mx-auto grid max-w-wide grid-cols-1 gap-[clamp(2.75rem,5vw,3.5rem)] px-(--gutter)">
           <div className="grid gap-5">
             <nav aria-label="Brotkrumen" className="daten flex flex-wrap items-center gap-x-2">
               <Link href="/" className="inline-flex min-h-11 min-w-11 items-center hover:text-text">

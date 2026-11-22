@@ -49,7 +49,7 @@ export function Haltung() {
     <section id="haltung" aria-labelledby="haltung-titel" className="scroll-mt-(--header-h) relative isolate py-(--section-y)">
       <Sektionsgrund licht="mitte-unten" motiv="scan" warm />
       <div className="mx-auto max-w-wide px-(--gutter)">
-        <Reveal className="mb-[clamp(2.5rem,5vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
+        <Reveal className="mb-[clamp(3.25rem,6vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
           <h2 id="haltung-titel" className="titel-linie titel-glitch max-w-[16ch] text-h2">
             Gezielt eingreifen statt neu bauen
           </h2>
@@ -59,7 +59,7 @@ export function Haltung() {
             Skripte und Werkzeuge so weit zu verfeinern, dass Ihr Team wieder Zeit für die eigene Infrastruktur hat.
           </p>
         </Reveal>
-        <div className="grid gap-[clamp(2rem,4vw,3.5rem)] md:grid-cols-2">
+        <div className="grid gap-[clamp(2.75rem,5vw,3.5rem)] md:grid-cols-2">
           {grundsaetze.map((g, i) => (
             <Reveal key={g.titel} index={i} className="grid content-start gap-3.5 border-t border-border pt-5.5">
               <h3 className="text-h3">{g.titel}</h3>

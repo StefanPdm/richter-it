@@ -105,7 +105,7 @@ export function BackupAblauf() {
           </div>
         </div>
 
-        <div className="mx-auto mt-10 flex max-w-wide flex-col px-(--gutter) md:mt-6 md:grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-[clamp(2rem,5vw,5rem)]">
+        <div className="mx-auto mt-10 flex max-w-wide flex-col px-(--gutter) md:mt-6 md:grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-[clamp(2.75rem,5vw,5rem)]">
           {/* Bühne: auf dem Handy klebt sie oben über dem Text, breit rechts daneben */}
           <div
             ref={buehne}

@@ -14,6 +14,8 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
+  /* Touch: Tippen sofort auslösen, ohne auf einen möglichen Doppeltipp-Zoom zu warten */
+  a, button, summary, label, input, select, textarea, [role="button"] { touch-action: manipulation; }
 
   body {
     font-family: var(--font-body);

@@ -32,7 +32,12 @@ export function Header() {
           </ul>
         </nav>
         <div className="flex items-center gap-2">
-          <ThemaKnopf thema={{ anliegen: "Erstgespräch" }} pfeil={false}>
+          {/* Handy: zurückhaltend wie der Menüknopf daneben (Rahmen, gleiche Höhe), ab sm Bernstein */}
+          <ThemaKnopf
+            thema={{ anliegen: "Erstgespräch" }}
+            pfeil={false}
+            className="max-sm:border max-sm:border-border max-sm:bg-transparent max-sm:px-3.5 max-sm:text-text max-sm:[clip-path:none]"
+          >
             <span className="hidden sm:inline">{site.aktion.label}</span>
             <span className="sm:hidden">{site.aktion.kurz}</span>
           </ThemaKnopf>

@@ -29,7 +29,7 @@ export default function Wissen() {
       />
       <section aria-labelledby="wissen-titel" className="relative isolate py-(--section-y)">
         <Sektionsgrund licht="links-oben" motiv="raster" />
-        <div className="mx-auto grid max-w-wide grid-cols-1 gap-[clamp(2rem,4vw,3.5rem)] px-(--gutter)">
+        <div className="mx-auto grid max-w-wide grid-cols-1 gap-[clamp(2.75rem,5vw,3.5rem)] px-(--gutter)">
           <div className="grid gap-5">
             <span className="daten">
               Wissen · {dossiers.length} Dossiers · {fertigeDossiers.length} bereit

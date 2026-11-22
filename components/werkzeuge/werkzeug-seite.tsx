@@ -22,7 +22,7 @@ export function WerkzeugSeite({ slug, einleitung, annahmen, children }: Props) {
   return (
     <>
       <section aria-labelledby="werkzeug-titel" className="py-(--section-y)">
-        <div className="mx-auto grid max-w-wide gap-[clamp(2rem,4vw,3.5rem)] px-(--gutter)">
+        <div className="mx-auto grid max-w-wide gap-[clamp(2.75rem,5vw,3.5rem)] px-(--gutter)">
           <div className="grid gap-5">
             <nav aria-label="Pfad" className="daten">
               <Link href="/werkzeuge" className="inline-flex min-h-11 items-center hover:text-text">

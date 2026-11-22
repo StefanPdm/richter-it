@@ -96,7 +96,7 @@
   --leading-base: 1.6;
   --section-y:  clamp(5.5rem, 3.5rem + 8vw, 12rem);
   --gutter:     clamp(1.25rem, 5vw, 5rem);
-  --gap-karten: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);  /* Abstand zwischen Karten und Kacheln */
+  --gap-karten: clamp(2rem, 1.25rem + 1.5vw, 2.5rem);  /* Abstand zwischen Karten und Kacheln */
   --header-h:   4.5rem;
   --leiste-h:   2.75rem;  /* Statusleiste unten, Handy: Tippziel 44px */
   --unten:      calc(var(--leiste-h) + env(safe-area-inset-bottom, 0px));  /* Basis für alles, was unten schwebt */

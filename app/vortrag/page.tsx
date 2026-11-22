@@ -59,7 +59,7 @@ export default function Vortrag() {
               <Reveal as="li" key={w.pfad} index={i}>
                 <Link
                   href={w.pfad}
-                  className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.5rem,3vw,2.25rem)] transition-colors duration-(--dur-base) hover:border-brand"
+                  className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.75rem,4vw,2.25rem)] transition-colors duration-(--dur-base) hover:border-brand"
                 >
                   <span className="daten text-brand-dark">{w.kennung}</span>
                   <span className="font-display text-h3 font-medium [font-stretch:80%]">{w.titel}</span>

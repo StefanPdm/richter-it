@@ -22,7 +22,7 @@ export function CtaBand({ satz, zusatz, knopf, thema }: Props) {
     <aside aria-label="Kontakt aufnehmen" className="relative isolate border-y border-border bg-surface transition-colors duration-(--dur-welt)">
       <Sektionsgrund licht="rechts-oben" warm />
       <Reveal className="mx-auto max-w-wide px-(--gutter) py-[clamp(1.25rem,3vw,2rem)]">
-        <div className="hud-rahmen grid items-center gap-6 p-[clamp(1.25rem,3vw,2rem)] md:grid-cols-[minmax(0,1fr)_auto]">
+        <div className="hud-rahmen grid items-center gap-6 p-[clamp(1.625rem,4vw,2rem)] md:grid-cols-[minmax(0,1fr)_auto]">
           <div className="grid gap-2">
             <p className="font-display text-h3 font-medium [font-stretch:80%]">{satz}</p>
             {zusatz && <p className="max-w-measure text-text-muted">{zusatz}</p>}

@@ -23,7 +23,7 @@ export function VbsInstrument() {
   const weiter = () => setStufe((s) => (s + 1) % vbs.stufen.length);
 
   return (
-    <div className="hud-rahmen grid gap-7 border border-border bg-bg-alt p-[clamp(1.25rem,3vw,2.25rem)]">
+    <div className="hud-rahmen grid gap-7 border border-border bg-bg-alt p-[clamp(1.625rem,4vw,2.25rem)]">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="grid gap-1.5">
           <span className="daten">{vbs.messgroesse}</span>
@@ -101,7 +101,7 @@ export function VbsMoment() {
   return (
     <section id="vbs" aria-labelledby="vbs-titel" className="relative isolate scroll-mt-(--header-h) py-(--section-y)">
       <Sektionsgrund licht="rechts-oben" motiv="raster" />
-      <div className="mx-auto grid max-w-wide grid-cols-1 items-start gap-[clamp(2.5rem,5vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div className="mx-auto grid max-w-wide grid-cols-1 items-start gap-[clamp(3.25rem,5vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         {/* Aussage und Erklärung */}
         <Reveal className="grid gap-6">
           <h2 id="vbs-titel" className="titel-linie titel-glitch max-w-[14ch] text-h2">

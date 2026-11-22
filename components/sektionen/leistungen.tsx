@@ -35,7 +35,7 @@ export function Leistungen() {
         {leistungen.map((l, i) => (
           /* Versatz nur für die ersten Karten, spätere fahren ohnehin seitlich herein */
           <Reveal as="li" key={l.titel} index={Math.min(i, 2)}>
-            <LichtkegelKarte className="flex h-full flex-col gap-5 border border-border bg-surface p-[clamp(1.5rem,3vw,2.5rem)] [@media(max-height:50rem)]:gap-4 [@media(max-height:50rem)]:p-6 transition-[border-color,background-color] duration-(--dur-base)">
+            <LichtkegelKarte className="flex h-full flex-col gap-5 border border-border bg-surface p-[clamp(1.75rem,4vw,2.5rem)] [@media(max-height:50rem)]:gap-4 [@media(max-height:50rem)]:p-6 transition-[border-color,background-color] duration-(--dur-base)">
               <div className="flex items-baseline justify-between gap-4">
                 <span className="daten text-brand-dark">MOD-{String(i + 1).padStart(2, "0")} · {l.kennung}</span>
                 <span className="status-punkt" aria-hidden="true" />

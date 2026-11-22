@@ -108,7 +108,7 @@ export function WissenListe() {
               </KartenFuss>
             </>
           );
-          const klassen = `hud-rahmen group flex h-full flex-col gap-4 border bg-surface p-[clamp(1.5rem,3vw,2.25rem)] transition-[opacity,border-color] duration-(--dur-base) ${
+          const klassen = `hud-rahmen group flex h-full flex-col gap-4 border bg-surface p-[clamp(1.75rem,4vw,2.25rem)] transition-[opacity,border-color] duration-(--dur-base) ${
             an ? "opacity-100" : "opacity-30"
           } ${bereit ? "border-border hover:border-brand" : "border-dashed border-border"}`;
           return (

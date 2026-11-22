@@ -23,7 +23,7 @@ function Verweis({ href, kennung, titel, satz, aktion }: { href: string; kennung
     <li>
       <Link
         href={href}
-        className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.5rem,3vw,2.25rem)] transition-colors duration-(--dur-base) hover:border-brand"
+        className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.75rem,4vw,2.25rem)] transition-colors duration-(--dur-base) hover:border-brand"
       >
         <span className="daten text-brand-dark">{kennung}</span>
         <span className="font-display text-h3 font-medium [font-stretch:80%]">{titel}</span>
@@ -108,8 +108,8 @@ export function LeistungsSeite({ daten, grafik }: Props) {
       {/* Abschnitte neben der Grafik */}
       <section aria-label={`${daten.name} im Detail`} className="relative isolate bg-bg-alt py-(--section-y)">
         <Sektionsgrund licht="rechts-unten" motiv="puls" />
-        <div className="mx-auto grid max-w-wide grid-cols-1 items-start gap-[clamp(2.5rem,5vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]">
-          <div className="grid gap-[clamp(2rem,4vw,3rem)]">
+        <div className="mx-auto grid max-w-wide grid-cols-1 items-start gap-[clamp(3.25rem,5vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]">
+          <div className="grid gap-[clamp(2.5rem,5vw,3rem)]">
             {daten.abschnitte.map((a, i) => (
               <Reveal key={a.titel} index={i} as="article" className="grid gap-3 border-l-2 border-border pl-5">
                 <span className="daten text-brand-dark">0{i + 1}</span>

@@ -29,7 +29,7 @@ export function Fehlersuche() {
   };
 
   return (
-    <div className="hud-rahmen grid gap-6 border border-border bg-bg-alt p-[clamp(1.25rem,3vw,2.25rem)]">
+    <div className="hud-rahmen grid gap-6 border border-border bg-bg-alt p-[clamp(1.625rem,4vw,2.25rem)]">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <span className="daten">Fehlersuche · Proxmox VE</span>
         <span className="daten text-text">

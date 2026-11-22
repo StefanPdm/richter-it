@@ -110,8 +110,8 @@ export default async function FallSeite({ params }: Seite) {
       {/* Ausgangslage, Vorgehen, Ergebnis neben der Grafik */}
       <section aria-labelledby="fall-verlauf" className="relative isolate bg-bg-alt py-(--section-y)">
         <Sektionsgrund licht="rechts-unten" motiv="puls" />
-        <div className={`mx-auto grid max-w-wide grid-cols-1 items-start gap-[clamp(2.5rem,5vw,5rem)] px-(--gutter) ${mitVbs ? "" : "lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]"}`}>
-          <div className="grid gap-[clamp(2rem,4vw,3rem)]">
+        <div className={`mx-auto grid max-w-wide grid-cols-1 items-start gap-[clamp(3.25rem,5vw,5rem)] px-(--gutter) ${mitVbs ? "" : "lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]"}`}>
+          <div className="grid gap-[clamp(2.5rem,5vw,3rem)]">
             <h2 id="fall-verlauf" className="sr-only">
               Verlauf des Falls
             </h2>
@@ -142,7 +142,7 @@ export default async function FallSeite({ params }: Seite) {
               <li key={f.slug}>
                 <Link
                   href={`/faelle/${f.slug}`}
-                  className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.5rem,3vw,2.25rem)] transition-colors duration-(--dur-base) hover:border-brand"
+                  className="hud-rahmen group flex h-full flex-col gap-4 border border-border bg-surface p-[clamp(1.75rem,4vw,2.25rem)] transition-colors duration-(--dur-base) hover:border-brand"
                 >
                   <span className="daten text-brand-dark">
                     Fall {String(referenzen.indexOf(f) + 1).padStart(2, "0")} · {f.bereich}

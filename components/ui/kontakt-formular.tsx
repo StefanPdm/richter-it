@@ -62,7 +62,7 @@ export function KontaktFormular() {
     <form
       ref={formular}
       onSubmit={absenden}
-      className="hud-rahmen grid gap-4 border border-border bg-surface/90 p-[clamp(1.5rem,3vw,2.5rem)]"
+      className="hud-rahmen grid gap-4 border border-border bg-surface/90 p-[clamp(1.75rem,4vw,2.5rem)]"
     >
       <h3 className="text-h3">Worum geht es?</h3>
 
