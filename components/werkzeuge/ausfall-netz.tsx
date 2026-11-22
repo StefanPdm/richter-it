@@ -48,6 +48,28 @@ const KNOTEN: Knoten[] = [
   { id: "backup", name: "Backup", ebene: 4, x: 90, braucht: ["strom", "netz", "host"] },
 ];
 
+/* Handy: eigenes, schmales Netz mit kurzen Namen, höchstens drei Systeme je Reihe.
+   Je System: Kurzname, x in Prozent, Reihe (die fünf Anwendungen verteilen sich auf zwei Reihen). */
+const MOBIL: Record<string, { kurz: string; x: number; reihe: number }> = {
+  strom: { kurz: "Strom/USV", x: 50, reihe: 0 },
+  internet: { kurz: "Internet", x: 27, reihe: 1 },
+  netz: { kurz: "Switches", x: 73, reihe: 1 },
+  firewall: { kurz: "Firewall", x: 16, reihe: 2 },
+  host: { kurz: "Host", x: 50, reihe: 2 },
+  speicher: { kurz: "SAN/NAS", x: 84, reihe: 2 },
+  ntp: { kurz: "NTP", x: 16, reihe: 3 },
+  anmeldung: { kurz: "Anmeldung", x: 50, reihe: 3 },
+  dns: { kurz: "DNS", x: 84, reihe: 3 },
+  dateien: { kurz: "Dateien", x: 16, reihe: 4 },
+  mail: { kurz: "E-Mail", x: 50, reihe: 4 },
+  erp: { kurz: "ERP", x: 84, reihe: 4 },
+  voip: { kurz: "VoIP", x: 31, reihe: 5 },
+  backup: { kurz: "Backup", x: 69, reihe: 5 },
+};
+/* Reihe in Prozent der Höhe; Beschriftung der Ebene steht über ihrer ersten Reihe */
+const MOBIL_Y = [7, 25, 43, 61, 79, 95];
+const MOBIL_EBENE_REIHE = [0, 1, 2, 3, 4];
+
 const NAME: Record<string, string> = Object.fromEntries(KNOTEN.map((k) => [k.id, k.name]));
 const POS: Record<string, Knoten> = Object.fromEntries(KNOTEN.map((k) => [k.id, k]));
 
@@ -138,7 +160,7 @@ export function AusfallNetz() {
     setWahl((w) => (w === id ? null : id));
   }
 
-  function netzKnopf(k: Knoten, breit: boolean) {
+  function netzKnopf(k: Knoten, mobil = false) {
     const z = zustand(k.id);
     return (
       <button
@@ -146,12 +168,48 @@ export function AusfallNetz() {
         onClick={() => waehle(k.id)}
         aria-pressed={aktiv === k.id}
         style={versatz(k.id)}
-        className={`zucken inline-flex min-h-11 cursor-pointer items-center gap-2 border px-3 py-2 text-left text-sm leading-tight transition-[border-color,background-color,color,opacity] duration-(--dur-base) ease-(--ease-out) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${breit ? "w-full justify-between" : "max-w-[11rem]"} ${KNOPF_ZUSTAND[z]}`}
+        aria-label={mobil ? k.name : undefined}
+        className={`zucken inline-flex min-h-11 cursor-pointer items-center border py-2 text-left text-sm leading-tight transition-[border-color,background-color,color,opacity] duration-(--dur-base) ease-(--ease-out) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${mobil ? "gap-1.5 px-2.5 whitespace-nowrap" : "max-w-[11rem] gap-2 px-3"} ${KNOPF_ZUSTAND[z]}`}
       >
-        <span>{k.name}</span>
+        <span>{mobil ? MOBIL[k.id].kurz : k.name}</span>
         {doppelt[k.id] && <span className="daten text-success">2×</span>}
-        {(z === "aus" || z === "start") && <span className="daten text-error">aus</span>}
+        {!mobil && (z === "aus" || z === "start") && <span className="daten text-error">aus</span>}
       </button>
+    );
+  }
+
+  /* Linien "braucht" zwischen den Systemen; Ausfallweg rot, im Versatz der Kaskade */
+  /* deckkraft: [Ruhe, gedämpft während einer Auswahl]; am Handy schwächer, weil die Linien dichter liegen */
+  function linien(lage: (id: string) => [number, number], [ruheDeckung, gedaempftDeckung] = [0.8, 0.3]) {
+    return (
+      <svg className="absolute inset-0 size-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        {sichtbar.flatMap((k) =>
+          gebraucht(k, vorhanden)
+            .filter((d) => vorhanden[d])
+            .map((d) => {
+              const [x1, y1] = lage(k.id);
+              const [x2, y2] = lage(d);
+              const rot = !uebernimmt && runden.has(k.id) && runden.has(d);
+              return (
+                <line
+                  key={`${k.id}-${d}`}
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  vectorEffect="non-scaling-stroke"
+                  strokeWidth={rot ? 1.5 : 1}
+                  style={{
+                    ...versatz(k.id),
+                    stroke: rot ? "var(--color-error)" : "var(--color-border-strong)",
+                    opacity: rot ? 0.9 : aktiv ? gedaempftDeckung : ruheDeckung,
+                    transition: "stroke var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out)",
+                  }}
+                />
+              );
+            }),
+        )}
+      </svg>
     );
   }
 
@@ -224,33 +282,7 @@ export function AusfallNetz() {
       <Feld titel="2 · Klicken Sie ein System an">
         {/* Breit: Netz mit Linien */}
         <div className="relative mt-6 hidden h-[34rem] md:block" role="group" aria-label="Abhängigkeitsnetz">
-          <svg className="absolute inset-0 size-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            {sichtbar.flatMap((k) =>
-              gebraucht(k, vorhanden)
-                .filter((d) => vorhanden[d])
-                .map((d) => {
-                  const ziel = POS[d];
-                  const rot = !uebernimmt && runden.has(k.id) && runden.has(d);
-                  return (
-                    <line
-                      key={`${k.id}-${d}`}
-                      x1={k.x}
-                      y1={EBENE_Y[k.ebene]}
-                      x2={ziel.x}
-                      y2={EBENE_Y[ziel.ebene]}
-                      vectorEffect="non-scaling-stroke"
-                      strokeWidth={rot ? 1.5 : 1}
-                      style={{
-                        ...versatz(k.id),
-                        stroke: rot ? "var(--color-error)" : "var(--color-border-strong)",
-                        opacity: aktiv && !rot ? 0.3 : 0.8,
-                        transition: "stroke var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out)",
-                      }}
-                    />
-                  );
-                }),
-            )}
-          </svg>
+          {linien((id) => [POS[id].x, EBENE_Y[POS[id].ebene]])}
           {EBENEN.map((name, i) => (
             <span
               key={name}
@@ -267,29 +299,33 @@ export function AusfallNetz() {
               className="absolute -translate-x-1/2 -translate-y-1/2"
               style={{ left: `${k.x}%`, top: `${EBENE_Y[k.ebene]}%` }}
             >
-              {netzKnopf(k, false)}
+              {netzKnopf(k)}
             </div>
           ))}
         </div>
 
-        {/* Schmal: Ebenen als Liste, gleiche Logik ohne Linien */}
-        <div className="grid gap-5 md:hidden" role="group" aria-label="Systeme nach Ebenen">
-          {EBENEN.map((name, i) => {
-            const liste = sichtbar.filter((k) => k.ebene === i);
-            if (liste.length === 0) return null;
-            return (
-              <div key={name} className="grid gap-2">
-                <span className="daten">
-                  {String(i + 1).padStart(2, "0")} · {name}
-                </span>
-                <div className="grid gap-2">
-                  {liste.map((k) => (
-                    <div key={k.id}>{netzKnopf(k, true)}</div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+        {/* Schmal: eigenes Netz mit kurzen Namen, drei Systeme je Reihe, gleiche Logik */}
+        <div className="relative mt-8 h-[33rem] md:hidden" role="group" aria-label="Abhängigkeitsnetz">
+          {linien((id) => [MOBIL[id].x, MOBIL_Y[MOBIL[id].reihe]], [0.45, 0.12])}
+          {EBENEN.map((name, i) => (
+            <span
+              key={name}
+              aria-hidden="true"
+              className="daten absolute left-0 -translate-y-[calc(100%+1.6rem)] text-[0.625rem] opacity-70"
+              style={{ top: `${MOBIL_Y[MOBIL_EBENE_REIHE[i]]}%` }}
+            >
+              {name}
+            </span>
+          ))}
+          {sichtbar.map((k) => (
+            <div
+              key={k.id}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: `${MOBIL[k.id].x}%`, top: `${MOBIL_Y[MOBIL[k.id].reihe]}%` }}
+            >
+              {netzKnopf(k, true)}
+            </div>
+          ))}
         </div>
 
         <div className="grid gap-5">
