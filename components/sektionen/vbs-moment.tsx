@@ -24,14 +24,16 @@ export function VbsInstrument() {
 
   return (
     <div className="hud-rahmen grid gap-7 border border-border bg-bg-alt p-[clamp(1.625rem,4vw,2.25rem)]">
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      {/* Wert bleibt rechts in derselben Zeile; reicht der Platz nicht, bricht die Beschriftung links um */}
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
         <div className="grid gap-1.5">
           <span className="daten">{vbs.messgroesse}</span>
           <span className="daten text-text">
-            Stufe <span className="text-brand-dark">0{stufe + 1}</span> / 0{vbs.stufen.length} · {aktuell.name}
+            <span className="max-sm:hidden">Stufe </span>
+            <span className="text-brand-dark">0{stufe + 1}</span> / 0{vbs.stufen.length} · {aktuell.name}
           </span>
         </div>
-        <span className={`font-mono text-zahl font-medium transition-colors duration-(--dur-base) ${stufe === 1 ? "text-error" : "text-brand-dark"}`}>
+        <span className={`font-mono text-zahl font-medium whitespace-nowrap transition-colors duration-(--dur-base) ${stufe === 1 ? "text-error" : "text-brand-dark"}`}>
           {aktuell.wert}
           <span className="ml-1.5 text-sm text-text-muted">{vbs.einheit}</span>
         </span>
