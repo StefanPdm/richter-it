@@ -15,7 +15,7 @@ export function Referenzen() {
     <section id="referenzen" aria-labelledby="referenzen-titel" className="relative isolate scroll-mt-(--header-h) bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)">
       <Sektionsgrund licht="links-oben" motiv="raster" />
       <div className="mx-auto max-w-wide px-(--gutter)">
-        <Reveal className="mb-[clamp(3.25rem,6vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
+        <Reveal className="mb-[clamp(4rem,6vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
           <h2 id="referenzen-titel" className="titel-linie titel-glitch max-w-[16ch] text-h2">
             Referenzen, ohne Namen
           </h2>

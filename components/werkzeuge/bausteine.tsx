@@ -113,7 +113,7 @@ export function Kennwert({ label, wert, zusatz, betont = false }: { label: strin
 /** Fläche für Eingaben oder Ergebnis */
 export function Feld({ titel, children, className = "" }: { titel?: string; children: ReactNode; className?: string }) {
   return (
-    <div className={`hud-rahmen grid content-start gap-6 border border-border bg-surface p-[clamp(1.625rem,4vw,2.25rem)] ${className}`}>
+    <div className={`hud-rahmen grid content-start gap-6 border border-border bg-surface p-[clamp(1.75rem,4vw,2.25rem)] ${className}`}>
       {titel && <h2 className="text-h3">{titel}</h2>}
       {children}
     </div>

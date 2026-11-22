@@ -11,9 +11,9 @@ import { zusammenarbeit } from "@/lib/inhalte";
 export function ZusammenarbeitBand() {
   const { schritte } = zusammenarbeit;
   return (
-    <section id="zusammenarbeit" aria-labelledby="zusammenarbeit-titel" className="relative isolate scroll-mt-(--header-h) border-y border-border py-[clamp(3rem,6vw,5rem)]">
+    <section id="zusammenarbeit" aria-labelledby="zusammenarbeit-titel" className="relative isolate scroll-mt-(--header-h) border-y border-border py-[clamp(4.5rem,7vw,5rem)]">
       <Sektionsgrund licht="rechts-unten" motiv="puls" />
-      <div className="mx-auto grid max-w-wide grid-cols-1 items-center gap-[clamp(2.75rem,5vw,4rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div className="mx-auto grid max-w-wide grid-cols-1 items-center gap-[clamp(3.5rem,5vw,4rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <Reveal className="grid gap-4">
           <h2 id="zusammenarbeit-titel" className="font-display text-h3 font-medium [font-stretch:80%]">
             {zusammenarbeit.titel}

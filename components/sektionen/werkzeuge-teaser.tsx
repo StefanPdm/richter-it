@@ -12,7 +12,7 @@ export function WerkzeugeTeaser() {
   return (
     <section id="werkzeuge" aria-labelledby="werkzeuge-teaser-titel" className="relative isolate scroll-mt-(--header-h) py-(--section-y)">
       <Sektionsgrund licht="links-unten" motiv="marken" />
-      <div className="mx-auto grid max-w-wide gap-[clamp(2.75rem,5vw,3.5rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start">
+      <div className="mx-auto grid max-w-wide gap-14 px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-start">
         <Reveal className="grid gap-5">
           <span className="daten">Werkzeuge · ohne Anmeldung</span>
           <h2 id="werkzeuge-teaser-titel" className="titel-linie max-w-[14ch] text-h2">

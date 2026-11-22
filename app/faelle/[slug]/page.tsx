@@ -110,7 +110,7 @@ export default async function FallSeite({ params }: Seite) {
       {/* Ausgangslage, Vorgehen, Ergebnis neben der Grafik */}
       <section aria-labelledby="fall-verlauf" className="relative isolate bg-bg-alt py-(--section-y)">
         <Sektionsgrund licht="rechts-unten" motiv="puls" />
-        <div className={`mx-auto grid max-w-wide grid-cols-1 items-start gap-[clamp(3.25rem,5vw,5rem)] px-(--gutter) ${mitVbs ? "" : "lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]"}`}>
+        <div className={`mx-auto grid max-w-wide grid-cols-1 items-start gap-[clamp(4rem,6vw,5rem)] px-(--gutter) ${mitVbs ? "" : "lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)]"}`}>
           <div className="grid gap-[clamp(2.5rem,5vw,3rem)]">
             <h2 id="fall-verlauf" className="sr-only">
               Verlauf des Falls

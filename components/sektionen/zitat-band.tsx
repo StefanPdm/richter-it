@@ -8,7 +8,7 @@ import { zitat } from "@/lib/inhalte";
  */
 export function ZitatBand() {
   return (
-    <section id="zitat" aria-label="Zitat von Daniel Richter" className="relative isolate scroll-mt-(--header-h) border-y border-border py-[clamp(4rem,9vw,8rem)]">
+    <section id="zitat" aria-label="Zitat von Daniel Richter" className="relative isolate scroll-mt-(--header-h) border-y border-border py-[clamp(5.5rem,9vw,8rem)]">
       <Sektionsgrund licht="links-oben" motiv="marken" warm />
       <Reveal as="figure" className="mx-auto grid max-w-wide gap-6 px-(--gutter)">
         <span aria-hidden="true" className="zitat-zeichen font-display leading-none text-cta">

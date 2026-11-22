@@ -203,7 +203,7 @@ export function DomainCheck() {
 
       {/* Röntgenblick: was nach dem Entfernen von Gestaltung und Code übrig bleibt */}
       {k && (
-        <section aria-labelledby={`${id}-lesart`} className="hud-rahmen grid gap-6 border border-border bg-bg p-[clamp(1.625rem,4vw,2.25rem)]">
+        <section aria-labelledby={`${id}-lesart`} className="hud-rahmen grid gap-6 border border-border bg-bg p-[clamp(1.75rem,4vw,2.25rem)]">
           <div className="grid gap-2">
             <span className="daten text-brand-dark">03 · Röntgenblick</span>
             <h2 id={`${id}-lesart`} className="text-h3">

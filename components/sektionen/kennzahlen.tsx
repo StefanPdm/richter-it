@@ -14,7 +14,7 @@ export function Kennzahlen() {
         {kennzahlen.map((k, i) => (
           <div
             key={k.label}
-            className={`grid content-start gap-3 border-border py-[clamp(2rem,4vw,3.5rem)] pr-5 ${i > 0 ? "md:border-l md:pl-8" : ""} ${i % 2 === 1 ? "border-l pl-5 md:pl-8" : ""} ${i > 1 ? "border-t md:border-t-0" : ""}`}
+            className={`grid content-start gap-3 border-border py-[clamp(3rem,5vw,3.5rem)] pr-5 ${i > 0 ? "md:border-l md:pl-8" : ""} ${i % 2 === 1 ? "border-l pl-5 md:pl-8" : ""} ${i > 1 ? "border-t md:border-t-0" : ""}`}
           >
             <span className="font-mono text-[clamp(1.15rem,0.75rem+1.35vw,2.1rem)] font-medium text-brand-dark">{alsText(k)}</span>
             <span className="daten">{k.label}</span>

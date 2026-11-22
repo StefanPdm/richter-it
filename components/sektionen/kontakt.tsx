@@ -22,7 +22,7 @@ export function Kontakt() {
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,var(--color-bg)_15%,color-mix(in_srgb,var(--color-bg)_80%,transparent)_55%,color-mix(in_srgb,var(--color-bg)_55%,transparent)_100%)]" />
       <div className="scanlines -z-10" aria-hidden="true" />
 
-      <div className="mx-auto grid max-w-wide gap-[clamp(3.25rem,5vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:items-start">
+      <div className="mx-auto grid max-w-wide gap-[clamp(4rem,6vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:items-start">
         <div className="grid gap-8">
           <Reveal className="grid gap-6">
             <h2 id="kontakt-titel" className="titel-linie titel-glitch max-w-[14ch] text-h2">

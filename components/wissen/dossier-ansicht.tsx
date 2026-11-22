@@ -106,7 +106,7 @@ export function DossierAnsicht({ dossier, ausprobieren, kopf, verweise }: Props)
             ))}
           </div>
           {dossier.dreissig && (
-            <div className="dossier-kurz grid max-w-3xl gap-3 border border-cta/60 bg-surface p-[clamp(1.625rem,4vw,2rem)]">
+            <div className="dossier-kurz grid max-w-3xl gap-3 border border-cta/60 bg-surface p-[clamp(1.75rem,4vw,2rem)]">
               <span className="daten text-cta">In 30 Sekunden</span>
               <ul className="grid gap-2.5">
                 {dossier.dreissig.map((p) => (
@@ -123,7 +123,7 @@ export function DossierAnsicht({ dossier, ausprobieren, kopf, verweise }: Props)
 
       {/* Kapitel mit klebender Leiste */}
       <section aria-label="Kapitel" className="relative isolate bg-bg-alt py-(--section-y)">
-        <div className="mx-auto grid max-w-wide grid-cols-1 gap-[clamp(2.75rem,5vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]">
+        <div className="mx-auto grid max-w-wide grid-cols-1 gap-[clamp(3.5rem,6vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]">
           <nav aria-label="Kapitel des Dossiers" className="hidden lg:block">
             <div className="sticky top-[calc(var(--header-h)+2rem)] grid gap-4">
               <span className="daten">Kapitel</span>
@@ -148,9 +148,9 @@ export function DossierAnsicht({ dossier, ausprobieren, kopf, verweise }: Props)
             </div>
           </nav>
 
-          <div ref={artikel} className="grid max-w-[46rem] gap-[clamp(3.25rem,5vw,4rem)]">
+          <div ref={artikel} className="grid max-w-[46rem] gap-[clamp(3.75rem,5vw,4rem)]">
             {kapitel.map((k, i) => (
-              <div key={k.titel} className="grid gap-[clamp(3.25rem,5vw,4rem)]">
+              <div key={k.titel} className="grid gap-[clamp(3.75rem,5vw,4rem)]">
                 <article id={`kapitel-${i + 1}`} data-kapitel className="grid scroll-mt-[calc(var(--header-h)+2rem)] gap-4">
                   <span className="daten text-brand-dark">0{i + 1}</span>
                   <h2 className="text-h3">{k.titel}</h2>

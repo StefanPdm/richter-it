@@ -22,7 +22,7 @@ type Props = {
  */
 export function FehlerBuehne({ code, zeile, titel, text, motiv, konsole, aktionen }: Props) {
   return (
-    <section aria-labelledby="fehler-titel" className="relative isolate grid min-h-[calc(100svh-var(--header-h)-var(--unten))] place-items-center overflow-hidden border-b border-border px-(--gutter) py-[clamp(3rem,8vw,6rem)]">
+    <section aria-labelledby="fehler-titel" className="relative isolate grid min-h-[calc(100svh-var(--header-h)-var(--unten))] place-items-center overflow-hidden border-b border-border px-(--gutter) py-[clamp(4.5rem,8vw,6rem)]">
       <div className="raster-boden -z-10" aria-hidden="true" />
       <div className="scanlines -z-10" aria-hidden="true" />
       <div className="hud-rahmen pointer-events-none absolute inset-4 md:inset-8" aria-hidden="true" />

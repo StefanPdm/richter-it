@@ -137,7 +137,7 @@ export function FirewallSchema() {
   const bewegt = useSyncExternalStore(abonnieren, bewegtErlaubt, () => false);
 
   return (
-    <div className="hud-rahmen grid gap-6 border border-border bg-bg-alt p-[clamp(1.625rem,4vw,2.25rem)]">
+    <div className="hud-rahmen grid gap-6 border border-border bg-bg-alt p-[clamp(1.75rem,4vw,2.25rem)]">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <span className="daten">Netzschema · interner Verkehr</span>
         <span className={`daten ${umgestellt ? "text-success" : "text-error"}`}>{umgestellt ? "Stabil" : "Engpass"}</span>

@@ -16,7 +16,7 @@ export default function Werkzeuge() {
   return (
     <>
       <section aria-labelledby="werkzeuge-titel" className="py-(--section-y)">
-        <div className="mx-auto grid max-w-wide gap-[clamp(2.75rem,5vw,3.5rem)] px-(--gutter)">
+        <div className="mx-auto grid max-w-wide gap-14 px-(--gutter)">
           <div className="grid gap-5">
             <span className="daten">Werkzeuge · ohne Anmeldung</span>
             <h1 id="werkzeuge-titel" className="titel-linie max-w-[16ch] text-h2">

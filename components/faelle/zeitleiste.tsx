@@ -11,7 +11,7 @@ type Props = {
  */
 export function Zeitleiste({ jahre }: Props) {
   return (
-    <div className="hud-rahmen grid gap-6 border border-border bg-bg-alt p-[clamp(1.625rem,4vw,2.25rem)]">
+    <div className="hud-rahmen grid gap-6 border border-border bg-bg-alt p-[clamp(1.75rem,4vw,2.25rem)]">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <span className="daten">Betriebszeit · Jahre</span>
         <span className="daten flex items-center gap-2.5 text-success">

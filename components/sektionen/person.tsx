@@ -24,7 +24,7 @@ export function Person() {
     <section id="ueber-mich" aria-labelledby="person-titel" className="relative isolate scroll-mt-(--header-h) overflow-hidden py-(--section-y)">
       {/* Hintergrund animiert: Knoten-Netz über die ganze Sektion, dezent */}
       <Netzwerk className="absolute inset-0 -z-10 size-full opacity-45" dichte={0.7} />
-      <div className="mx-auto grid max-w-wide gap-[clamp(2.75rem,5vw,5rem)] px-(--gutter) md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-center">
+      <div className="mx-auto grid max-w-wide gap-[clamp(3.5rem,6vw,5rem)] px-(--gutter) md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:items-center">
         <Reveal className="hud-rahmen relative aspect-[4/5] max-w-full overflow-hidden border border-border p-2">
           <div className="relative size-full overflow-hidden bg-bg-alt">
             {/* Lichtkegel hinter Daniel, Farbe aus der Welt */}

@@ -24,7 +24,7 @@ export function Leitstand() {
       <div className="scan-strahl -z-10" aria-hidden="true" />
 
       <div className="mx-auto max-w-wide px-(--gutter)">
-        <Reveal className="mb-[clamp(3.25rem,6vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
+        <Reveal className="mb-[clamp(4rem,6vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
           <h2 id="leitstand-titel" className="titel-linie titel-glitch max-w-[14ch] text-h2">
             Messen. Eingreifen. Wieder messen.
           </h2>
@@ -55,7 +55,7 @@ export function Leitstand() {
         {/* Stack und fertige Module, Inhalte von der bestehenden Website */}
         {/* Leicht abgedunkelter Grund wie die Reihe darüber, gleiche Spalten, damit die Kanten fluchten */}
         <div className="mt-(--gap-karten) grid gap-(--gap-karten) md:grid-cols-2 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
-          <Reveal className="@container hud-rahmen grid content-start gap-5 bg-bg/65 p-[clamp(1.625rem,3.5vw,2rem)] transition-colors duration-(--dur-welt)">
+          <Reveal className="@container hud-rahmen grid content-start gap-5 bg-bg/65 p-[clamp(1.75rem,3.5vw,2rem)] transition-colors duration-(--dur-welt)">
             <h3 className="text-h3">Der Observability-Stack</h3>
             <ul className="grid gap-x-6 @md:grid-cols-2">
               {observability.map((o) => (
@@ -73,7 +73,7 @@ export function Leitstand() {
               </a>
             </p>
           </Reveal>
-          <Reveal index={1} className="@container hud-rahmen grid content-start gap-5 bg-bg/65 p-[clamp(1.625rem,3.5vw,2rem)] transition-colors duration-(--dur-welt)">
+          <Reveal index={1} className="@container hud-rahmen grid content-start gap-5 bg-bg/65 p-[clamp(1.75rem,3.5vw,2rem)] transition-colors duration-(--dur-welt)">
             <h3 className="text-h3">Fertige Module</h3>
             <ul className="grid gap-3">
               {fertigeModule.map((m) => (

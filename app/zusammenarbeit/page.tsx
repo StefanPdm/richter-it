@@ -73,7 +73,7 @@ export default function Zusammenarbeit() {
           {schritte.map((s, i) => {
             const gespiegelt = i % 2 === 1;
             return (
-              <li key={s.kurz} className="grid grid-cols-1 items-center gap-[clamp(2.75rem,5vw,4rem)] md:grid-cols-2">
+              <li key={s.kurz} className="grid grid-cols-1 items-center gap-[clamp(3.5rem,5vw,4rem)] md:grid-cols-2">
                 <Reveal className={`grid gap-4 ${gespiegelt ? "md:order-2" : ""}`}>
                   <span className="daten">
                     <span className="text-brand-dark">0{i + 1}</span> / 0{schritte.length} · {s.kurz}

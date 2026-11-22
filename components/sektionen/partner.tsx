@@ -11,7 +11,7 @@ export function Partner() {
   return (
     <section id="partner" aria-labelledby="partner-titel" className="relative isolate scroll-mt-(--header-h) bg-bg-alt py-(--section-y) transition-colors duration-(--dur-welt)">
       <Sektionsgrund licht="rechts-oben" motiv="puls" />
-      <div className="mx-auto grid max-w-wide gap-[clamp(2.75rem,5vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div className="mx-auto grid max-w-wide gap-[clamp(3.5rem,6vw,5rem)] px-(--gutter) lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <Reveal className="grid content-start gap-6">
           <h2 id="partner-titel" className="titel-linie titel-glitch text-h2">
             Ein Netzwerk für jedes Projekt

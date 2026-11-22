@@ -75,7 +75,7 @@ export function Fehler502Demo({ kompakt = false }: { /** untereinander statt neb
   const z = getrennt ? fehler502.getrennt : fehler502.verbunden;
 
   return (
-    <div className={`grid grid-cols-1 items-center gap-[clamp(2.75rem,5vw,4rem)] ${kompakt ? "" : "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"}`}>
+    <div className={`grid grid-cols-1 items-center gap-[clamp(3.5rem,5vw,4rem)] ${kompakt ? "" : "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"}`}>
       {/* Schema und Schalter */}
       <Reveal className="grid gap-6">
         <div className="flex items-center" role="img" aria-label={getrennt ? "Besucher erreicht den Proxy, der Dienst dahinter ist getrennt" : "Besucher erreicht über den Proxy den Dienst"}>
@@ -163,7 +163,7 @@ export function Fehler502() {
   return (
     <section id="fehler-502" aria-labelledby="f502-titel" className="scroll-mt-(--header-h) bg-bg-alt py-(--section-y)">
       <div className="mx-auto max-w-wide px-(--gutter)">
-        <Reveal className="mb-[clamp(3.25rem,6vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
+        <Reveal className="mb-[clamp(4rem,6vw,4.5rem)] grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-end">
           <h2 id="f502-titel" className="titel-linie max-w-[16ch] text-h2">
             {fehler502.titel}
           </h2>
@@ -176,7 +176,7 @@ export function Fehler502() {
           <h3 className="font-display text-h3 font-medium [font-stretch:80%]">{fehler502.gruendeTitel}</h3>
           <p className="max-w-measure text-text-muted">{fehler502.gruendeText}</p>
         </Reveal>
-        <div className="grid grid-cols-1 gap-[clamp(2.75rem,5vw,3.5rem)] md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-14 md:grid-cols-3">
           {fehler502.gruende.map((g, i) => (
             <Reveal key={g.titel} index={i} className="grid content-start gap-3.5 border-t border-border pt-5.5">
               <span className="daten">0{i + 1}</span>

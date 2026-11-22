@@ -20,7 +20,7 @@ export function WissenTafel() {
   const zeilen = [...dossiers].sort((a, b) => (a.status === b.status ? a.kennung.localeCompare(b.kennung) : a.status === "bereit" ? -1 : 1));
 
   return (
-    <section id="wissen" aria-labelledby="wissen-tafel-titel" className="relative isolate scroll-mt-(--header-h) border-y border-border bg-bg-alt py-[clamp(3.5rem,7vw,6rem)]">
+    <section id="wissen" aria-labelledby="wissen-tafel-titel" className="relative isolate scroll-mt-(--header-h) border-y border-border bg-bg-alt py-[clamp(5rem,8vw,6rem)]">
       <Sektionsgrund licht="links-unten" motiv="scan" />
       <div className="mx-auto grid max-w-wide grid-cols-1 gap-8 px-(--gutter)">
         <Reveal className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
