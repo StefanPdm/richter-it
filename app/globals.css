@@ -720,7 +720,8 @@
     scroll-padding-inline: var(--spur-rand);
     scrollbar-width: thin;
   }
-  .spur > li { flex: 0 0 min(84vw, 26rem); scroll-snap-align: start; }
+  /* 72vw: am Handy schaut die nächste Karte sichtbar herein (ca. 55px), damit klar ist, dass es seitlich weitergeht */
+  .spur > li { flex: 0 0 min(72vw, 26rem); scroll-snap-align: start; }
   .spur-fuss {
     display: flex; align-items: center; gap: 1.25rem;  /* Abstand nach oben über gap der Bühne */
     padding-inline: max(var(--gutter), calc((100% - var(--container-wide)) / 2 + var(--gutter)));
